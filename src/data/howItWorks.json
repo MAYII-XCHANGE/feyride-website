@@ -1,0 +1,80 @@
+{
+  "howItWorks": {
+    "guest": [
+      {
+        "step": 1,
+        "title": "Create Account",
+        "description": "Sign up and complete a quick verification. Provide ID, selfie, and phone number.",
+        "icon": "✓"
+      },
+      {
+        "step": 2,
+        "title": "Search Routes",
+        "description": "Enter your pickup and destination. See available rides in real-time with fares and host ratings.",
+        "icon": "🔍"
+      },
+      {
+        "step": 3,
+        "title": "Book & Pay",
+        "description": "Select seats and pay instantly through your wallet or card. No cash transactions.",
+        "icon": "💳"
+      },
+      {
+        "step": 4,
+        "title": "Get PIN",
+        "description": "Receive a unique PIN code for check-in. Share it only with your assigned host.",
+        "icon": "🔐"
+      },
+      {
+        "step": 5,
+        "title": "Track Live",
+        "description": "See real-time location of your ride, ETA, and chat with your host and fellow passengers.",
+        "icon": "📍"
+      },
+      {
+        "step": 6,
+        "title": "Complete & Rate",
+        "description": "Reach your destination, auto-exit chat, and rate your experience to help others.",
+        "icon": "⭐"
+      }
+    ],
+    "host": [
+      {
+        "step": 1,
+        "title": "Verify & Setup",
+        "description": "Complete KYC verification. Upload vehicle photos and add your vehicle capacity.",
+        "icon": "✓"
+      },
+      {
+        "step": 2,
+        "title": "Post Route",
+        "description": "Enter start, destination, stops, seat count, and minimum fare. One-tap for favorite routes.",
+        "icon": "📍"
+      },
+      {
+        "step": 3,
+        "title": "Receive Bookings",
+        "description": "See guest details, ratings, and age before accepting. Maintain full control over who boards.",
+        "icon": "📬"
+      },
+      {
+        "step": 4,
+        "title": "Verify PINs",
+        "description": "Check guest PINs at pickup to confirm their identity and update seat availability.",
+        "icon": "🔐"
+      },
+      {
+        "step": 5,
+        "title": "Complete Trip",
+        "description": "Drive your normal route. Guests auto-leave chat at their stops. You close trip when done.",
+        "icon": "🚗"
+      },
+      {
+        "step": 6,
+        "title": "Earn & Rate",
+        "description": "Get paid instantly per guest completion. Rate passengers to build your community trust.",
+        "icon": "💰"
+      }
+    ]
+  }
+}

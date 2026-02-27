@@ -1,0 +1,89 @@
+{
+  "faqs": [
+    {
+      "category": "For Riders",
+      "questions": [
+        {
+          "title": "How do I book a ride on FeyRide?",
+          "content": "Simply search for your destination, select a route that matches your schedule, book seats, and pay through the app. You'll receive a unique PIN to check in with your host."
+        },
+        {
+          "title": "Is my payment secure?",
+          "content": "Yes! FeyRide uses bank-level encryption. All payments are processed through secure gateways. Your wallet is protected, and funds are held until you complete your trip."
+        },
+        {
+          "title": "What if I need to cancel?",
+          "content": "You can cancel up to 2 hours before your ride for a full refund. Cancellations within 2 hours may incur a ₦100 convenience fee."
+        },
+        {
+          "title": "What if my host cancels?",
+          "content": "You'll get an instant refund and see alternative routes. We also credit ₦50 to your wallet as an apology for the inconvenience."
+        }
+      ]
+    },
+    {
+      "category": "For Hosts",
+      "questions": [
+        {
+          "title": "What do I need to become a host?",
+          "content": "Complete KYC verification, submit valid driver's license and vehicle photos. You must have a reliable vehicle and a good track record of no accidents."
+        },
+        {
+          "title": "How much can I earn?",
+          "content": "Earnings depend on your route popularity and commission tier. First-time hosts earn 20% commission. As you complete more trips, commission reduces to 15% (20-40 trips) or 10% (40+ trips)."
+        },
+        {
+          "title": "Can I decline bookings?",
+          "content": "Yes! You have full control. You can accept or decline before guests board. We suggest declining less than 5% of bookings to maintain good standing."
+        },
+        {
+          "title": "What if a guest doesn't show up?",
+          "content": "If a guest hasn't checked in 15 minutes after scheduled time, you can mark them as no-show. No charges apply to you, and the guest loses their booking fee."
+        }
+      ]
+    },
+    {
+      "category": "Safety",
+      "questions": [
+        {
+          "title": "How does FeyRide ensure safety?",
+          "content": "All users undergo multi-step verification: ID + selfie match + phone verification. Drivers provide vehicle photos. Real-time trip monitoring, SOS button, and 24/7 support are available."
+        },
+        {
+          "title": "Can I see who I'm riding with before booking?",
+          "content": "After you confirm your booking, you'll see the host's name, photo, vehicle details, and rating. This builds trust while protecting privacy initially."
+        },
+        {
+          "title": "What if I feel unsafe?",
+          "content": "Press the SOS button in the app - it alerts nearby authorities and FeyRide support. You can also exit the vehicle anytime. Report via chat, and our team investigates within 24 hours."
+        },
+        {
+          "title": "Are rides monitored in real-time?",
+          "content": "Yes! All rides are GPS-tracked. If you deviate significantly from the posted route, both passengers and FeyRide support get an alert."
+        }
+      ]
+    },
+    {
+      "category": "Payments",
+      "questions": [
+        {
+          "title": "What payment methods do you accept?",
+          "content": "FeyRide accepts bank transfers, debit cards, and credit cards. We don't accept cash. All payments must be through the app to maintain safety and records."
+        },
+        {
+          "title": "When do hosts get paid?",
+          "content": "Hosts are credited to their wallet instantly after each guest completes their trip. You can withdraw to your bank account anytime with no hidden fees."
+        },
+        {
+          "title": "Are there hidden charges?",
+          "content": "No hidden charges! The price you see is the price you pay. Hosts see their commission tier upfront, and guests see the final cost before payment."
+        },
+        {
+          "title": "Can I use the free ride credit?",
+          "content": "New guests get a one-time free ride credit (up to ₦2,000). Apply it at checkout for your first ride. It's non-transferable and expires after 30 days."
+        }
+      ]
+    }
+  ]
+}
+

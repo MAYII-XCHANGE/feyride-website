@@ -1,0 +1,37 @@
+{
+  "routes": [
+    {
+      "id": 1,
+      "from": "Lekki",
+      "to": "Ikoyi",
+      "time": "08:00 AM",
+      "seats": 3,
+      "host": "Chioma",
+      "rating": 4.9,
+      "Reviews": 48,
+      "avatar": "👩"
+    },
+    {
+      "id": 2,
+      "from": "Ikeja",
+      "to": "VI",
+      "time": "07:30 AM",
+      "seats": 2,
+      "host": "Ahmed",
+      "rating": 4.8,
+      "reviews": 52,
+      "avatar": "👨"
+    },
+    {
+      "id": 3,
+      "from": "Surulere",
+      "to": "Lekki",
+      "time": "06:00 AM",
+      "seats": 4,
+      "host": "Tunde",
+      "rating": 4.7,
+      "reviews": 35,
+      "avatar": "👨"
+    }
+  ]
+}
