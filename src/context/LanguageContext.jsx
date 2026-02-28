@@ -16,6 +16,7 @@ const baseEn = {
   sustainability: 'Sustainability',
   careers: 'Careers',
   safetyTrust: 'Safety & Trust',
+  teamMember: 'Our Team',
   signIn: 'Sign In',
   getStarted: 'Get Started',
   language: 'Language',
@@ -24,9 +25,9 @@ const baseEn = {
     toggle: { guest: 'Looking for Rides', host: 'Want to Offer Rides' },
     guest: {
       badge: 'Save up to 60% on your daily commute',
-      title1: 'Smarter Daily Commuting.',
-      title2: 'Affordable & Trusted Ride Sharing for Your Exact Route.',
-      title3: '',
+      title1: 'Find Rides.',
+      title2: 'Share Costs.',
+      title3: 'Build Community.',
       description: 'Connect with verified commuters on your exact route. Reduce costs, travel safer, and make daily connections.',
       cta: 'Find a Ride',
       features: [

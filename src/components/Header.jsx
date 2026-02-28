@@ -22,6 +22,7 @@ export default function Header() {
 
   const aboutLinks = [
     { label: t('aboutUs'), href: '/about' },
+    { label: t('teamMember'), href: '/team' },
     { label: t('blog'), href: '/blog' },
     { label: t('stories'), href: '/stories' },
     { label: t('careers'), href: '/careers' },

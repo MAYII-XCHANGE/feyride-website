@@ -4,8 +4,19 @@ import testimonialData from '../data/testimonials.json';
 import Button from '../components/Button';
 import AppStoreBadge from '../components/AppStoreBadge';
 import GooglePlayBadge from '../components/GooglePlayBadge';
+import headshot1 from '../assets/istockphoto-1138561236-612x612.jpg';
+import headshot2 from '../assets/istockphoto-2187993440-612x612.jpg';
+import headshot3 from '../assets/liam-pozz-yjmJBkKn26k-unsplash.jpg';
+import headshot4 from '../assets/pexels-cottonbro-4606350.jpg';
 
 export default function Stories() {
+  const testimonialAvatars = {
+    'headshot-1': headshot1,
+    'headshot-2': headshot2,
+    'headshot-3': headshot3,
+    'headshot-4': headshot4,
+  };
+
   return (
     <div>
       {/* Hero */}
@@ -51,7 +62,12 @@ export default function Stories() {
             {testimonialData.testimonials.map((testimonial) => (
               <Card key={testimonial.id} elevated>
                 <div className="flex items-start gap-4 mb-6">
-                  <span className="text-5xl flex-shrink-0">{testimonial.avatar}</span>
+                  <img
+                    src={testimonialAvatars[testimonial.avatar]}
+                    alt={`${testimonial.name} headshot`}
+                    className="w-14 h-14 rounded-full object-cover border border-nova-charcoal-lighter flex-shrink-0"
+                    loading="lazy"
+                  />
                   <div className="flex-1">
                     <h3 className="font-bold text-nova-charcoal">{testimonial.name}</h3>
                     <p className="text-sm text-gray-700 mb-2">{testimonial.company}</p>

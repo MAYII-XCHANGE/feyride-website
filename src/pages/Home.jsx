@@ -14,6 +14,11 @@ import guestOnboardingImage from '../assets/pexels-gustavo-fring-4895405.jpg';
 import hostOnboardingImage from '../assets/pexels-tim-samuel-5835591.jpg';
 import safetyImage from '../assets/pexels-cottonbro-4606336.jpg';
 import heroBackgroundImage from '../assets/background-image.png';
+import headshot1 from '../assets/istockphoto-1138561236-612x612.jpg';
+import headshot2 from '../assets/istockphoto-2187993440-612x612.jpg';
+import headshot3 from '../assets/liam-pozz-yjmJBkKn26k-unsplash.jpg';
+import headshot4 from '../assets/pexels-cottonbro-4606350.jpg';
+import trackingBackground from '../assets/stevepb-map-2789052_1280.jpg';
 
 export default function Home() {
 
@@ -31,6 +36,12 @@ export default function Home() {
     MAIL: Mail,
     CAR: Truck,
     EARN: CreditCard,
+  };
+  const testimonialAvatars = {
+    'headshot-1': headshot1,
+    'headshot-2': headshot2,
+    'headshot-3': headshot3,
+    'headshot-4': headshot4,
   };
   const appInfoPageUrl = 'https://www.uber.com/global/en/ride/app/?referrer=singular_click_id%3Dd250e28e-49ff-4e83-a531-5f9517c8dd54';
   const appStoreLinks = {
@@ -63,21 +74,15 @@ export default function Home() {
     const title3 = t(`${prefix}.title3`);
 
     return (
-      <>
-        {title1}
+      <span className="hero-title">
+        <span className="hero-title-line">{title1}</span>
         {title2 ? (
-          <>
-            <br />
-            <span className="hero-highlight">{title2}</span>
-          </>
+          <span className="hero-title-line hero-highlight">{title2}</span>
         ) : null}
         {title3 ? (
-          <>
-            <br />
-            {title3}
-          </>
+          <span className="hero-title-line">{title3}</span>
         ) : null}
-      </>
+      </span>
     );
   };
 
@@ -184,7 +189,7 @@ export default function Home() {
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-nova-charcoal leading-tight mb-6">
               {currentContent.title}
             </h1>
-            <p className="subheading text-nova-charcoal-700 max-w-3xl mx-auto mb-8">
+            <p className="subheading text-nova-charcoal-700 max-w-3xl mx-auto mb-8 typewriter-rtl">
               {currentContent.description}
             </p>
 
@@ -222,7 +227,15 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section-padding bg-white">
+      <section
+        className="section-padding bg-white relative overflow-hidden"
+        style={{
+          backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url(${trackingBackground})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
         <div className="container-custom">
           <div className="mb-16">
             <h3 className="heading-3 text-nova-charcoal mb-4">Ride For Guests</h3>
@@ -492,75 +505,17 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right - Interactive Map */}
-            <div className="relative h-96 md:h-full min-h-[450px] rounded-2xl border-2 border-nova-green/20 overflow-hidden shadow-xl order-1 lg:order-2 bg-white">
-              <img
-                src="https://maps.googleapis.com/maps/api/staticmap?center=6.594027,3.580021&zoom=12&size=1200x700&maptype=roadmap&markers=color:green%7Clabel:D%7C6.594027,3.580021&markers=color:red%7Clabel:P%7C6.5200,3.3700"
-                alt="Live ride tracking map view"
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-
-              <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-[36%] left-[46%]">
-                  <span className="absolute -inset-2 rounded-full bg-nova-green/40 animate-ping"></span>
-                  <span className="relative block w-4 h-4 rounded-full bg-nova-green border-2 border-white shadow-lg"></span>
-                </div>
-                <div className="absolute top-[58%] left-[66%]">
-                  <span className="absolute -inset-2 rounded-full bg-red-500/35 animate-ping"></span>
-                  <span className="relative block w-4 h-4 rounded-full bg-red-500 border-2 border-white shadow-lg"></span>
-                </div>
+            {/* Right Image */}
+            <div className="order-1 lg:order-2">
+              <div className="relative h-72 sm:h-80 lg:h-[420px] rounded-2xl overflow-hidden border border-nova-green/20 shadow-lg">
+                <img
+                  src={trackingBackground}
+                  alt="Map background"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-tr from-nova-charcoal/30 via-transparent to-transparent"></div>
               </div>
-
-              {/* Overlay Info */}
-              <div className="absolute top-0 left-0 right-0 bg-gradient-to-b from-nova-charcoal via-nova-charcoal/70 to-transparent p-4 text-white">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-bold flex items-center gap-2">
-                      <span className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></span>
-                      {userType === 'guest' ? 'Driver Locating...' : 'Monitoring Active Routes'}
-                    </p>
-                    <p className="text-xs opacity-75">Real-time updates every 3 seconds</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Live Rider Card */}
-              {userType === 'guest' ? (
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-nova-charcoal via-nova-charcoal/95 to-transparent p-5 text-white">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <p className="text-lg font-bold">Driver: Samuel O.</p>
-                      <p className="text-sm opacity-90 flex items-center gap-1">
-                        <span>Toyota Camry</span>
-                      </p>
-                      <p className="text-xs opacity-75 mt-1">Arriving in 4 minutes - 1.2 km away</p>
-                    </div>
-                    <div className="text-right text-xs">
-                      <p className="opacity-75">Rating</p>
-                      <p className="font-bold text-lg">4.9 stars</p>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-nova-charcoal via-nova-charcoal/95 to-transparent p-5 text-white">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <p className="text-sm opacity-75">Rider Details</p>
-                      <p className="text-lg font-bold">Chinedu M.</p>
-                      <p className="text-xs opacity-90 mt-1 flex items-center gap-2">
-                        <span>Location Lekki Phase 1</span>
-                        <span>to</span>
-                        <span>VI</span>
-                      </p>
-                    </div>
-                    <div className="text-right text-xs">
-                      <p className="opacity-75">Passenger Rating</p>
-                      <p className="font-bold text-lg">4.8 stars</p>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>
@@ -745,7 +700,12 @@ export default function Home() {
             {testimonialData.testimonials.slice(0, 3).map((testimonial) => (
               <Card key={testimonial.name} elevated className="h-full text-left border border-nova-charcoal-lighter">
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="text-3xl">{testimonial.avatar}</span>
+                  <img
+                    src={testimonialAvatars[testimonial.avatar]}
+                    alt={`${testimonial.name} headshot`}
+                    className="w-12 h-12 rounded-full object-cover border border-nova-charcoal-lighter"
+                    loading="lazy"
+                  />
                   <div>
                     <h4 className="font-display font-bold text-nova-charcoal">{testimonial.name}</h4>
                     <p className="text-xs text-nova-charcoal-700">{testimonial.company}</p>

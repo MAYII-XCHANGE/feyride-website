@@ -11,6 +11,9 @@ export default function Footer() {
   const MotionFooter = motion.footer;
   const MotionDiv = motion.div;
   const MotionA = motion.a;
+  const disableSocialLink = (event) => {
+    event.preventDefault();
+  };
 
   return (
     <MotionFooter
@@ -41,9 +44,9 @@ export default function Footer() {
               <MotionA
                 whileHover={{ scale: 1.15, color: '#00C48C' }}
                 transition={{ type: 'spring', stiffness: 300 }}
-                href="https://web.facebook.com/shuttlersng/"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#"
+                onClick={disableSocialLink}
+                aria-disabled="true"
                 aria-label="Facebook"
               >
                 <svg width="20" height="20" fill="currentColor" className="text-white"><path d="M18.896 0H1.104C.494 0 0 .494 0 1.104v17.792C0 19.506.494 20 1.104 20h9.583v-7.729H8.077V9.237h2.61V7.077c0-2.587 1.582-3.997 3.892-3.997 1.107 0 2.057.082 2.335.119v2.708h-1.602c-1.256 0-1.5.597-1.5 1.473v1.931h3l-.391 3.034h-2.609V20h5.116c.61 0 1.104-.494 1.104-1.104V1.104C20 .494 19.506 0 18.896 0z"/></svg>
@@ -51,9 +54,9 @@ export default function Footer() {
               <MotionA
                 whileHover={{ scale: 1.15, color: '#00C48C' }}
                 transition={{ type: 'spring', stiffness: 300 }}
-                href="https://twitter.com/shuttlersng"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#"
+                onClick={disableSocialLink}
+                aria-disabled="true"
                 aria-label="Twitter"
               >
                 <svg width="20" height="20" fill="currentColor" className="text-white"><path d="M20 3.924a8.19 8.19 0 0 1-2.357.646A4.118 4.118 0 0 0 19.448 2.3a8.224 8.224 0 0 1-2.605.996A4.107 4.107 0 0 0 9.85 6.03a11.65 11.65 0 0 1-8.457-4.287a4.106 4.106 0 0 0 1.27 5.482A4.073 4.073 0 0 1 .8 6.575v.052a4.108 4.108 0 0 0 3.292 4.025a4.095 4.095 0 0 1-1.853.07a4.108 4.108 0 0 0 3.834 2.85A8.233 8.233 0 0 1 0 17.542a11.616 11.616 0 0 0 6.29 1.844c7.547 0 11.675-6.155 11.675-11.49c0-.175-.004-.349-.012-.522A8.18 8.18 0 0 0 20 3.924z"/></svg>
@@ -61,7 +64,7 @@ export default function Footer() {
               <MotionA
                 whileHover={{ scale: 1.15, color: '#00C48C' }}
                 transition={{ type: 'spring', stiffness: 300 }}
-                href="https://www.instagram.com/shuttlers/"
+                href="https://www.instagram.com/fey.ride?igsh=MWgwZGo2YW11cDhhdw%3D%3D&utm_source=qr"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
@@ -71,9 +74,9 @@ export default function Footer() {
               <MotionA
                 whileHover={{ scale: 1.15, color: '#00C48C' }}
                 transition={{ type: 'spring', stiffness: 300 }}
-                href="https://www.linkedin.com/company/shuttlers"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#"
+                onClick={disableSocialLink}
+                aria-disabled="true"
                 aria-label="LinkedIn"
               >
                 <svg width="20" height="20" fill="currentColor" className="text-white"><path d="M18.146 18.146h-3.08v-4.356c0-1.038-.019-2.374-1.447-2.374c-1.447 0-1.669 1.13-1.669 2.297v4.433h-3.08V7.5h2.958v1.453h.042c.412-.78 1.42-1.602 2.924-1.602c3.127 0 3.703 2.057 3.703 4.736v6.059zM5.337 6.047a1.785 1.785 0 1 1 0-3.57a1.785 1.785 0 0 1 0 3.57zM6.877 18.146H3.797V7.5h3.08v10.646zM20 0H0v20h20V0z"/></svg>
