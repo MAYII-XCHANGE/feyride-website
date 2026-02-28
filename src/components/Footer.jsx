@@ -194,7 +194,7 @@ export default function Footer() {
                       toast.className =
                         "fixed bottom-4 right-4 bg-emerald-600 text-white px-6 py-3 rounded-lg shadow-lg";
                       toast.textContent =
-                        "✓ Message sent! Thanks for reaching out.";
+                        "Message sent! Thanks for reaching out.";
                       document.body.appendChild(toast);
                       setTimeout(() => toast.remove(), 4000);
                     } else {
@@ -283,3 +283,4 @@ export default function Footer() {
     </MotionFooter>
   );
 }
+

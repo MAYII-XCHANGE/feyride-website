@@ -18,7 +18,7 @@ export default function CostCalculator({ userType = 'guest' }) {
   if (userType === 'host') {
     // Host earnings calculator
     const costPerKm = 25;
-    const costPerSeat = 800; // ₦800 per seat average
+    const costPerSeat = 800; // NGN 800 per seat average
     const seatsInCar = 4;
     const weeklyTrips = hostPreset.tripsPerWeek;
     
@@ -59,18 +59,18 @@ export default function CostCalculator({ userType = 'guest' }) {
           <div className="space-y-4">
             <div className="bg-nova-charcoal text-white rounded-xl p-4 border border-nova-green/30 shadow-md">
               <p className="text-sm text-white/80 mb-1">Per Trip Earnings</p>
-              <p className="text-3xl font-bold text-nova-green">₦{profitPerTrip.toFixed(0)}</p>
+              <p className="text-3xl font-bold text-nova-green">NGN {profitPerTrip.toFixed(0)}</p>
             </div>
 
             <div className="bg-nova-charcoal text-white rounded-xl p-4 border border-nova-green/20 shadow-md">
               <p className="text-sm text-white/80 mb-1">Weekly Earnings</p>
-              <p className="text-3xl font-bold text-nova-green">₦{weeklyEarnings.toFixed(0)}</p>
+              <p className="text-3xl font-bold text-nova-green">NGN {weeklyEarnings.toFixed(0)}</p>
             </div>
 
             <div className="bg-nova-charcoal text-white rounded-xl p-4 border border-nova-green/30 shadow-md">
               <p className="text-sm mb-1 opacity-90 flex items-center gap-2"><TrendingUp size={16} /> Monthly Potential</p>
               <div className="flex items-baseline gap-2">
-                <p className="text-3xl font-bold">₦{monthlyEarnings.toFixed(0)}</p>
+                <p className="text-3xl font-bold">NGN {monthlyEarnings.toFixed(0)}</p>
                 <p className="text-sm font-semibold">/ month</p>
               </div>
             </div>
@@ -120,18 +120,18 @@ export default function CostCalculator({ userType = 'guest' }) {
         <div className="space-y-4">
           <div className="bg-nova-charcoal text-white rounded-xl p-4 border border-nova-green/30 shadow-md">
             <p className="text-sm text-white/80 mb-1">FeyRide Cost per Person</p>
-            <p className="text-3xl font-bold text-nova-green">₦{costPerPerson.toFixed(0)}</p>
+            <p className="text-3xl font-bold text-nova-green">NGN {costPerPerson.toFixed(0)}</p>
           </div>
 
           <div className="bg-nova-charcoal text-white rounded-xl p-4 border border-nova-green/20 shadow-md">
             <p className="text-sm text-white/80 mb-1">Traditional Ride Cost</p>
-            <p className="text-3xl font-bold text-nova-charcoal-lighter line-through">₦{uberEstimate.toFixed(0)}</p>
+            <p className="text-3xl font-bold text-nova-charcoal-lighter line-through">NGN {uberEstimate.toFixed(0)}</p>
           </div>
 
           <div className="bg-nova-charcoal text-white rounded-xl p-4 border border-nova-green/30 shadow-md">
             <p className="text-sm mb-1 opacity-90 flex items-center gap-2"><TrendingDown size={16} /> You Save</p>
             <div className="flex items-baseline gap-2">
-              <p className="text-3xl font-bold">₦{savings.toFixed(0)}</p>
+              <p className="text-3xl font-bold">NGN {savings.toFixed(0)}</p>
               <p className="text-xl font-semibold">({savingsPercent}%)</p>
             </div>
           </div>
@@ -140,5 +140,6 @@ export default function CostCalculator({ userType = 'guest' }) {
     </div>
   );
 }
+
 
 

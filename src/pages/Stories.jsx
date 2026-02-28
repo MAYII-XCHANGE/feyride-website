@@ -27,7 +27,7 @@ export default function Stories() {
               <p className="text-gray-700 font-semibold">Active Users</p>
             </div>
             <div>
-              <p className="text-4xl font-bold text-nova-green">₦2B+</p>
+              <p className="text-4xl font-bold text-nova-green">NGN 2B+</p>
               <p className="text-gray-700 font-semibold">Saved by Community</p>
             </div>
             <div>
@@ -35,7 +35,7 @@ export default function Stories() {
               <p className="text-gray-700 font-semibold">Completed Trips</p>
             </div>
             <div>
-              <p className="text-4xl font-bold text-nova-green">4.8★</p>
+              <p className="text-4xl font-bold text-nova-green">4.8 stars</p>
               <p className="text-gray-700 font-semibold">Average Rating</p>
             </div>
           </div>
@@ -70,8 +70,8 @@ export default function Stories() {
                 <div className="pt-4 border-t border-nova-charcoal-lighter">
                   <p className="text-sm font-semibold text-nova-green">
                     {testimonial.savedAmount 
-                      ? `Saved ₦${testimonial.savedAmount.toLocaleString()} on ${testimonial.trips} trips`
-                      : `Earned ₦${testimonial.earnedAmount.toLocaleString()} on ${testimonial.trips} trips`
+                      ? `Saved NGN ${testimonial.savedAmount.toLocaleString()} on ${testimonial.trips} trips`
+                      : `Earned NGN ${testimonial.earnedAmount.toLocaleString()} on ${testimonial.trips} trips`
                     }
                   </p>
                 </div>
@@ -93,21 +93,21 @@ export default function Stories() {
                   "FeyRide Changed My Daily Commute"
                 </h3>
                 <p className="text-lg text-gray-700 leading-relaxed">
-                  Before FeyRide, I was spending over ₦3,000 daily on Uber commutes. As someone passionate about sustainability, the high cost was frustrating. But FeyRide isn't just about savings—it's about community.
+                  Before FeyRide, I was spending over NGN 3,000 daily on Uber commutes. As someone passionate about sustainability, the high cost was frustrating. But FeyRide isn't just about savings - it's about community.
                 </p>
                 <p className="text-lg text-gray-700 leading-relaxed">
-                  I've made genuine friendships on my commute, we carpool together several times a week, and I'm now saving ₦1,500 daily. Plus, knowing we're reducing traffic and emissions together feels amazing!
+                  I've made genuine friendships on my commute, we carpool together several times a week, and I'm now saving NGN 1,500 daily. Plus, knowing we're reducing traffic and emissions together feels amazing!
                 </p>
                 <p className="text-lg text-gray-700 leading-relaxed">
                   If you're on the fence: try it. The verification process made me feel safe immediately, and the app is incredibly intuitive.
                 </p>
-                <p className="font-semibold text-nova-charcoal">— Chioma Okafor, Tech Hub Nigeria</p>
+                <p className="font-semibold text-nova-charcoal"> -  Chioma Okafor, Tech Hub Nigeria</p>
               </div>
 
               <div className="bg-gradient-to-br from-nova-green/10 to-nova-green/5 rounded-xl p-8 flex flex-col justify-center">
                 <div className="space-y-6 text-center">
                   <div>
-                    <p className="text-4xl font-bold text-nova-green">₦1,500</p>
+                    <p className="text-4xl font-bold text-nova-green">NGN 1,500</p>
                     <p className="text-gray-700">Daily Savings</p>
                   </div>
                   <div className="h-1 bg-nova-green/20"></div>
@@ -117,7 +117,7 @@ export default function Stories() {
                   </div>
                   <div className="h-1 bg-nova-green/20"></div>
                   <div>
-                    <p className="text-4xl font-bold text-nova-green">₦67.5K</p>
+                    <p className="text-4xl font-bold text-nova-green">NGN 67.5K</p>
                     <p className="text-gray-700">Total Saved</p>
                   </div>
                   <div className="h-1 bg-nova-green/20"></div>
@@ -140,9 +140,9 @@ export default function Stories() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { emoji: '💰', Icon: DollarSign, title: 'Save Money', desc: 'Cut commute costs in half with smart shared rides' },
-              { emoji: '🌍', Icon: Leaf, title: 'Help The Planet', desc: 'Reduce traffic and carbon emissions' },
-              { emoji: '👥', Icon: Users, title: 'Build Community', desc: 'Meet people on your route and make friends' },
+              { emoji: 'Money', Icon: DollarSign, title: 'Save Money', desc: 'Cut commute costs in half with smart shared rides' },
+              { emoji: 'Planet', Icon: Leaf, title: 'Help The Planet', desc: 'Reduce traffic and carbon emissions' },
+              { emoji: 'Community', Icon: Users, title: 'Build Community', desc: 'Meet people on your route and make friends' },
             ].map((item, idx) => (
               <Card key={idx}>
                 <div className="text-5xl mb-4"><item.Icon size={48} className="text-nova-green" /></div>
@@ -182,5 +182,6 @@ export default function Stories() {
     </div>
   );
 }
+
 
 

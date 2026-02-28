@@ -46,3 +46,4 @@ export default function GooglePlayBadge({ className = "" }) {
     </svg>
   );
 }
+

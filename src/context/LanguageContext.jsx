@@ -24,16 +24,16 @@ const baseEn = {
     toggle: { guest: 'Looking for Rides', host: 'Want to Offer Rides' },
     guest: {
       badge: 'Save up to 60% on your daily commute',
-      title1: 'Find Rides.',
-      title2: 'Share Costs.',
-      title3: 'Build Community.',
+      title1: 'Smarter Daily Commuting.',
+      title2: 'Affordable & Trusted Ride Sharing for Your Exact Route.',
+      title3: '',
       description: 'Connect with verified commuters on your exact route. Reduce costs, travel safer, and make daily connections.',
-      cta: 'Find Your Ride',
+      cta: 'Find a Ride',
       features: [
         { title: 'Smart Route Matching', desc: 'AI-powered matching finds your perfect ride' },
         { title: 'Transparent Pricing', desc: 'No hidden fees, just fair shared costs' },
         { title: 'Verified Drivers', desc: 'Bank-level verification for every host' },
-        { title: 'Rated Community', desc: 'Travel with drivers rated 4.5★ and up' },
+        { title: 'Rated Community', desc: 'Travel with drivers rated 4.5 stars and up' },
       ],
       stats: ['Safe Rides Shared', 'Saved Together', 'Average Rating'],
     },
@@ -42,10 +42,10 @@ const baseEn = {
       title1: 'Offer Rides.',
       title2: 'Earn Income.',
       title3: 'Build Your Business.',
-      description: 'Turn your daily commute into income. Earn ₦500-₦2000 per trip while helping others save on costs.',
-      cta: 'Start Earning',
+      description: 'Turn your daily commute into income. Earn NGN 500-NGN 2000 per trip while helping others save on costs.',
+      cta: 'Offer a Ride',
       features: [
-        { title: 'Easy Income', desc: 'Earn ₦500-₦2000 per trip instantly' },
+        { title: 'Easy Income', desc: 'Earn NGN 500-NGN 2000 per trip instantly' },
         { title: 'Simple Onboarding', desc: 'KYC verified and earning in 24 hours' },
         { title: 'Passenger Care', desc: 'Automated insurance on every ride' },
         { title: 'Fast Payouts', desc: 'Weekly withdrawals to your bank account' },
@@ -89,7 +89,7 @@ const baseEn = {
       },
     },
     download: {
-      title: 'It’s easier in the apps',
+      title: "It's easier in the apps",
       0: { title: 'Download the FeyRide Guest app', desc: 'Scan to download' },
       1: { title: 'Download the FeyRide Host app', desc: 'Scan to download' },
     },
@@ -209,3 +209,4 @@ export function useLanguage() {
 
   return context;
 }
+

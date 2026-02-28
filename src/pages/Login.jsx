@@ -57,7 +57,7 @@ export default function Login() {
             >
               {isLoading ? (
                 <>
-                  <span className="inline-block animate-spin mr-2">⏳</span>
+                  <span className="inline-block animate-spin mr-2">Loading</span>
                   Signing in as rider...
                 </>
               ) : (
@@ -78,7 +78,7 @@ export default function Login() {
             >
               {isLoading ? (
                 <>
-                  <span className="inline-block animate-spin mr-2">⏳</span>
+                  <span className="inline-block animate-spin mr-2">Loading</span>
                   Signing in as host...
                 </>
               ) : (
@@ -118,4 +118,5 @@ export default function Login() {
     </div>
   );
 }
+
 

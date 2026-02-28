@@ -46,3 +46,4 @@ export const isPasswordStrong = (password) => {
     /[0-9]/.test(password)
   );
 };
+

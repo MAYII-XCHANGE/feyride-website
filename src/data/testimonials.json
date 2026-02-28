@@ -5,8 +5,8 @@
       "name": "Chioma Okafor",
       "role": "Corporate Professional",
       "company": "Tech Hub Nigeria",
-      "avatar": "👩‍💼",
-      "quote": "I used to spend ₦3,000 daily on Uber commute. Now with FeyRide, I spend half that amount and get to know wonderful people along the way!",
+      "avatar": "Guest",
+      "quote": "I used to spend NGN 3,000 daily on Uber commute. Now with FeyRide, I spend half that amount and get to know wonderful people along the way!",
       "savedAmount": 1500,
       "trips": 45,
       "rating": 5
@@ -16,7 +16,7 @@
       "name": "Ahmed Hassan",
       "role": "Software Developer",
       "company": "Fintech Startup",
-      "avatar": "👨‍💻",
+      "avatar": "Host",
       "quote": "As a host, FeyRide helped me offset my fuel costs significantly. I commute anyway, so why not earn some money while I'm at it?",
       "earnedAmount": 15000,
       "trips": 32,
@@ -27,7 +27,7 @@
       "name": "Tunde Adebayo",
       "role": "Sales Executive",
       "company": "Insurance Company",
-      "avatar": "👨‍💼",
+      "avatar": "Guest",
       "quote": "The safety verification process gave me confidence. I trust the people I ride with because they're equally vetted. Best commute app ever!",
       "savedAmount": 2000,
       "trips": 60,
@@ -38,7 +38,7 @@
       "name": "Zainab Ibrahim",
       "role": "Student",
       "company": "University of Lagos",
-      "avatar": "👩‍🎓",
+      "avatar": "Guest",
       "quote": "As a student with a tight budget, FeyRide is a lifesaver. I can now afford daily commute to campus without stress!",
       "savedAmount": 800,
       "trips": 22,
@@ -46,4 +46,5 @@
     }
   ]
 }
+
 

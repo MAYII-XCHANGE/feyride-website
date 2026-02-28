@@ -238,6 +238,28 @@ a:hover {
     @apply bg-gradient-to-r from-nova-green to-nova-green-dark bg-clip-text text-transparent;
   }
 
+  .hero-section {
+    @apply relative overflow-hidden;
+    background-color: #f5f5f5;
+  }
+
+  .hero-pattern {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(8, 247, 228, 0.16), transparent 45%),
+      radial-gradient(circle at 85% 5%, rgba(8, 247, 228, 0.12), transparent 40%),
+      url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'800'%20height%3D'600'%20viewBox%3D'0%200%20800%20600'%3E%3Cg%20stroke%3D'%252308f7e4'%20stroke-opacity%3D'0.14'%20stroke-width%3D'2'%20fill%3D'none'%3E%3Cpath%20d%3D'M20%2080H780'%2F%3E%3Cpath%20d%3D'M20%20160H780'%2F%3E%3Cpath%20d%3D'M20%20240H780'%2F%3E%3Cpath%20d%3D'M20%20320H780'%2F%3E%3Cpath%20d%3D'M20%20400H780'%2F%3E%3Cpath%20d%3D'M20%20480H780'%2F%3E%3Cpath%20d%3D'M120%2020V580'%2F%3E%3Cpath%20d%3D'M240%2020V580'%2F%3E%3Cpath%20d%3D'M360%2020V580'%2F%3E%3Cpath%20d%3D'M480%2020V580'%2F%3E%3Cpath%20d%3D'M600%2020V580'%2F%3E%3Cpath%20d%3D'M720%2020V580'%2F%3E%3Cpath%20d%3D'M60%2060Q200%20140%20340%20120T620%20140'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+    background-size: auto, auto, 600px 450px;
+    background-repeat: no-repeat, no-repeat, repeat;
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .hero-highlight {
+    @apply text-nova-green-dark font-bold;
+  }
+
   .card {
     @apply bg-white rounded-xl border border-nova-charcoal-lighter shadow-md hover:shadow-xl hover:border-nova-green/40 transition-all duration-300 transform hover:scale-105;
   }
@@ -453,3 +475,4 @@ a {
     @apply shadow-lg transition-shadow duration-300 hover:shadow-xl;
   }
 }
+

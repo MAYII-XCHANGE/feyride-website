@@ -1,21 +1,37 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import { MapPin, CreditCard, CheckCircle, Search, Users, DollarSign, Shield, Star, TrendingDown, Leaf, Clock, ArrowRight, Zap, Heart, TrendingUp, Navigation, Wifi, Music, Zap as Battery, Wind, Smartphone, AlertCircle, Car, Gift, GiftIcon, Handshake, CalendarDays } from 'lucide-react';
+import { MapPin, CreditCard, CheckCircle, Search, Users, DollarSign, Shield, Star, TrendingDown, Leaf, Clock, ArrowRight, Zap, Heart, TrendingUp, Navigation, Wifi, Music, Zap as Battery, Wind, Smartphone, AlertCircle, Car, Gift, GiftIcon, Handshake, CalendarDays, Lock, Truck, Mail, XCircle } from 'lucide-react';
 import Button from '../components/Button';
 import Card from '../components/Card';
 import Badge from '../components/Badge';
+import AppStoreBadge from '../components/AppStoreBadge';
+import GooglePlayBadge from '../components/GooglePlayBadge';
 import routesData from '../data/routes.json';
 import testimonialData from '../data/testimonials.json';
+import howItWorksData from '../data/howItWorks.json';
 import guestOnboardingImage from '../assets/pexels-gustavo-fring-4895405.jpg';
 import hostOnboardingImage from '../assets/pexels-tim-samuel-5835591.jpg';
 import safetyImage from '../assets/pexels-cottonbro-4606336.jpg';
+import heroBackgroundImage from '../assets/background-image.png';
 
 export default function Home() {
 
   const [userType, setUserType] = useState('guest');
   const [tripType, setTripType] = useState('one-way');
   const { t } = useLanguage();
+  const { guest: guestSteps, host: hostSteps } = howItWorksData.howItWorks;
+  const iconMap = {
+    CHECK: CheckCircle,
+    SEARCH: Search,
+    PAY: CreditCard,
+    PIN: Lock,
+    MAP: MapPin,
+    STAR: Star,
+    MAIL: Mail,
+    CAR: Truck,
+    EARN: CreditCard,
+  };
   const appInfoPageUrl = 'https://www.uber.com/global/en/ride/app/?referrer=singular_click_id%3Dd250e28e-49ff-4e83-a531-5f9517c8dd54';
   const appStoreLinks = {
     ios: 'https://apps.apple.com/ng/app/FeyRide-rides/id1234567890',
@@ -41,9 +57,33 @@ export default function Home() {
   };
 
   // All translation keys must be defined in LanguageContext translations
+  const renderHeroTitle = (prefix) => {
+    const title1 = t(`${prefix}.title1`);
+    const title2 = t(`${prefix}.title2`);
+    const title3 = t(`${prefix}.title3`);
+
+    return (
+      <>
+        {title1}
+        {title2 ? (
+          <>
+            <br />
+            <span className="hero-highlight">{title2}</span>
+          </>
+        ) : null}
+        {title3 ? (
+          <>
+            <br />
+            {title3}
+          </>
+        ) : null}
+      </>
+    );
+  };
+
   const guestContent = {
     badge: t('home.guest.badge'),
-    title: <>{t('home.guest.title1')}<br /><span className="text-gradient italic">{t('home.guest.title2')}</span><br />{t('home.guest.title3')}</>,
+    title: renderHeroTitle('home.guest'),
     description: t('home.guest.description'),
     cta: t('home.guest.cta'),
     features: [
@@ -54,14 +94,14 @@ export default function Home() {
     ],
     stats: [
       { number: '50K+', label: t('home.guest.stats.0') },
-      { number: '₦2B+', label: t('home.guest.stats.1') },
-      { number: '4.8★', label: t('home.guest.stats.2') },
+      { number: 'NGN 2B+', label: t('home.guest.stats.1') },
+      { number: '4.8 stars', label: t('home.guest.stats.2') },
     ],
   };
 
   const hostContent = {
     badge: t('home.host.badge'),
-    title: <>{t('home.host.title1')}<br /><span className="text-gradient italic">{t('home.host.title2')}</span><br />{t('home.host.title3')}</>,
+    title: renderHeroTitle('home.host'),
     description: t('home.host.description'),
     cta: t('home.host.cta'),
     features: [
@@ -72,10 +112,10 @@ export default function Home() {
     ],
     stats: [
       { number: '50K+', label: t('home.host.stats.0') },
-      { number: '₦2B+', label: t('home.host.stats.1') },
-      { number: '4.8★', label: t('home.host.stats.2') },
+      { number: 'NGN 2B+', label: t('home.host.stats.1') },
+      { number: '4.8 stars', label: t('home.host.stats.2') },
     ],
-    visual: '💼',
+    visual: 'Host',
   };
 
   const currentContent = userType === 'guest' ? guestContent : hostContent;
@@ -107,8 +147,16 @@ export default function Home() {
   return (
     <div className="font-light">
       {/* Hero Section */}
-      <section className="bg-[#f5f5f5] py-16 sm:py-20">
-        <div className="container-custom">
+      <section
+        className="hero-section py-16 sm:py-20"
+        style={{
+          backgroundImage: `url(${heroBackgroundImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        <div className="container-custom relative z-10">
           <div className="max-w-5xl mx-auto text-center">
             <div className="inline-flex p-1 rounded-xl bg-white border border-nova-charcoal-lighter shadow-sm mb-8">
               <Button
@@ -160,6 +208,145 @@ export default function Home() {
                 </Card>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section (Embedded) */}
+      <section className="bg-gradient-to-br from-nova-green-light to-white py-16 sm:py-20">
+        <div className="container-custom text-center">
+          <h2 className="heading-2 text-nova-charcoal mb-6">How FeyRide Works</h2>
+          <p className="subheading text-nova-charcoal-700 max-w-2xl mx-auto">
+            Simple, secure, and smart. Whether you're seeking a ride or sharing your commute, we've got you covered.
+          </p>
+        </div>
+      </section>
+
+      <section className="section-padding bg-white">
+        <div className="container-custom">
+          <div className="mb-16">
+            <h3 className="heading-3 text-nova-charcoal mb-4">Ride For Guests</h3>
+            <p className="subheading text-nova-charcoal-700">Book. Pay. Ride. Save.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {guestSteps.map((item) => {
+              const StepIcon = iconMap[item.icon] ?? CheckCircle;
+              return (
+              <Card key={item.step}>
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0">
+                    <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-nova-green text-nova-charcoal font-bold text-lg">
+                      <StepIcon size={18} />
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-bold text-nova-charcoal mb-2">{item.title}</h4>
+                    <p className="text-sm text-nova-charcoal-700">{item.description}</p>
+                  </div>
+                </div>
+              </Card>
+            )})}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-padding bg-nova-charcoal-light">
+        <div className="container-custom">
+          <div className="mb-16">
+            <h3 className="heading-3 text-nova-charcoal mb-4">Ride For Hosts</h3>
+            <p className="subheading text-nova-charcoal-700">Share. Earn. Connect.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {hostSteps.map((item) => {
+              const StepIcon = iconMap[item.icon] ?? CheckCircle;
+              return (
+              <Card key={item.step}>
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0">
+                    <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-nova-green text-nova-charcoal font-bold text-lg">
+                      <StepIcon size={18} />
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-bold text-nova-charcoal mb-2">{item.title}</h4>
+                    <p className="text-sm text-nova-charcoal-700">{item.description}</p>
+                  </div>
+                </div>
+              </Card>
+            )})}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-padding bg-white">
+        <div className="container-custom">
+          <h3 className="heading-3 text-center text-nova-charcoal mb-16">Why Choose FeyRide?</h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <Card elevated>
+              <h4 className="heading-4 text-nova-charcoal mb-6">Traditional Ride-Hailing</h4>
+              <ul className="space-y-3">
+                {[
+                  'Expensive (60% commission)',
+                  'Professional drivers only',
+                  'Community connection',
+                  'Lower fares',
+                  'Predictable pricing',
+                ].map((item, idx) => (
+                  <li key={idx} className="text-nova-charcoal-700 flex items-start gap-2">
+                    <XCircle size={16} className="text-red-500 mt-0.5 flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+
+            <Card elevated className="bg-nova-charcoal text-white">
+              <h4 className="heading-4 text-white mb-6">FeyRide Cost-Sharing</h4>
+              <ul className="space-y-3">
+                {[
+                  'Affordable (10-20% commission)',
+                  'Regular commuters like you',
+                  'Build lasting community',
+                  'Lower fares and lower cost',
+                  'Fixed, transparent pricing',
+                ].map((item, idx) => (
+                  <li key={idx} className="text-nova-green font-semibold flex items-start gap-2">
+                    <CheckCircle size={16} className="text-nova-green mt-0.5 flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      <section className="section-padding bg-gradient-to-r from-nova-green-dark to-nova-green-darker text-white text-center">
+        <div className="container-custom">
+          <h3 className="heading-3 text-white mb-6">Get Started Today</h3>
+          <p className="subheading text-white/90 mb-8 max-w-2xl mx-auto">
+            Join thousands of smart commuters saving time and money.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-md mx-auto">
+            <a
+              href={appStoreLinks.ios}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:opacity-80 transition-opacity w-full sm:w-auto"
+            >
+              <AppStoreBadge className="h-14 w-full" />
+            </a>
+            <a
+              href={appStoreLinks.android}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:opacity-80 transition-opacity w-full sm:w-auto"
+            >
+              <GooglePlayBadge className="h-14 w-full" />
+            </a>
           </div>
         </div>
       </section>
@@ -345,13 +532,13 @@ export default function Home() {
                     <div>
                       <p className="text-lg font-bold">Driver: Samuel O.</p>
                       <p className="text-sm opacity-90 flex items-center gap-1">
-                        <span>🚗 Toyota Camry</span>
+                        <span>Toyota Camry</span>
                       </p>
-                      <p className="text-xs opacity-75 mt-1">Arriving in 4 minutes • 1.2 km away</p>
+                      <p className="text-xs opacity-75 mt-1">Arriving in 4 minutes - 1.2 km away</p>
                     </div>
                     <div className="text-right text-xs">
                       <p className="opacity-75">Rating</p>
-                      <p className="font-bold text-lg">4.9★</p>
+                      <p className="font-bold text-lg">4.9 stars</p>
                     </div>
                   </div>
                 </div>
@@ -362,14 +549,14 @@ export default function Home() {
                       <p className="text-sm opacity-75">Rider Details</p>
                       <p className="text-lg font-bold">Chinedu M.</p>
                       <p className="text-xs opacity-90 mt-1 flex items-center gap-2">
-                        <span>📍 Lekki Phase 1</span>
-                        <span>→</span>
+                        <span>Location Lekki Phase 1</span>
+                        <span>to</span>
                         <span>VI</span>
                       </p>
                     </div>
                     <div className="text-right text-xs">
                       <p className="opacity-75">Passenger Rating</p>
-                      <p className="font-bold text-lg">4.8★</p>
+                      <p className="font-bold text-lg">4.8 stars</p>
                     </div>
                   </div>
                 </div>
@@ -511,7 +698,7 @@ export default function Home() {
                       <span className="text-2xl"><Users size={24} className="text-nova-green" /></span>
                       <div>
                         <p className="font-semibold text-nova-charcoal">{route.host}</p>
-                        <Badge variant="success" className="text-xs">⭐ {route.rating}</Badge>
+                        <Badge variant="success" className="text-xs">Rating: {route.rating}</Badge>
                       </div>
                     </div>
                   </div>
@@ -520,7 +707,7 @@ export default function Home() {
                   <div className="flex gap-2 items-center">
                     <MapPin size={18} className="text-nova-charcoal-700" />
                     <p className="text-sm text-gray-700">
-                      {route.from} → {route.to}
+                      {route.from} to {route.to}
                     </p>
                   </div>
                   <div className="flex gap-2 items-center">
@@ -572,7 +759,7 @@ export default function Home() {
                 <div className="pt-4 border-t border-nova-charcoal-lighter">
                   <p className="text-sm text-nova-charcoal">
                     <span className="font-semibold text-nova-green">
-                      {testimonial.savedAmount ? `Saved ₦${testimonial.savedAmount}` : `Earned ₦${testimonial.earnedAmount}`}
+                      {testimonial.savedAmount ? `Saved NGN ${testimonial.savedAmount}` : `Earned NGN ${testimonial.earnedAmount}`}
                     </span>
                     {' '}on {testimonial.trips} trips
                   </p>
@@ -679,6 +866,7 @@ export default function Home() {
     </div>
   );
 }
+
 
 
 

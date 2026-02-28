@@ -99,3 +99,4 @@ export default function Carousel({ items, renderItem, autoPlay = true, interval 
   );
 }
 
+

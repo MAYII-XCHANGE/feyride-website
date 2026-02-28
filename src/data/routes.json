@@ -9,7 +9,7 @@
       "host": "Chioma",
       "rating": 4.9,
       "Reviews": 48,
-      "avatar": "👩"
+      "avatar": "Rider"
     },
     {
       "id": 2,
@@ -20,7 +20,7 @@
       "host": "Ahmed",
       "rating": 4.8,
       "reviews": 52,
-      "avatar": "👨"
+      "avatar": "Rider"
     },
     {
       "id": 3,
@@ -31,7 +31,8 @@
       "host": "Tunde",
       "rating": 4.7,
       "reviews": 35,
-      "avatar": "👨"
+      "avatar": "Rider"
     }
   ]
 }
+

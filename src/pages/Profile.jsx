@@ -15,7 +15,7 @@ function ProfileContent() {
     setTimeout(() => navigate('/'), 1000);
   };
 
-  const userTypeLabel = user?.userType === 'host' ? '💼 Host' : '🛻 Rider';
+  const userTypeLabel = user?.userType === 'host' ? 'Host' : 'Rider';
   const isBadgeVerified = user?.reviews > 0;
 
   return (
@@ -60,7 +60,7 @@ function ProfileContent() {
                       ))}
                     </div>
                     <p className="text-sm font-semibold text-nova-charcoal">
-                      {user.rating.toFixed(1)}★ ({user.reviews} reviews)
+                      {user.rating.toFixed(1)} stars ({user.reviews} reviews)
                     </p>
                   </div>
                 )}
@@ -138,10 +138,10 @@ function ProfileContent() {
                 {/* Quick Links */}
                 <div className="grid grid-cols-2 gap-4">
                   <Button variant="outline" size="sm" className="w-full">
-                    📋 {user?.userType === 'host' ? 'My Routes' : 'My Rides'}
+                    List {user?.userType === 'host' ? 'My Routes' : 'My Rides'}
                   </Button>
                   <Button variant="outline" size="sm" className="w-full">
-                    💬 Messages
+                     Messages
                   </Button>
                 </div>
               </div>
@@ -160,3 +160,4 @@ export default function Profile() {
     </ProtectedRoute>
   );
 }
+

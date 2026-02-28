@@ -1,12 +1,23 @@
 import Button from '../components/Button';
 import Card from '../components/Card';
-import { CheckCircle, Search, CreditCard, Lock, Truck, Star, MapPin, Users } from 'lucide-react';
+import { CheckCircle, Search, CreditCard, Lock, Truck, Star, MapPin, Mail, XCircle } from 'lucide-react';
 import AppStoreBadge from '../components/AppStoreBadge';
 import GooglePlayBadge from '../components/GooglePlayBadge';
 import howItWorksData from '../data/howItWorks.json';
 
 export default function HowItWorks() {
   const { guest, host } = howItWorksData.howItWorks;
+  const iconMap = {
+    CHECK: CheckCircle,
+    SEARCH: Search,
+    PAY: CreditCard,
+    PIN: Lock,
+    MAP: MapPin,
+    STAR: Star,
+    MAIL: Mail,
+    CAR: Truck,
+    EARN: CreditCard,
+  };
 
   return (
     <div>
@@ -29,12 +40,14 @@ export default function HowItWorks() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {guest.map((item) => (
+            {guest.map((item) => {
+              const StepIcon = iconMap[item.icon] ?? CheckCircle;
+              return (
               <Card key={item.step}>
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0">
                     <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-nova-green text-nova-charcoal font-bold text-lg">
-                      {item.step}
+                      <StepIcon size={18} />
                     </div>
                   </div>
                   <div className="flex-1">
@@ -43,7 +56,7 @@ export default function HowItWorks() {
                   </div>
                 </div>
               </Card>
-            ))}
+            )})}
           </div>
         </div>
       </section>
@@ -57,12 +70,14 @@ export default function HowItWorks() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {host.map((item) => (
+            {host.map((item) => {
+              const StepIcon = iconMap[item.icon] ?? CheckCircle;
+              return (
               <Card key={item.step}>
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0">
                     <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-nova-green text-nova-charcoal font-bold text-lg">
-                      {item.step}
+                      <StepIcon size={18} />
                     </div>
                   </div>
                   <div className="flex-1">
@@ -71,7 +86,7 @@ export default function HowItWorks() {
                   </div>
                 </div>
               </Card>
-            ))}
+            )})}
           </div>
         </div>
       </section>
@@ -83,31 +98,37 @@ export default function HowItWorks() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card elevated>
-              <h3 className="heading-3 text-nova-charcoal mb-6">🚖 Traditional Ride-Hailing</h3>
+              <h3 className="heading-3 text-nova-charcoal mb-6">Traditional Ride-Hailing</h3>
               <ul className="space-y-3">
                 {[
-                  '❌ Expensive (60% commission)',
-                  '❌ Professional drivers only',
-                  '❌ No community connection',
-                  '❌ Higher fares = higher cost',
-                  '❌ Unpredictable pricing',
+                  'Expensive (60% commission)',
+                  'Professional drivers only',
+                  'Community connection',
+                  'Lower fares',
+                  'Predictable pricing',
                 ].map((item, idx) => (
-                  <li key={idx} className="text-nova-charcoal-700">{item}</li>
+                  <li key={idx} className="text-nova-charcoal-700 flex items-start gap-2">
+                    <XCircle size={16} className="text-red-500 mt-0.5 flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
                 ))}
               </ul>
             </Card>
 
             <Card elevated className="bg-nova-charcoal text-white">
-              <h3 className="heading-3 text-white mb-6">✓ FeyRide Cost-Sharing</h3>
+              <h3 className="heading-3 text-white mb-6">FeyRide Cost-Sharing</h3>
               <ul className="space-y-3">
                 {[
-                  '✓ Affordable (10-20% commission)',
-                  '✓ Regular commuters like you',
-                  '✓ Build lasting community',
-                  '✓ Lower fares = lower cost',
-                  '✓ Fixed, transparent pricing',
+                  'Affordable (10-20% commission)',
+                  'Regular commuters like you',
+                  'Build lasting community',
+                  'Lower fares and lower cost',
+                  'Fixed, transparent pricing',
                 ].map((item, idx) => (
-                  <li key={idx} className="text-nova-green font-semibold">{item}</li>
+                  <li key={idx} className="text-nova-green font-semibold flex items-start gap-2">
+                    <CheckCircle size={16} className="text-nova-green mt-0.5 flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
                 ))}
               </ul>
             </Card>
@@ -145,5 +166,6 @@ export default function HowItWorks() {
     </div>
   );
 }
+
 
 
