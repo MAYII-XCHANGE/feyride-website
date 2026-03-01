@@ -20,17 +20,17 @@ export default function Contact() {
               {
                 title: 'Support',
                 desc: '24/7 help for riders and hosts.',
-                contact: 'support@FeyRide.ng'
+                contact: 'support@feyride.co'
               },
               {
                 title: 'Partnerships',
                 desc: 'Work with FeyRide for corporate routes.',
-                contact: 'partners@FeyRide.ng'
+                contact: 'hello@feyride.co'
               },
               {
                 title: 'Press',
                 desc: 'Media and brand collaborations.',
-                contact: 'press@FeyRide.ng'
+                contact: 'hello@feyride.co'
               }
             ].map((item, idx) => (
               <Card key={idx}>

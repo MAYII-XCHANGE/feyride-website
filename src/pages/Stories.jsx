@@ -34,15 +34,15 @@ export default function Stories() {
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center mb-16">
             <div>
-              <p className="text-4xl font-bold text-nova-green">50K+</p>
+              <p className="text-4xl font-bold text-nova-green">1K+</p>
               <p className="text-gray-700 font-semibold">Active Users</p>
             </div>
             <div>
-              <p className="text-4xl font-bold text-nova-green">NGN 2B+</p>
+              <p className="text-4xl font-bold text-nova-green">NGN 3M</p>
               <p className="text-gray-700 font-semibold">Saved by Community</p>
             </div>
             <div>
-              <p className="text-4xl font-bold text-nova-green">500K+</p>
+              <p className="text-4xl font-bold text-nova-green">500+</p>
               <p className="text-gray-700 font-semibold">Completed Trips</p>
             </div>
             <div>

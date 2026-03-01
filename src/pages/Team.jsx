@@ -7,24 +7,6 @@ import headshot5 from '../assets/pexels-gustavo-fring-4895405.jpg';
 import headshot6 from '../assets/pexels-tim-samuel-5835591.jpg';
 import leadershipBackground from '../assets/websubs-iocenters-2673327_1280.jpg';
 
-const boardMembers = [
-  {
-    name: 'Princewill Adabanya',
-    role: 'Founder',
-    image: headshot1,
-  },
-  {
-    name: 'Ebenezer Ojo',
-    role: 'Flutter Developer',
-    image: headshot2,
-  },
-  {
-    name: 'Mayowa Oyeniran',
-    role: 'Application Developer',
-    image: headshot3,
-  },
-];
-
 const leadershipTeam = [
   {
     name: 'Princewill Adabanya',
@@ -33,12 +15,12 @@ const leadershipTeam = [
   },
   {
     name: 'Ebenezer Ojo',
-    role: 'Chief Operating Officer',
+    role: 'Chief Technology Officer',
     image: headshot5,
   },
   {
     name: 'Mayowa Oyeniran',
-    role: 'Chief Technology Officer',
+    role: 'Chief Operating Officer',
     image: headshot6,
   },
   {
@@ -106,15 +88,10 @@ export default function Team() {
         </div>
       </section>
 
-      <TeamGrid
-        title="Board of Directors"
-        members={boardMembers}
-      />
-
       <section className="section-padding bg-nova-charcoal-light">
         <div className="container-custom">
           <div className="mb-12 text-center">
-            <h2 className="heading-2 text-nova-charcoal">Leadership Team</h2>
+            <h2 className="heading-2 text-nova-charcoal">Our Team</h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">

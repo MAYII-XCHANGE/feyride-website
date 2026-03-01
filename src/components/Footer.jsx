@@ -68,8 +68,8 @@ export default function Footer() {
             <p className="text-gray-400 text-xs mt-1 inline-flex items-center gap-2">
               <Mail size={14} className="text-nova-green" />
               {t('footer.email').split(':')[0]}
-              <a href="mailto:support@feyride.com" className="hover:text-nova-green transition">
-                support@feyride.com
+              <a href="mailto:support@feyride.co" className="hover:text-nova-green transition">
+                support@feyride.co
               </a>
             </p>
             <div className="flex gap-3 mt-2">
