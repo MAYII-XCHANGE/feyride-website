@@ -1,12 +1,22 @@
 import Card from '../components/Card';
+import { Target, Eye } from 'lucide-react';
+import aboutBackground from '../assets/parveender-target-audience-7733218_1920.png';
 
 export default function About() {
   return (
     <div>
-      <section className="bg-gradient-to-br from-nova-green-light to-white py-16 sm:py-20">
+      <section
+        className="py-16 sm:py-20"
+        style={{
+          backgroundImage: `linear-gradient(rgba(9, 20, 28, 0.75), rgba(9, 20, 28, 0.35)), url(${aboutBackground})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
         <div className="container-custom text-center">
-          <h1 className="heading-1 text-nova-charcoal mb-6">About FeyRide</h1>
-          <p className="subheading text-nova-charcoal-700 max-w-2xl mx-auto">
+          <h1 className="heading-1 text-white mb-6">About FeyRide</h1>
+          <p className="subheading text-white/90 max-w-2xl mx-auto">
             We help commuters share rides, cut costs, and build trusted communities across cities.
           </p>
         </div>
@@ -14,19 +24,35 @@ export default function About() {
 
       <section className="section-padding bg-white">
         <div className="container-custom">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <Card elevated>
-              <h2 className="heading-4 text-nova-charcoal mb-3">Our Mission</h2>
-              <p className="text-nova-charcoal-700">
-                Make daily transportation affordable, safe, and social by matching verified riders and hosts.
-              </p>
-            </Card>
-            <Card elevated>
-              <h2 className="heading-4 text-nova-charcoal mb-3">Our Vision</h2>
-              <p className="text-nova-charcoal-700">
-                Build the most trusted cost-sharing network for commuters in Africa.
-              </p>
-            </Card>
+          <div className="max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card elevated className="relative overflow-hidden border border-nova-green/20">
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="inline-flex items-center justify-center h-10 w-10 rounded-full bg-nova-green/15 text-nova-green">
+                    <Target size={18} />
+                  </span>
+                  <div className="h-1 w-16 bg-nova-green"></div>
+                </div>
+                <p className="text-sm uppercase tracking-[0.35em] text-nova-green mb-3">Our Mission</p>
+                <h2 className="heading-4 text-nova-charcoal mb-3">Redefining value in everyday travel.</h2>
+                <p className="text-nova-charcoal-700">
+                  To provide safe, affordable, and technology-driven transportation solutions that connect people seamlessly to their daily destinations while enhancing convenience, trust, and community.
+                </p>
+              </Card>
+              <Card elevated className="relative overflow-hidden border border-nova-green/20">
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="inline-flex items-center justify-center h-10 w-10 rounded-full bg-nova-green/15 text-nova-green">
+                    <Eye size={18} />
+                  </span>
+                  <div className="h-1 w-16 bg-nova-green"></div>
+                </div>
+                <p className="text-sm uppercase tracking-[0.35em] text-nova-green mb-3">Our Vision</p>
+                <h2 className="heading-4 text-nova-charcoal mb-3">Africa's most trusted ride-sharing network.</h2>
+                <p className="text-nova-charcoal-700">
+                  Building the most trusted cost-sharing network for daily commuters in Africa.
+                </p>
+              </Card>
+            </div>
           </div>
         </div>
       </section>

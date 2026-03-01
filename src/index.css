@@ -306,6 +306,18 @@ a:hover {
     animation: typewriterRtl 2.4s steps(60, end) forwards;
   }
 
+  @media (max-width: 640px) {
+    .typewriter-rtl {
+      display: block;
+      overflow: visible;
+      white-space: normal;
+      direction: ltr;
+      max-width: none !important;
+      width: 100%;
+      animation: none;
+    }
+  }
+
   .card {
     @apply bg-white rounded-xl border border-nova-charcoal-lighter shadow-md hover:shadow-xl hover:border-nova-green/40 transition-all duration-300 transform hover:scale-105;
   }

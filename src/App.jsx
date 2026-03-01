@@ -3,6 +3,7 @@ import { Toaster } from 'react-hot-toast';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ChatWidget from './components/ChatWidget';
+import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import HowItWorks from './pages/HowItWorks';
 import Safety from './pages/Safety';
@@ -30,6 +31,7 @@ export default function App() {
     <Router>
       <Toaster position="top-right" reverseOrder={false} />
       <div className="flex flex-col min-h-screen bg-white">
+        <ScrollToTop />
         <Header />
         <main className="flex-grow">
           <Routes>

@@ -28,7 +28,7 @@ const baseEn = {
       title1: 'Find Rides.',
       title2: 'Share Costs.',
       title3: 'Build Community.',
-      description: 'Connect with verified commuters on your exact route. Reduce costs, travel safer, and make daily connections.',
+      //description: 'Affordable rides, Safer trips, stay connected.',
       cta: 'Find a Ride',
       features: [
         { title: 'Smart Route Matching', desc: 'AI-powered matching finds your perfect ride' },
@@ -43,7 +43,7 @@ const baseEn = {
       title1: 'Offer Rides.',
       title2: 'Earn Income.',
       title3: 'Build Your Business.',
-      description: 'Turn your daily commute into income. Earn NGN 500-NGN 2000 per trip while helping others save on costs.',
+      //description: 'Turn your daily commute into income. Earn NGN 500-NGN 2000 per trip while helping others save on costs.',
       cta: 'Offer a Ride',
       features: [
         { title: 'Easy Income', desc: 'Earn NGN 500-NGN 2000 per trip instantly' },
@@ -135,8 +135,8 @@ const baseEn = {
   footer: {
     brand: 'Share rides. Share costs. Share good vibes.',
     address: 'Lagos, Nigeria',
-    call: 'Call: 0700 0700 080',
-    email: 'Email: support@feyride.com',
+    call: '',
+    email: '',
     forGuests: 'For Guests',
     forHosts: 'For Hosts',
     company: 'Company',

@@ -3,6 +3,7 @@ import AppStoreBadge from "./AppStoreBadge";
 import GooglePlayBadge from "./GooglePlayBadge";
 import logo from "../assets/Feyride Logo.svg";
 import { motion } from 'framer-motion';
+import { MapPin, Phone, Mail } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 
@@ -37,9 +38,40 @@ export default function Footer() {
               <img src={logo} alt="FeyRide Logo" className="h-10 w-auto" />
             </Link>
             <p className="text-gray-300 text-sm mb-2">{t('footer.brand')}</p>
-            <p className="text-gray-400 text-xs">{t('footer.address')}</p>
-            <p className="text-gray-400 text-xs mt-1">{t('footer.call').split(':')[0]}: <a href="tel:07000700080" className="hover:text-nova-green transition">0700 0700 080</a></p>
-            <p className="text-gray-400 text-xs mt-1">{t('footer.email').split(':')[0]}: <a href="mailto:support@feyride.com" className="hover:text-nova-green transition">support@feyride.com</a></p>
+            <p className="text-gray-400 text-xs inline-flex items-center gap-2">
+              <MapPin size={14} className="text-nova-green" />
+              {t('footer.address')}
+            </p>
+            <p className="text-gray-400 text-xs mt-1 inline-flex items-center gap-2">
+              <Phone size={14} className="text-nova-green" />
+              {t('footer.call').split(':')[0]}
+              <span className="inline-flex items-center gap-2">
+                <a
+                  href="https://wa.me/2349059773535"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-nova-green transition"
+                >
+                  +234 905 977 3535
+                </a>
+                <span className="text-gray-500">/</span>
+                <a
+                  href="https://wa.me/2348108514620"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-nova-green transition"
+                >
+                  +234 810 851 4620
+                </a>
+              </span>
+            </p>
+            <p className="text-gray-400 text-xs mt-1 inline-flex items-center gap-2">
+              <Mail size={14} className="text-nova-green" />
+              {t('footer.email').split(':')[0]}
+              <a href="mailto:support@feyride.com" className="hover:text-nova-green transition">
+                support@feyride.com
+              </a>
+            </p>
             <div className="flex gap-3 mt-2">
               <MotionA
                 whileHover={{ scale: 1.15, color: '#00C48C' }}

@@ -46,7 +46,10 @@ export default function Stories() {
               <p className="text-gray-700 font-semibold">Completed Trips</p>
             </div>
             <div>
-              <p className="text-4xl font-bold text-nova-green">4.8 stars</p>
+              <p className="text-4xl font-bold text-nova-green inline-flex items-center gap-2">
+                4.8
+                <Star size={22} className="text-nova-green fill-nova-green" />
+              </p>
               <p className="text-gray-700 font-semibold">Average Rating</p>
             </div>
           </div>

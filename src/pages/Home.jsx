@@ -89,7 +89,7 @@ export default function Home() {
   const guestContent = {
     badge: t('home.guest.badge'),
     title: renderHeroTitle('home.guest'),
-    description: t('home.guest.description'),
+    //description: t('home.guest.description'),
     cta: t('home.guest.cta'),
     features: [
       { icon: Search, title: t('home.guest.features.0.title'), desc: t('home.guest.features.0.desc') },
@@ -100,14 +100,14 @@ export default function Home() {
     stats: [
       { number: '50K+', label: t('home.guest.stats.0') },
       { number: 'NGN 2B+', label: t('home.guest.stats.1') },
-      { number: '4.8 stars', label: t('home.guest.stats.2') },
+      { number: '4.8', label: t('home.guest.stats.2') },
     ],
   };
 
   const hostContent = {
     badge: t('home.host.badge'),
     title: renderHeroTitle('home.host'),
-    description: t('home.host.description'),
+    //description: t('home.host.description'),
     cta: t('home.host.cta'),
     features: [
       { icon: TrendingUp, title: t('home.host.features.0.title'), desc: t('home.host.features.0.desc') },
@@ -118,7 +118,7 @@ export default function Home() {
     stats: [
       { number: '50K+', label: t('home.host.stats.0') },
       { number: 'NGN 2B+', label: t('home.host.stats.1') },
-      { number: '4.8 stars', label: t('home.host.stats.2') },
+      { number: '4.8', label: t('home.host.stats.2') },
     ],
     visual: 'Host',
   };
@@ -170,7 +170,7 @@ export default function Home() {
                 onClick={() => setUserType('guest')}
                 className="rounded-lg"
               >
-                Guest
+                Passenger
               </Button>
               <Button
                 variant={userType === 'host' ? 'primary' : 'ghost'}
@@ -178,7 +178,7 @@ export default function Home() {
                 onClick={() => setUserType('host')}
                 className="rounded-lg"
               >
-                Host
+                Rider
               </Button>
             </div>
 
@@ -208,7 +208,14 @@ export default function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {currentContent.stats.map((stat, index) => (
                 <Card key={index} className="text-center">
-                  <p className="text-2xl font-bold text-nova-green">{stat.number}</p>
+                  <p className="text-2xl font-bold text-nova-green">
+                    {stat.number}
+                    {stat.label === t('home.guest.stats.2') || stat.label === t('home.host.stats.2') ? (
+                      <span className="inline-flex items-center ml-2 text-nova-green">
+                        <Star size={18} className="fill-nova-green text-nova-green" />
+                      </span>
+                    ) : null}
+                  </p>
                   <p className="text-sm text-nova-charcoal-700">{stat.label}</p>
                 </Card>
               ))}
@@ -653,7 +660,16 @@ export default function Home() {
                       <span className="text-2xl"><Users size={24} className="text-nova-green" /></span>
                       <div>
                         <p className="font-semibold text-nova-charcoal">{route.host}</p>
-                        <Badge variant="success" className="text-xs">Rating: {route.rating}</Badge>
+                        <Badge variant="success" className="text-xs inline-flex items-center gap-1">
+                          <span className="sr-only">Rating: {route.rating}</span>
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              size={12}
+                              className={i < Math.round(route.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-yellow-400/40'}
+                            />
+                          ))}
+                        </Badge>
                       </div>
                     </div>
                   </div>

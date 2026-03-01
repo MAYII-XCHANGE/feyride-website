@@ -61,6 +61,7 @@ export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState(initialMessages);
   const [isTyping, setIsTyping] = useState(false);
+  const [isFooterVisible, setIsFooterVisible] = useState(false);
   const panelRef = useRef(null);
   const messagesEndRef = useRef(null);
 
@@ -101,6 +102,23 @@ export default function ChatWidget() {
       return () => document.removeEventListener('keydown', handleEscape);
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    const footerElement = document.querySelector('footer');
+    if (!footerElement || !('IntersectionObserver' in window)) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsFooterVisible(entry.isIntersecting);
+      },
+      { threshold: 0.2 },
+    );
+
+    observer.observe(footerElement);
+    return () => observer.disconnect();
+  }, []);
 
   const handleQuickQuestion = (question) => {
     const userMessage = {
@@ -262,7 +280,11 @@ export default function ChatWidget() {
         type="button"
         data-support-launcher
         onClick={() => setIsOpen((prev) => !prev)}
-        className="fixed z-50 right-4 bottom-4 h-12 w-12 md:h-14 md:w-auto md:right-6 md:bottom-6 rounded-full bg-nova-charcoal text-white px-0 md:px-5 inline-flex items-center justify-center gap-2 shadow-[0_12px_30px_rgba(0,0,0,0.22)] hover:bg-black transition-colors"
+        className={`fixed z-50 right-4 bottom-4 h-12 w-12 md:h-14 md:w-auto md:right-6 md:bottom-6 rounded-full px-0 md:px-5 inline-flex items-center justify-center gap-2 shadow-[0_12px_30px_rgba(0,0,0,0.22)] transition-colors ${
+          isFooterVisible
+            ? 'bg-primary-500 text-nova-charcoal hover:bg-primary-500'
+            : 'bg-nova-charcoal text-white hover:bg-black'
+        }`}
         aria-expanded={isOpen}
         aria-label="Open support chat"
       >
