@@ -98,8 +98,8 @@ export default function Home() {
       { icon: Star, title: t('home.guest.features.3.title'), desc: t('home.guest.features.3.desc') },
     ],
     stats: [
-      { number: '50K+', label: t('home.guest.stats.0') },
-      { number: 'NGN 2B+', label: t('home.guest.stats.1') },
+      { number: '500+', label: t('home.guest.stats.0') },
+      { number: 'NGN 5M+', label: t('home.guest.stats.1') },
       { number: '4.8', label: t('home.guest.stats.2') },
     ],
   };
@@ -116,8 +116,8 @@ export default function Home() {
       { icon: CreditCard, title: t('home.host.features.3.title'), desc: t('home.host.features.3.desc') },
     ],
     stats: [
-      { number: '50K+', label: t('home.host.stats.0') },
-      { number: 'NGN 2B+', label: t('home.host.stats.1') },
+      { number: '500+', label: t('home.host.stats.0') },
+      { number: 'NGN 5M+', label: t('home.host.stats.1') },
       { number: '4.8', label: t('home.host.stats.2') },
     ],
     visual: 'Host',
