@@ -90,7 +90,7 @@ const baseEn = {
       },
     },
     download: {
-      title: "It's easier in the apps",
+      title: "It's easier on the apps",
       0: { title: 'Download the FeyRide Guest app', desc: 'Scan to download' },
       1: { title: 'Download the FeyRide Host app', desc: 'Scan to download' },
     },

@@ -19,6 +19,7 @@ import Sustainability from './pages/Sustainability';
 import Contact from './pages/Contact';
 import Blog from './pages/Blog';
 import Team from './pages/Team';
+import ComingSoon from './pages/ComingSoon';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import Login from './pages/Login';
@@ -50,6 +51,7 @@ export default function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/team" element={<Team />} />
+            <Route path="/coming-soon" element={<ComingSoon />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/login" element={<Login />} />

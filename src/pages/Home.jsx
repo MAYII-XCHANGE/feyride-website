@@ -43,7 +43,8 @@ export default function Home() {
     'headshot-3': headshot3,
     'headshot-4': headshot4,
   };
-  const appInfoPageUrl = 'https://www.uber.com/global/en/ride/app/?referrer=singular_click_id%3Dd250e28e-49ff-4e83-a531-5f9517c8dd54';
+  const appInfoPageUrl =
+    typeof window !== 'undefined' ? `${window.location.origin}/coming-soon` : '/coming-soon';
   const appStoreLinks = {
     ios: 'https://apps.apple.com/ng/app/FeyRide-rides/id1234567890',
     android: 'https://play.google.com/store/apps/details?id=com.FeyRiderider.app',
@@ -153,7 +154,7 @@ export default function Home() {
     <div className="font-light">
       {/* Hero Section */}
       <section
-        className="hero-section py-16 sm:py-20"
+        className="hero-section py-16 sm:py-20 relative overflow-hidden"
         style={{
           backgroundImage: `url(${heroBackgroundImage})`,
           backgroundSize: 'cover',
@@ -161,6 +162,95 @@ export default function Home() {
           backgroundRepeat: 'no-repeat',
         }}
       >
+        {/* Animated Route Line */}
+        <svg
+          className="absolute inset-0 w-full h-full"
+          style={{
+            pointerEvents: 'none',
+            zIndex: 5,
+          }}
+          preserveAspectRatio="none"
+          viewBox="0 0 1000 400"
+        >
+          <defs>
+            <style>{`
+              @keyframes tracePath {
+                0% {
+                  stroke-dashoffset: 500;
+                  opacity: 0;
+                }
+                20% {
+                  opacity: 1;
+                }
+                80% {
+                  opacity: 1;
+                }
+                100% {
+                  stroke-dashoffset: 0;
+                  opacity: 0.3;
+                }
+              }
+              .route-line {
+                fill: none;
+                stroke: url(#lineGradient);
+                stroke-width: 2;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+                stroke-dasharray: 500;
+                animation: tracePath 3s ease-in-out infinite;
+              }
+            `}</style>
+            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#10B981" stopOpacity="0" />
+              <stop offset="50%" stopColor="#10B981" stopOpacity="1" />
+              <stop offset="100%" stopColor="#10B981" stopOpacity="0.3" />
+            </linearGradient>
+          </defs>
+          <path
+            className="route-line"
+            d="M 50,350 Q 250,100 450,320 T 950,200"
+          />
+        </svg>
+
+        {/* Signature Visual Element - Abstract City Route Silhouette */}
+        <svg
+          className="absolute top-0 right-0 w-96 h-full"
+          style={{
+            pointerEvents: 'none',
+            zIndex: 3,
+            opacity: 0.08,
+          }}
+          viewBox="0 0 300 400"
+          preserveAspectRatio="xMidYMid slice"
+        >
+          <defs>
+            <linearGradient id="cityGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#10B981" stopOpacity="0.5" />
+              <stop offset="100%" stopColor="#10B981" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          {/* City skyline with route elements */}
+          <rect x="10" y="280" width="30" height="120" fill="url(#cityGradient)" />
+          <rect x="50" y="240" width="25" height="160" fill="url(#cityGradient)" />
+          <polygon points="50,240 65,200 80,240" fill="url(#cityGradient)" />
+          <rect x="95" y="260" width="35" height="140" fill="url(#cityGradient)" />
+          <rect x="145" y="220" width="28" height="180" fill="url(#cityGradient)" />
+          <polygon points="145,220 159,180 173,220" fill="url(#cityGradient)" />
+          <rect x="190" y="250" width="32" height="150" fill="url(#cityGradient)" />
+          <rect x="240" y="270" width="25" height="130" fill="url(#cityGradient)" />
+          
+          {/* Abstract route lines connecting through the cityscape */}
+          <path
+            d="M 20,320 Q 80,250 150,280 T 280,300"
+            fill="none"
+            stroke="url(#cityGradient)"
+            strokeWidth="2"
+            opacity="0.6"
+          />
+          <circle cx="20" cy="320" r="3" fill="#10B981" opacity="0.7" />
+          <circle cx="150" cy="280" r="3" fill="#10B981" opacity="0.7" />
+        </svg>
+
         <div className="container-custom relative z-10">
           <div className="max-w-5xl mx-auto text-center">
             <div className="inline-flex p-1 rounded-xl bg-white border border-nova-charcoal-lighter shadow-sm mb-8">
