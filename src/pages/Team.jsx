@@ -1,37 +1,25 @@
 import Card from '../components/Card';
-import headshot1 from '../assets/istockphoto-1138561236-612x612.jpg';
-import headshot2 from '../assets/istockphoto-2187993440-612x612.jpg';
-import headshot3 from '../assets/liam-pozz-yjmJBkKn26k-unsplash.jpg';
-import headshot4 from '../assets/pexels-cottonbro-4606350.jpg';
-import headshot5 from '../assets/pexels-gustavo-fring-4895405.jpg';
-import headshot6 from '../assets/pexels-tim-samuel-5835591.jpg';
+import headshot4 from '../assets/istockphoto-2187993440-612x612.jpg';
+import headshot1 from '../assets/priAda.jpg';
+import headshot2 from '../assets/ebenOjo.jpg';
+import headshot3 from '../assets/mayOye.jpg';
 import leadershipBackground from '../assets/websubs-iocenters-2673327_1280.jpg';
 
 const leadershipTeam = [
   {
     name: 'Princewill Adabanya',
     role: 'Chief Executive Officer',
-    image: headshot4,
+    image: headshot1,
   },
   {
     name: 'Ebenezer Ojo',
     role: 'Chief Technology Officer',
-    image: headshot5,
+    image: headshot2,
   },
   {
     name: 'Mayowa Oyeniran',
     role: 'Chief Operating Officer',
-    image: headshot6,
-  },
-  {
-    name: 'Nzubechukwu Anyakwu',
-    role: 'Chief Product Officer',
-    image: headshot2,
-  },
-  {
-    name: 'Chidiebere Ogbonna',
-    role: 'Head of Customer Experience & Marketing Strategist',
-    image: headshot5,
+    image: headshot3,
   },
 ];
 
@@ -47,14 +35,13 @@ function TeamGrid({ title, subtitle, members }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {members.map((member) => (
             <Card key={member.name} elevated className="overflow-hidden group">
-              <div className="relative h-72 w-full overflow-hidden">
+              <div className="h-72 w-full overflow-hidden bg-nova-charcoal-light">
                 <img
                   src={member.image}
                   alt={`${member.name} headshot`}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-105"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-nova-charcoal/80 via-nova-charcoal/20 to-transparent"></div>
               </div>
               <div className="p-6 text-center">
                 <h3 className="font-display text-xl font-bold text-nova-charcoal mb-2">{member.name}</h3>
@@ -97,14 +84,13 @@ export default function Team() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {leadershipTeam.map((member) => (
               <Card key={member.name} elevated className="overflow-hidden group">
-                <div className="relative h-60 w-full overflow-hidden">
+                <div className="h-60 w-full overflow-hidden bg-nova-charcoal-light">
                   <img
                     src={member.image}
                     alt={`${member.name} headshot`}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-nova-charcoal/70 via-nova-charcoal/10 to-transparent"></div>
                 </div>
                 <div className="p-5 text-center">
                   <h3 className="font-display text-lg font-bold text-nova-charcoal mb-2">{member.name}</h3>
