@@ -470,6 +470,7 @@ export default function Home() {
                 src={quickStartContent.image}
                 alt={quickStartContent.imageAlt}
                 className="w-full h-[420px] object-cover rounded-2xl border border-nova-green/20 shadow-lg"
+                loading="lazy"
               />
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-nova-charcoal/30 via-transparent to-transparent"></div>
             </div>
@@ -717,6 +718,7 @@ export default function Home() {
                       src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(appInfoPageUrl)}`}
                       alt={`${item.title} QR code`}
                       className="w-28 h-28 sm:w-32 sm:h-32"
+                      loading="lazy"
                     />
 
                     <div className="flex-1 min-w-0">

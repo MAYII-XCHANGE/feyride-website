@@ -35,7 +35,7 @@ export default function Footer() {
             transition={{ duration: 0.9, delay: 0.1, ease: 'easeOut' }}
           >
             <Link to="/" className="flex items-center gap-2 mb-2">
-              <img src={logo} alt="FeyRide Logo" className="h-10 w-auto" />
+              <img src={logo} alt="FeyRide Logo" className="h-10 w-auto" loading="lazy" />
             </Link>
             <p className="text-gray-300 text-sm mb-2">{t('footer.brand')}</p>
             <p className="text-gray-400 text-xs inline-flex items-center gap-2">
