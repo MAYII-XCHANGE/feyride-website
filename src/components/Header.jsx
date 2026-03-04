@@ -4,6 +4,7 @@ import { ChevronDown, Globe, Menu, X } from 'lucide-react';
 import Button from './Button';
 import logo from '../assets/Feyride Logo.svg';
 import { useLanguage } from '../context/LanguageContext';
+import { redirectToStoreByDevice } from '../utils/appStoreRedirect';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,28 +35,9 @@ export default function Header() {
     { code: 'en', label: 'English' },
   ];
 
-  // App store links
-  const appStoreLinks = {
-    ios: 'https://apps.apple.com/ng/app/FeyRide-rides/id1234567890',
-    android: 'https://play.google.com/store/apps/details?id=com.FeyRiderider.app',
-  };
-
-  // Detect device and redirect to appropriate store
   const handleAppDownload = (e) => {
     e.preventDefault();
-    
-    const userAgent = navigator.userAgent.toLowerCase();
-    const isIOS = /iphone|ipad|ipod/.test(userAgent);
-    const isAndroid = /android/.test(userAgent);
-
-    if (isIOS) {
-      window.location.href = appStoreLinks.ios;
-    } else if (isAndroid) {
-      window.location.href = appStoreLinks.android;
-    } else {
-      // Desktop - show both options or default to Google Play
-      window.location.href = appStoreLinks.android;
-    }
+    redirectToStoreByDevice();
   };
 
   useEffect(() => {

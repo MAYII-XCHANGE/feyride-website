@@ -6,17 +6,27 @@ const quickQuestions = [
   {
     label: 'How do I find a ride?',
     response:
-      "Open the app, choose your pickup and destination, then book from available hosts on your route.",
+      "• Open the app.\n• Choose your pickup and destination.\n• Book from available riders on your route.",
   },
   {
-    label: 'How do I become a host?',
+    label: 'How do I become a Rider?',
     response:
-      'Register as a host, complete verification, post your route, and start accepting ride requests.',
+      '• Register as a rider.\n• Complete verification.\n• Start posting routes.',
   },
   {
     label: 'How do payouts work?',
     response:
-      'Host payouts are processed securely to your registered bank account based on completed trips.',
+      '• Complete trips as a rider.\n• Payouts are processed securely.\n• Funds are sent to your wallet.',
+  },
+  {
+    label: 'How do I report an issue?',
+    response:
+      '• Use the in-app support chat.\n• Provide details of the issue.\n• Our team will assist you promptly.',
+  },
+  {
+    label: 'How do I download the App?',
+    response:
+      '• Visit the App Store or Google Play Store.\n• Search for "FeyRide".\n• Download and install the app.',
   },
 ];
 
@@ -24,12 +34,7 @@ const initialMessages = [
   {
     id: 1,
     sender: 'bot',
-    text: 'Hi there. Welcome to FeyRide Support.',
-  },
-  {
-    id: 2,
-    sender: 'bot',
-    text: 'How can we help you today?',
+    text: 'Hi there, Welcome to FeyRide Support. How can we help you today?',
   },
 ];
 
@@ -196,7 +201,7 @@ export default function ChatWidget() {
                   className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[85%] rounded-2xl px-3 py-2.5 text-sm leading-relaxed ${
+                    className={`max-w-[85%] rounded-2xl px-3 py-2.5 text-sm leading-relaxed whitespace-pre-line ${
                       message.sender === 'user'
                         ? 'bg-nova-green text-nova-charcoal rounded-br-md'
                         : 'bg-white text-nova-charcoal rounded-bl-md border border-nova-charcoal-lighter'

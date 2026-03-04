@@ -19,6 +19,7 @@ import headshot2 from '../assets/istockphoto-2187993440-612x612.jpg';
 import headshot3 from '../assets/liam-pozz-yjmJBkKn26k-unsplash.jpg';
 import headshot4 from '../assets/pexels-cottonbro-4606350.jpg';
 import trackingBackground from '../assets/stevepb-map-2789052_1280.jpg';
+import { appStoreLinks, redirectToStoreByDevice } from '../utils/appStoreRedirect';
 
 export default function Home() {
 
@@ -45,27 +46,8 @@ export default function Home() {
   };
   const appInfoPageUrl =
     typeof window !== 'undefined' ? `${window.location.origin}/coming-soon` : '/coming-soon';
-  const appStoreLinks = {
-    ios: 'https://apps.apple.com/ng/app/FeyRide-rides/id1234567890',
-    android: 'https://play.google.com/store/apps/details?id=com.FeyRiderider.app',
-  };
-
   const handleAppDownload = () => {
-    const userAgent = navigator.userAgent.toLowerCase();
-    const isIOS = /iphone|ipad|ipod/.test(userAgent);
-    const isAndroid = /android/.test(userAgent);
-
-    if (isIOS) {
-      window.location.href = appStoreLinks.ios;
-      return;
-    }
-
-    if (isAndroid) {
-      window.location.href = appStoreLinks.android;
-      return;
-    }
-
-    window.location.href = appStoreLinks.android;
+    redirectToStoreByDevice();
   };
 
   // All translation keys must be defined in LanguageContext translations

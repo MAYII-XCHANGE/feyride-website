@@ -1,7 +1,7 @@
 import Card from '../components/Card';
 import Button from '../components/Button';
-import { Link } from 'react-router-dom';
 import { CreditCard, DollarSign, TrendingDown } from 'lucide-react';
+import { redirectToStoreByDevice } from '../utils/appStoreRedirect';
 
 export default function Pricing() {
   return (
@@ -83,9 +83,9 @@ export default function Pricing() {
           <p className="subheading text-nova-charcoal-700 mb-8">
             Create an account and start booking today.
           </p>
-          <Link to="/register">
-            <Button variant="primary" size="lg">Get Started</Button>
-          </Link>
+          <Button variant="primary" size="lg" onClick={redirectToStoreByDevice}>
+            Get Started
+          </Button>
         </div>
       </section>
     </div>
