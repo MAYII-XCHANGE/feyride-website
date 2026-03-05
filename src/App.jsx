@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { Toaster } from 'react-hot-toast';
 import Header from './components/Header';
@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import ChatWidget from './components/ChatWidget';
 import ScrollToTop from './components/ScrollToTop';
 import PageTransition from './components/PageTransition';
+import usePreloadImages from './hooks/usePreloadImages';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import './App.css';
@@ -33,6 +34,8 @@ const Login = lazy(() => import('./pages/Login'));
 const Profile = lazy(() => import('./pages/Profile'));
 
 export default function App() {
+  usePreloadImages();
+
   return (
     <Router>
       <Toaster position="top-right" reverseOrder={false} />
