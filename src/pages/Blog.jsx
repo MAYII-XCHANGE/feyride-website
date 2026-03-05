@@ -1,4 +1,5 @@
 import Card from '../components/Card';
+import blogHeroBg from '../assets/pexels-yelenaodintsova-10556711.jpg';
 
 export default function Blog() {
   const posts = [
@@ -21,8 +22,17 @@ export default function Blog() {
 
   return (
     <div>
-      <section className="bg-gradient-to-br from-nova-green-light to-white py-16 sm:py-20">
-        <div className="container-custom text-center">
+      <section className="relative overflow-hidden py-16 sm:py-20">
+        <img
+          src={blogHeroBg}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
+          aria-hidden="true"
+        />
+        <div className="absolute inset-0 bg-white/70" />
+        <div className="container-custom text-center relative z-10">
           <h1 className="heading-1 text-nova-charcoal mb-6">FeyRide Blog</h1>
           <p className="subheading text-nova-charcoal-700 max-w-2xl mx-auto">
             Insights, updates, and commuter stories from the FeyRide community.

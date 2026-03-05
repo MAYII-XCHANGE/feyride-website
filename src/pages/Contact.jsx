@@ -1,13 +1,27 @@
 import Card from '../components/Card';
 import Button from '../components/Button';
+import contactHeroBg from '../assets/pexels-mikhail-nilov-7682340.jpg';
 
 export default function Contact() {
+  const handleOpenSupportChat = () => {
+    window.dispatchEvent(new Event('open-support-chat'));
+  };
+
   return (
     <div>
-      <section className="bg-gradient-to-br from-nova-green-light to-white py-16 sm:py-20">
+      <section className="relative overflow-hidden py-16 sm:py-20">
+        <img
+          src={contactHeroBg}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
+          aria-hidden="true"
+        />
+        <div className="absolute inset-0 bg-white/70" />
         <div className="container-custom text-center">
-          <h1 className="heading-1 text-nova-charcoal mb-6">Contact Us</h1>
-          <p className="subheading text-nova-charcoal-700 max-w-2xl mx-auto">
+          <h1 className="heading-1 text-nova-charcoal mb-6 relative z-10">Contact Us</h1>
+          <p className="subheading text-nova-charcoal-700 max-w-2xl mx-auto relative z-10">
             Reach out to the FeyRide team for support, partnerships, or press inquiries.
           </p>
         </div>
@@ -51,7 +65,9 @@ export default function Contact() {
           <p className="subheading text-nova-charcoal-700 mb-8">
             Our in-app support team responds within minutes.
           </p>
-          <Button variant="primary" size="lg">Open Support Chat</Button>
+          <Button variant="primary" size="lg" onClick={handleOpenSupportChat}>
+            Open Support Chat
+          </Button>
         </div>
       </section>
     </div>

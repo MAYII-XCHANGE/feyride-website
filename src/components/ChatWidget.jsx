@@ -125,6 +125,15 @@ export default function ChatWidget() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const handleOpenSupportChat = () => {
+      setIsOpen(true);
+    };
+
+    window.addEventListener('open-support-chat', handleOpenSupportChat);
+    return () => window.removeEventListener('open-support-chat', handleOpenSupportChat);
+  }, []);
+
   const handleQuickQuestion = (question) => {
     const userMessage = {
       id: Date.now(),

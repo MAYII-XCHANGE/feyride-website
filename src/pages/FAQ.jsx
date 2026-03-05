@@ -2,13 +2,23 @@ import { Link } from 'react-router-dom';
 import Accordion from '../components/Accordion';
 import Button from '../components/Button';
 import faqsData from '../data/faqs.json';
+import faqHeroBg from '../assets/pexels-leeloothefirst-5428829.jpg';
 
 export default function FAQ() {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-nova-green-light to-white py-16 sm:py-20">
-        <div className="container-custom text-center">
+      <section className="relative overflow-hidden py-16 sm:py-20">
+        <img
+          src={faqHeroBg}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
+          aria-hidden="true"
+        />
+        <div className="absolute inset-0 bg-white/70" />
+        <div className="container-custom text-center relative z-10">
           <h1 className="heading-1 text-nova-charcoal mb-6">Frequently Asked Questions</h1>
           <p className="subheading text-gray-700 max-w-2xl mx-auto">
             Got questions? We've got answers. Here's everything you need to know about FeyRide.
