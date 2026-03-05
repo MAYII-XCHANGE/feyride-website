@@ -4,7 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ========== ANIMATIONS - Uber Style ========== */
+/* ========== ANIMATIONS ========== */
 @keyframes slideInUp {
   from {
     opacity: 0;

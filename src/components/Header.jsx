@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { ChevronDown, Globe, Menu, X } from 'lucide-react';
 import Button from './Button';
@@ -14,11 +14,13 @@ export default function Header() {
   const languageMenuMobileRef = useRef(null);
   const languageMenuDesktopRef = useRef(null);
   const { language, setLanguage, t } = useLanguage();
+  const location = useLocation();
 
   const navLinks = [
-    { label: t('howItWorks'), href: '/how-it-works' },
-    { label: t('contactUs'), href: '/contact' },
-    { label: t('faq'), href: '/faq' },
+    { label: 'Home', href: '/', end: true },
+    { label: t('howItWorks'), href: '/how-it-works', end: false },
+    { label: t('contactUs'), href: '/contact', end: false },
+    { label: t('faq'), href: '/faq', end: false },
   ];
 
   const aboutLinks = [
@@ -34,6 +36,11 @@ export default function Header() {
   const languageOptions = [
     { code: 'en', label: 'English' },
   ];
+  const navBaseClass = 'py-2 md:py-1.5 px-0 md:px-1 border-b-[3px] border-transparent transition-all duration-300 font-medium';
+
+  const isAboutActive = aboutLinks.some(
+    (link) => location.pathname === link.href || location.pathname.startsWith(`${link.href}/`),
+  );
 
   const handleAppDownload = (e) => {
     e.preventDefault();
@@ -90,25 +97,36 @@ export default function Header() {
 
         <div
           className={`absolute inset-x-0 top-full z-20 px-6 py-5 bg-nova-charcoal border-b border-nova-green/50 shadow-md transition-all duration-300 ease-in-out md:static md:z-auto md:p-0 md:bg-transparent md:border-0 md:shadow-none md:flex md:items-center md:gap-8 md:translate-x-0 md:opacity-100 ${
-            isOpen ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0 pointer-events-none md:pointer-events-auto'
+            isOpen ? 'translate-x-0 opacity-100 animate-slideInDown' : '-translate-x-full opacity-0 pointer-events-none md:pointer-events-auto'
           }`}
         >
           <nav className="flex flex-col md:flex-row md:items-center md:gap-8">
             {navLinks.map((link) => (
-              <Link
+              <NavLink
                 key={link.href}
                 to={link.href}
-                className="py-2 md:py-0 text-nova-green hover:text-nova-green-light transition font-medium"
+                end={link.end}
+                className={({ isActive }) =>
+                  `${navBaseClass} ${
+                    isActive
+                      ? 'text-white border-white'
+                      : 'text-nova-green border-transparent hover:text-nova-green-light hover:border-nova-green-light'
+                  }`
+                }
                 onClick={closeMenu}
               >
                 {link.label}
-              </Link>
+              </NavLink>
             ))}
 
             <div className="relative" ref={aboutMenuRef}>
               <button
                 type="button"
-                className="w-full md:w-auto py-2 md:py-0 text-left text-nova-green hover:text-nova-green-light transition font-medium inline-flex items-center gap-1"
+                className={`w-full md:w-auto text-left inline-flex items-center gap-1 ${navBaseClass} ${
+                  isAboutActive
+                    ? 'text-white border-white'
+                    : 'text-nova-green border-transparent hover:text-nova-green-light hover:border-nova-green-light'
+                }`}
                 aria-haspopup="menu"
                 aria-expanded={isAboutOpen}
                 onClick={() => {
@@ -124,14 +142,16 @@ export default function Header() {
                 className={`${isAboutOpen ? 'block' : 'hidden'} mt-1 md:mt-2 md:absolute md:left-0 md:min-w-[11rem] md:rounded-lg md:border md:border-nova-green/30 md:bg-nova-charcoal md:shadow-lg`}
               >
                 {aboutLinks.map((link) => (
-                  <Link
+                  <NavLink
                     key={link.href}
                     to={link.href}
-                    className="block py-2 px-3 md:px-4 text-sm text-nova-green hover:text-nova-green-light hover:bg-nova-green/10 transition"
+                    className={({ isActive }) =>
+                      `block py-2 px-3 md:px-4 text-sm transition-all duration-300 border-b-[3px] border-transparent ${isActive ? "text-white border-white" : "text-nova-green hover:text-nova-green-light hover:border-nova-green-light"}`
+                    }
                     onClick={closeMenu}
                   >
                     {link.label}
-                  </Link>
+                  </NavLink>
                 ))}
               </div>
             </div>
