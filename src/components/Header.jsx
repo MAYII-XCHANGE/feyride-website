@@ -61,9 +61,15 @@ export default function Header() {
       }
     };
 
-    document.addEventListener('mousedown', handleOutsideClick);
-    return () => document.removeEventListener('mousedown', handleOutsideClick);
+    document.addEventListener('pointerdown', handleOutsideClick);
+    return () => document.removeEventListener('pointerdown', handleOutsideClick);
   }, []);
+
+  useEffect(() => {
+    setIsOpen(false);
+    setIsAboutOpen(false);
+    setIsLanguageOpen(false);
+  }, [location.pathname]);
 
   const closeMenu = () => {
     setIsOpen(false);
@@ -79,7 +85,7 @@ export default function Header() {
             <img
               src={logo}
               alt="FeyRide Logo"
-              className="h-19 w-auto animate-float transition-transform duration-300 hover:scale-105 hover:-rotate-1"
+              className="h-16 w-auto animate-float transition-transform duration-300 hover:scale-105 hover:-rotate-1"
               loading="lazy"
             />
           </Link>
@@ -96,8 +102,8 @@ export default function Header() {
         </div>
 
         <div
-          className={`absolute inset-x-0 top-full z-20 px-6 py-5 bg-nova-charcoal border-b border-nova-green/50 shadow-md transition-all duration-300 ease-in-out md:static md:z-auto md:p-0 md:bg-transparent md:border-0 md:shadow-none md:flex md:items-center md:gap-8 md:translate-x-0 md:opacity-100 ${
-            isOpen ? 'translate-x-0 opacity-100 animate-slideInDown' : '-translate-x-full opacity-0 pointer-events-none md:pointer-events-auto'
+          className={`absolute inset-x-0 top-full z-20 px-6 py-5 bg-nova-charcoal border-b border-nova-green/50 shadow-md transition-[transform,opacity] duration-300 ease-in-out md:static md:z-auto md:p-0 md:bg-transparent md:border-0 md:shadow-none md:flex md:items-center md:gap-8 md:translate-x-0 md:opacity-100 ${
+            isOpen ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0 pointer-events-none md:pointer-events-auto'
           }`}
         >
           <nav className="flex flex-col md:flex-row md:items-center md:gap-8">
