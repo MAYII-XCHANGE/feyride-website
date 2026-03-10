@@ -85,7 +85,7 @@ export default function Header() {
             <img
               src={logo}
               alt="FeyRide Logo"
-              className="h-16 w-auto animate-float transition-transform duration-300 hover:scale-105 hover:-rotate-1"
+              className="h-10 w-auto transition-transform duration-300 hover:scale-105 hover:-rotate-1"
               loading="lazy"
             />
           </Link>

@@ -1,5 +1,4 @@
 import Card from '../components/Card';
-import headshot4 from '../assets/istockphoto-2187993440-612x612.jpg';
 import headshot1 from '../assets/priAda.jpg';
 import headshot2 from '../assets/ebenOjo.jpg';
 import headshot3 from '../assets/mayOye.jpg';
