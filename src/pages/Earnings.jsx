@@ -10,7 +10,7 @@ export default function Earnings() {
         <div className="container-custom text-center">
           <h1 className="heading-1 text-nova-charcoal mb-6">Earnings</h1>
           <p className="subheading text-nova-charcoal-700 max-w-2xl mx-auto">
-            See how hosts earn more by sharing their commute with verified riders.
+            See how riders earn more by sharing and posting their routes daily.
           </p>
         </div>
       </section>
@@ -31,7 +31,7 @@ export default function Earnings() {
               },
               {
                 Icon: DollarSign,
-                title: 'Weekly Payouts',
+                title: 'Instant Payouts',
                 desc: 'Automatic transfers every Friday, no manual requests.'
               }
             ].map((item, idx) => (
@@ -75,10 +75,10 @@ export default function Earnings() {
         <div className="container-custom text-center">
           <h2 className="heading-2 text-nova-charcoal mb-6">Ready to Earn?</h2>
           <p className="subheading text-nova-charcoal-700 mb-8">
-            Complete verification and start hosting today.
+            Complete verification and start earning today.
           </p>
           <Link to="/register">
-            <Button variant="primary" size="lg">Become a Host</Button>
+            <Button variant="primary" size="lg">Become a Rider</Button>
           </Link>
         </div>
       </section>

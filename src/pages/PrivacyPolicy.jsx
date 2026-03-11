@@ -21,7 +21,7 @@ export default function PrivacyPolicy() {
 
           <h2 className="heading-3 text-nova-charcoal mt-10 mb-4">How We Use Data</h2>
           <ul className="space-y-2 text-nova-charcoal-700">
-            <li>Match riders and hosts on the same routes</li>
+            <li>Match riders and passengers on the same routes</li>
             <li>Process payments and detect fraud</li>
             <li>Improve safety tools and service quality</li>
           </ul>

@@ -33,7 +33,7 @@ export default function Contact() {
             {[
               {
                 title: 'Support',
-                desc: '24/7 help for riders and hosts.',
+                desc: '24/7 help for riders and passengers.',
                 contact: 'support@feyride.co'
               },
               {

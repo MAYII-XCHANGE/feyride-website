@@ -66,9 +66,13 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    setIsOpen(false);
-    setIsAboutOpen(false);
-    setIsLanguageOpen(false);
+    const frameId = window.requestAnimationFrame(() => {
+      setIsOpen(false);
+      setIsAboutOpen(false);
+      setIsLanguageOpen(false);
+    });
+
+    return () => window.cancelAnimationFrame(frameId);
   }, [location.pathname]);
 
   const closeMenu = () => {

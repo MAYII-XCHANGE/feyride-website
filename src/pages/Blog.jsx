@@ -14,7 +14,7 @@ export default function Blog() {
       category: 'Community'
     },
     {
-      title: 'Host Safety Checklist for 2026',
+      title: 'Rider Safety Checklist for 2026',
       date: 'Jan 18, 2026',
       category: 'Safety'
     }

@@ -10,7 +10,7 @@
                                      {
                                          "step":  2,
                                          "title":  "Search Routes",
-                                         "description":  "Enter your pickup and destination. See available rides in real-time with fares and host ratings.",
+                                         "description":  "Enter your pickup and destination. See available rides in real-time with fares and rider ratings.",
                                          "icon":  "SEARCH"
                                      },
                                      {
@@ -22,13 +22,13 @@
                                      {
                                          "step":  4,
                                          "title":  "Get PIN",
-                                         "description":  "Receive a unique PIN code for check-in. Share it only with your assigned host.",
+                                         "description":  "Receive a unique PIN code for check-in. Share it only with your assigned rider.",
                                          "icon":  "PIN"
                                      },
                                      {
                                          "step":  5,
                                          "title":  "Track Live",
-                                         "description":  "See real-time location of your ride, ETA, and chat with your host and fellow passengers.",
+                                         "description":  "See real-time location of your ride, ETA, and chat with your rider and fellow passengers.",
                                          "icon":  "MAP"
                                      },
                                      {

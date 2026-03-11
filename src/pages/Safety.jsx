@@ -44,13 +44,13 @@ export default function Safety() {
             <Card elevated>
               <div className="text-4xl mb-4"><Lock size={40} className="text-nova-green" /></div>
               <h3 className="heading-4 text-nova-charcoal mb-3">Vehicle Verification (Hosts)</h3>
-              <p className="text-nova-charcoal-700">Vehicle photos and license verification for all hosts.</p>
+              <p className="text-nova-charcoal-700">Vehicle photos and license verification for all riders.</p>
             </Card>
 
             <Card elevated>
               <div className="text-4xl mb-4"><AlertCircle size={40} className="text-nova-green" /></div>
               <h3 className="heading-4 text-nova-charcoal mb-3">License Check (Hosts)</h3>
-              <p className="text-nova-charcoal-700">Valid driver's license verification for host eligibility.</p>
+              <p className="text-nova-charcoal-700">Valid driver's license verification for rider eligibility.</p>
             </Card>
 
             <Card elevated>
@@ -82,7 +82,7 @@ export default function Safety() {
               {
                 Icon: Star,
                 title: 'Two-Way Ratings',
-                desc: 'Both riders and hosts rate each other to ensure community quality.'
+                desc: 'Both riders and passengers rate each other to ensure community quality.'
               },
               {
                 Icon: CheckCircle,

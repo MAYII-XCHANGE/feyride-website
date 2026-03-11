@@ -10,7 +10,7 @@ export default function FindRide() {
         <div className="container-custom text-center">
           <h1 className="heading-1 text-nova-charcoal mb-6">Find a Ride</h1>
           <p className="subheading text-nova-charcoal-700 max-w-2xl mx-auto">
-            Match with verified hosts on your exact route, save on costs, and travel with confidence.
+            Match with verified riders on your exact route, save on costs, and travel with confidence.
           </p>
         </div>
       </section>
@@ -32,7 +32,7 @@ export default function FindRide() {
               {
                 Icon: MapPin,
                 title: 'Pick Your Seat',
-                desc: 'Filter by pickup time, price, and host rating.'
+                desc: 'Filter by pickup time, price, and rider rating.'
               },
               {
                 Icon: CreditCard,
@@ -42,7 +42,7 @@ export default function FindRide() {
               {
                 Icon: CheckCircle,
                 title: 'Ride With Confidence',
-                desc: 'Live trip tracking and verified hosts on every trip.'
+                desc: 'Live trip tracking and verified riders on every trip.'
               }
             ].map((step, idx) => (
               <Card key={idx}>
@@ -60,9 +60,9 @@ export default function FindRide() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card elevated>
               <div className="text-3xl mb-4"><Shield size={32} className="text-nova-green" /></div>
-              <h3 className="heading-4 text-nova-charcoal mb-3">Verified Hosts</h3>
+              <h3 className="heading-4 text-nova-charcoal mb-3">Verified Riders</h3>
               <p className="text-nova-charcoal-700">
-                Every host completes phone, ID, and vehicle verification for safer rides.
+                Every rider completes phone, email, ID, and vehicle verification for safer rides.
               </p>
             </Card>
             <Card elevated>
@@ -71,7 +71,7 @@ export default function FindRide() {
                 <li>City commutes for work and school</li>
                 <li>Airport and intercity trips</li>
                 <li>Weekend events and group rides</li>
-                <li>Recurring routes with trusted hosts</li>
+                <li>Recurring routes with trusted riders</li>
               </ul>
             </Card>
           </div>

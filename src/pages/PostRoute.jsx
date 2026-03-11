@@ -19,7 +19,7 @@ export default function PostRoute() {
         <div className="container-custom">
           <div className="mb-12">
             <h2 className="heading-2 text-nova-charcoal mb-4">Start Hosting in 3 Steps</h2>
-            <p className="subheading text-nova-charcoal-700">Complete KYC, list your route, earn weekly.</p>
+            <p className="subheading text-nova-charcoal-700">Complete KYC, post your route and earn instantly.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -27,16 +27,16 @@ export default function PostRoute() {
               {
                 Icon: Users,
                 title: 'Complete Verification',
-                desc: 'Verify phone, ID, and vehicle details to get approved.'
+                desc: 'Verify phone, email, ID, and vehicle details to get approved.'
               },
               {
                 Icon: TrendingUp,
-                title: 'List Your Commute',
+                title: 'Post your Route',
                 desc: 'Set pickup points, schedule, and seat availability.'
               },
               {
                 Icon: DollarSign,
-                title: 'Earn Weekly',
+                title: 'Earn Instantly',
                 desc: 'Get automatic payouts to your bank account.'
               }
             ].map((step, idx) => (
@@ -55,17 +55,17 @@ export default function PostRoute() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card elevated>
               <div className="text-3xl mb-4"><Shield size={32} className="text-nova-green" /></div>
-              <h3 className="heading-4 text-nova-charcoal mb-3">Host Requirements</h3>
+              <h3 className="heading-4 text-nova-charcoal mb-3">Rider Requirements</h3>
               <ul className="space-y-2 text-nova-charcoal-700">
-                <li>Valid driver license and vehicle papers</li>
+                <li>Valid driver's license and vehicle papers</li>
                 <li>Vehicle photos and inspection checklist</li>
-                <li>Phone and identity verification</li>
+                <li>Phone, email and identity verification</li>
                 <li>Community ratings above 4.5</li>
               </ul>
             </Card>
             <Card elevated>
               <div className="text-3xl mb-4"><CheckCircle size={32} className="text-nova-green" /></div>
-              <h3 className="heading-4 text-nova-charcoal mb-3">Why Hosts Love FeyRide</h3>
+              <h3 className="heading-4 text-nova-charcoal mb-3">Why Riders Love FeyRide</h3>
               <ul className="space-y-2 text-nova-charcoal-700">
                 <li>Flexible schedules with recurring routes</li>
                 <li>Transparent pricing and fare control</li>
@@ -79,7 +79,7 @@ export default function PostRoute() {
 
       <section className="section-padding bg-white">
         <div className="container-custom text-center">
-          <h2 className="heading-2 text-nova-charcoal mb-6">Ready to Start Hosting?</h2>
+          <h2 className="heading-2 text-nova-charcoal mb-6">Ready to Start Posting Routes?</h2>
           <p className="subheading text-nova-charcoal-700 mb-8">
             Build a trusted route and earn on every trip.
           </p>

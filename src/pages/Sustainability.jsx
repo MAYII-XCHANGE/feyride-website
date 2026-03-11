@@ -23,7 +23,7 @@ export default function Sustainability() {
   const commitments = [
     {
       title: 'Ride-Sharing by Default',
-      detail: 'Prioritize matching riders to existing host routes before creating new trips.',
+      detail: 'Prioritize matching passengers to existing rider routes before creating new trips.',
       icon: Leaf,
     },
     {

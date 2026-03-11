@@ -116,7 +116,7 @@ export default function Footer() {
             </div>
           </MotionDiv>
 
-          {/* For Guests */}
+          {/* For Passengers */}
           <div>
             <h4 className="font-semibold mb-4">{t('footer.forGuests')}</h4>
             <ul className="space-y-2 text-sm text-gray-300">
@@ -143,7 +143,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* For Hosts */}
+          {/* For Riders */}
           <div>
             <h4 className="font-semibold mb-4">{t('footer.forHosts')}</h4>
             <ul className="space-y-2 text-sm text-gray-300">

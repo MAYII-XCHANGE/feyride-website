@@ -122,11 +122,11 @@ export default function Home() {
         }
       : {
           image: hostOnboardingImage,
-          imageAlt: 'Host getting ready to offer rides',
-          title: 'Host quick start',
-          description: 'Register as a host and start connecting with riders.',
+          imageAlt: 'Rider getting ready to offer rides',
+          title: 'Rider quick start',
+          description: 'Register as a rider and start connecting with riders.',
           steps: [
-            'Register and complete your host setup.',
+            'Register and complete setup.',
             'Find active ride demand and start hosting.',
           ],
           secondaryAction: { label: 'Post Route', to: '/post-route' },
@@ -317,7 +317,7 @@ export default function Home() {
       >
         <div className="container-custom">
           <div className="mb-16">
-            <h3 className="heading-3 text-nova-charcoal mb-4">Ride For Guests</h3>
+            <h3 className="heading-3 text-nova-charcoal mb-4">For Passengers</h3>
             <p className="subheading text-nova-charcoal-700">Book. Pay. Ride. Save.</p>
           </div>
 
@@ -346,7 +346,7 @@ export default function Home() {
       <section className="section-padding bg-nova-charcoal-light">
         <div className="container-custom">
           <div className="mb-16">
-            <h3 className="heading-3 text-nova-charcoal mb-4">Ride For Hosts</h3>
+            <h3 className="heading-3 text-nova-charcoal mb-4">For Riders</h3>
             <p className="subheading text-nova-charcoal-700">Share. Earn. Connect.</p>
           </div>
 
@@ -683,11 +683,11 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {[
                 {
-                  title: 'Download the FeyRide Guest app',
+                  title: 'Download the FeyRide Passenger app',
                   description: 'Scan to download',
                 },
                 {
-                  title: 'Download the FeyRide Host app',
+                  title: 'Download the FeyRide Driver app',
                   description: 'Scan to download',
                 },
               ].map((item, idx) => (
@@ -782,7 +782,7 @@ export default function Home() {
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-nova-green mb-4">Testimonials</p>
             <h2 className="heading-2 font-display text-nova-charcoal mb-4">Don&apos;t just take our <span className="italic">word</span> for it</h2>
             <p className="subheading text-nova-charcoal-700">
-              Hear from guests and hosts who use FeyRide every day.
+              Hear from passengers and riders who use FeyRide every day.
             </p>
           </div>
 

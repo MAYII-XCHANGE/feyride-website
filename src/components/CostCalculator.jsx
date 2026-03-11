@@ -35,7 +35,7 @@ export default function CostCalculator({ userType = 'guest' }) {
           {/* Presets */}
           <div className="space-y-6">
             <div>
-              <p className="block text-sm font-semibold text-nova-charcoal mb-3">Select host plan</p>
+              <p className="block text-sm font-semibold text-nova-charcoal mb-3">Select Rider plan</p>
               <div className="space-y-2">
                 {hostPresets.map((preset) => (
                   <button
@@ -96,7 +96,7 @@ export default function CostCalculator({ userType = 'guest' }) {
         {/* Presets */}
         <div className="space-y-6">
           <div>
-            <p className="block text-sm font-semibold text-nova-charcoal mb-3">Select guest plan</p>
+            <p className="block text-sm font-semibold text-nova-charcoal mb-3">Select Passenger plan</p>
             <div className="space-y-2">
               {guestPresets.map((preset) => (
                 <button

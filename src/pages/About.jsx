@@ -72,7 +72,7 @@ export default function About() {
               },
               {
                 title: 'Affordability',
-                desc: 'Lower costs for riders and fair earnings for hosts.'
+                desc: 'Lower costs for passengers and fair earnings for riders.'
               }
             ].map((value, idx) => (
               <Card key={idx}>

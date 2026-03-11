@@ -35,7 +35,7 @@ export default function HowItWorks() {
       <section className="section-padding bg-white">
         <div className="container-custom">
           <div className="mb-16">
-            <h2 className="heading-2 text-nova-charcoal mb-4">Ride For Guests</h2>
+            <h2 className="heading-2 text-nova-charcoal mb-4">For Passengers</h2>
             <p className="subheading text-nova-charcoal-700">Book. Pay. Ride. Save.</p>
           </div>
 
@@ -65,7 +65,7 @@ export default function HowItWorks() {
       <section className="section-padding bg-nova-charcoal-light">
         <div className="container-custom">
           <div className="mb-16">
-            <h2 className="heading-2 text-nova-charcoal mb-4">Ride For Hosts</h2>
+            <h2 className="heading-2 text-nova-charcoal mb-4">For Riders</h2>
             <p className="subheading text-nova-charcoal-700">Share. Earn. Connect.</p>
           </div>
 

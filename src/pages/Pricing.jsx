@@ -10,7 +10,7 @@ export default function Pricing() {
         <div className="container-custom text-center">
           <h1 className="heading-1 text-nova-charcoal mb-6">Pricing</h1>
           <p className="subheading text-nova-charcoal-700 max-w-2xl mx-auto">
-            Transparent pricing that keeps rides affordable and rewards hosts fairly.
+            Transparent pricing that keeps rides affordable and rewards riders fairly.
           </p>
         </div>
       </section>
@@ -20,9 +20,9 @@ export default function Pricing() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card elevated>
               <div className="text-3xl mb-4"><TrendingDown size={32} className="text-nova-green" /></div>
-              <h2 className="heading-4 text-nova-charcoal mb-3">Rider Pricing</h2>
+              <h2 className="heading-4 text-nova-charcoal mb-3">Passenger Pricing</h2>
               <p className="text-nova-charcoal-700 mb-4">
-                Riders pay a simple per-seat price set by the host, with a small service fee.
+                Passengers pay a simple per-seat price set by the rider, with a small service fee.
               </p>
               <ul className="space-y-2 text-nova-charcoal-700">
                 <li>Typical seat price: N800 - N2000</li>
@@ -33,13 +33,13 @@ export default function Pricing() {
 
             <Card elevated>
               <div className="text-3xl mb-4"><DollarSign size={32} className="text-nova-green" /></div>
-              <h2 className="heading-4 text-nova-charcoal mb-3">Host Earnings</h2>
+              <h2 className="heading-4 text-nova-charcoal mb-3">Rider Earnings</h2>
               <p className="text-nova-charcoal-700 mb-4">
-                Hosts keep most of the fare while we handle payments, verification, and support.
+                Riders keep most of the fare while we handle payments, verifications, and support.
               </p>
               <ul className="space-y-2 text-nova-charcoal-700">
-                <li>Host keeps 80-90% of every seat</li>
-                <li>Weekly payouts to your bank account</li>
+                <li>Rider keeps 80-90% of every seat</li>
+                <li>Instant payouts to your bank account</li>
                 <li>Earn more with recurring routes</li>
               </ul>
             </Card>
