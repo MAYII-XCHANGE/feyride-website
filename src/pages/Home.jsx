@@ -112,7 +112,7 @@ export default function Home() {
       ? {
           image: guestOnboardingImage,
           imageAlt: 'Guest checking ride options on phone',
-          title: 'Guest quick start',
+          title: 'Quick Start as a Guest',
           description: 'Set up your account and book your seat in minutes.',
           steps: [
             'Create your account and complete your profile.',
@@ -123,7 +123,7 @@ export default function Home() {
       : {
           image: hostOnboardingImage,
           imageAlt: 'Rider getting ready to offer rides',
-          title: 'Rider quick start',
+          title: 'Quick Start as a Rider',
           description: 'Register as a rider and start connecting with riders.',
           steps: [
             'Register and complete setup.',
