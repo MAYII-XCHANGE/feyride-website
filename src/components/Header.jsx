@@ -1,6 +1,6 @@
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-import { ChevronDown, Globe, Menu, X } from 'lucide-react';
+import { AlertTriangle, ChevronDown, Globe, Menu, Phone, ShieldAlert, X } from 'lucide-react';
 import Button from './Button';
 import logo from '../assets/Feyride Logo.svg';
 import { useLanguage } from '../context/LanguageContext';
@@ -10,6 +10,7 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const [isSosOpen, setIsSosOpen] = useState(false);
   const aboutMenuRef = useRef(null);
   const languageMenuMobileRef = useRef(null);
   const languageMenuDesktopRef = useRef(null);
@@ -47,6 +48,18 @@ export default function Header() {
     redirectToStoreByDevice();
   };
 
+  const openSosModal = () => {
+    setIsSosOpen(true);
+    setIsOpen(false);
+    setIsAboutOpen(false);
+    setIsLanguageOpen(false);
+  };
+
+  const handleOpenSupportChat = () => {
+    setIsSosOpen(false);
+    window.dispatchEvent(new Event('open-support-chat'));
+  };
+
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (aboutMenuRef.current && !aboutMenuRef.current.contains(event.target)) {
@@ -70,10 +83,32 @@ export default function Header() {
       setIsOpen(false);
       setIsAboutOpen(false);
       setIsLanguageOpen(false);
+      setIsSosOpen(false);
     });
 
     return () => window.cancelAnimationFrame(frameId);
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (!isSosOpen) {
+      return undefined;
+    }
+
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        setIsSosOpen(false);
+      }
+    };
+
+    const { overflow } = document.body.style;
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.body.style.overflow = overflow;
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [isSosOpen]);
 
   const closeMenu = () => {
     setIsOpen(false);
@@ -200,6 +235,14 @@ export default function Header() {
           </div>
 
           <div className="mt-4 pt-4 border-t border-nova-green/30 flex flex-col gap-3 md:hidden">
+            <button
+              type="button"
+              onClick={openSosModal}
+              className="w-full inline-flex items-center justify-center gap-2 rounded-lg border border-red-400/60 bg-red-500/10 px-4 py-3 font-semibold text-red-200 hover:bg-red-500/20 transition"
+            >
+              <ShieldAlert className="w-5 h-5" />
+              SOS Alert
+            </button>
             <Button variant="outline" size="md" onClick={handleAppDownload} className="w-full">
               {t('signIn')}
             </Button>
@@ -210,6 +253,15 @@ export default function Header() {
         </div>
 
         <div className="hidden md:flex items-center gap-3">
+          <button
+            type="button"
+            onClick={openSosModal}
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-red-400/60 bg-red-500/10 px-4 py-2 text-sm font-semibold text-red-200 hover:bg-red-500/20 transition"
+            aria-label="Open safety SOS alert options"
+          >
+            <ShieldAlert className="w-4 h-4" />
+            SOS
+          </button>
           <div className="relative" ref={languageMenuDesktopRef}>
             <button
               type="button"
@@ -254,6 +306,90 @@ export default function Header() {
           </Button>
         </div>
       </div>
+
+      {isSosOpen && (
+        <div
+          className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm px-4 py-8"
+          onClick={() => setIsSosOpen(false)}
+          role="presentation"
+        >
+          <div
+            className="mx-auto flex min-h-full max-w-xl items-center"
+            onClick={(event) => event.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="sos-alert-title"
+          >
+            <div className="w-full rounded-2xl border border-red-400/30 bg-nova-charcoal text-white shadow-[0_24px_60px_rgba(0,0,0,0.35)]">
+              <div className="flex items-start justify-between gap-4 border-b border-white/10 px-6 py-5">
+                <div>
+                  <p className="mb-2 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-red-300">
+                    <AlertTriangle className="h-4 w-4" />
+                    Emergency Support
+                  </p>
+                  <h2 id="sos-alert-title" className="text-2xl font-bold">
+                    Trigger an SOS response
+                  </h2>
+                  <p className="mt-2 text-sm text-white/75">
+                    If a rider or passenger is at risk, use one of these actions immediately.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsSosOpen(false)}
+                  className="rounded-full p-2 text-white/80 hover:bg-white/10 hover:text-white transition"
+                  aria-label="Close SOS dialog"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              <div className="space-y-4 px-6 py-6">
+                <a
+                  href="tel:112"
+                  className="flex items-start gap-4 rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-4 hover:bg-red-500/20 transition"
+                >
+                  <Phone className="mt-0.5 h-5 w-5 flex-shrink-0 text-red-300" />
+                  <div>
+                    <p className="font-semibold text-white">Call emergency services</p>
+                    <p className="mt-1 text-sm text-white/75">
+                      Use your local emergency line immediately if there is an active threat.
+                    </p>
+                  </div>
+                </a>
+
+                <button
+                  type="button"
+                  onClick={handleOpenSupportChat}
+                  className="flex w-full items-start gap-4 rounded-xl border border-nova-green/30 bg-nova-green/10 px-4 py-4 text-left hover:bg-nova-green/20 transition"
+                >
+                  <ShieldAlert className="mt-0.5 h-5 w-5 flex-shrink-0 text-nova-green-light" />
+                  <div>
+                    <p className="font-semibold text-white">Alert FeyRide support</p>
+                    <p className="mt-1 text-sm text-white/75">
+                      Open the support chat right away so the team can respond and guide next steps.
+                    </p>
+                  </div>
+                </button>
+
+                <Link
+                  to="/safety"
+                  onClick={() => setIsSosOpen(false)}
+                  className="flex items-start gap-4 rounded-xl border border-white/10 bg-white/5 px-4 py-4 hover:bg-white/10 transition"
+                >
+                  <AlertTriangle className="mt-0.5 h-5 w-5 flex-shrink-0 text-nova-green-light" />
+                  <div>
+                    <p className="font-semibold text-white">Open safety guidance</p>
+                    <p className="mt-1 text-sm text-white/75">
+                      Review the in-platform safety steps and what to do during a trip incident.
+                    </p>
+                  </div>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

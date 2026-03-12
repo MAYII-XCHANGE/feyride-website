@@ -16,7 +16,7 @@ const quickQuestions = [
   {
     label: 'How do payouts work?',
     response:
-      '• Complete trips as a rider.\n• Payouts are processed securely.\n• Funds are sent to your wallet.',
+      '• Complete trips as a rider.\n• Payouts are processed instantly and securely.\n• Funds are sent to your wallet.',
   },
   {
     label: 'How do I report an issue?',

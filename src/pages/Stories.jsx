@@ -17,6 +17,33 @@ export default function Stories() {
     'headshot-4': headshot4,
   };
 
+  const featuredStories = [
+    {
+      title: 'A Better Start Before 8AM',
+      person: 'Mariam Afolabi',
+      role: 'Operations Lead',
+      summary:
+        'Mariam swapped unpredictable bus changes for a repeat commute match on FeyRide and now gets to work earlier with less stress.',
+      highlight: 'Saves about NGN 1,200 each workday',
+    },
+    {
+      title: 'Turning Daily Traffic Into Extra Earnings',
+      person: 'David Eze',
+      role: 'Product Designer and Rider',
+      summary:
+        'David already drove from Lekki to Yaba every weekday. Listing his spare seats on FeyRide helped him offset fuel and toll costs.',
+      highlight: 'Earns on recurring routes twice a week',
+    },
+    {
+      title: 'Safer Late Classes for Students',
+      person: 'Amaka Nwosu',
+      role: 'Final-Year Student',
+      summary:
+        'After evening labs, Amaka uses verified ride matches to get home without the usual rush-hour uncertainty or inflated fares.',
+      highlight: 'Cuts late-night commute pressure and cost',
+    },
+  ];
+
   return (
     <div>
       {/* Hero */}
@@ -152,8 +179,39 @@ export default function Stories() {
         </div>
       </section>
 
-      {/* Why Join */}
       <section className="section-padding bg-nova-charcoal-light">
+        <div className="container-custom">
+          <div className="max-w-3xl mx-auto text-center mb-14">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-nova-green mb-3">
+              Catching Stories
+            </p>
+            <h2 className="heading-2 text-nova-charcoal mb-5">More stories worth reading</h2>
+            <p className="text-gray-700 leading-relaxed">
+              Beyond quick testimonials, these snapshots show how different people are using
+              FeyRide to save money, reduce stress, and make daily travel feel more reliable.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {featuredStories.map((story) => (
+              <Card key={story.title} elevated className="h-full">
+                <p className="text-xs uppercase tracking-[0.18em] text-nova-green font-semibold mb-3">
+                  {story.role}
+                </p>
+                <h3 className="heading-4 text-nova-charcoal mb-4">{story.title}</h3>
+                <p className="text-gray-700 leading-relaxed mb-6">{story.summary}</p>
+                <div className="pt-4 border-t border-nova-charcoal-lighter">
+                  <p className="font-semibold text-nova-charcoal">{story.person}</p>
+                  <p className="text-sm text-nova-green mt-1">{story.highlight}</p>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Join */}
+      <section className="section-padding bg-white">
         <div className="container-custom text-center">
           <h2 className="heading-2 text-nova-charcoal mb-16">Join Our Growing Community</h2>
 

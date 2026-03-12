@@ -24,7 +24,9 @@ export default function HowItWorks() {
       {/* Hero */}
       <section className="bg-gradient-to-br from-nova-green-light to-white py-16 sm:py-20">
         <div className="container-custom text-center">
-          <h1 className="heading-1 text-nova-charcoal mb-6">How FeyRide Works</h1>
+          <h1 className="heading-1 text-nova-charcoal mb-6">
+            How <span className="text-nova-green">FeyRide</span> Works
+          </h1>
           <p className="subheading text-nova-charcoal-700 max-w-2xl mx-auto">
             Simple, secure, and smart. Whether you're seeking a ride or sharing your commute, we've got you covered.
           </p>

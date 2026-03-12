@@ -18,7 +18,7 @@ export default function FindRide() {
       <section className="section-padding bg-white">
         <div className="container-custom">
           <div className="mb-12">
-            <h2 className="heading-2 text-nova-charcoal mb-4">Book a Ride in Minutes</h2>
+            <h2 className="heading-2 text-nova-charcoal mb-4">Book a Ride in less than Minutes</h2>
             <p className="subheading text-nova-charcoal-700">Search, compare, pay, and go.</p>
           </div>
 

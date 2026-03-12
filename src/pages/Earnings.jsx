@@ -32,7 +32,7 @@ export default function Earnings() {
               {
                 Icon: DollarSign,
                 title: 'Instant Payouts',
-                desc: 'Automatic transfers every Friday, no manual requests.'
+                desc: 'Instant settlement in your wallet, no manual requests.'
               }
             ].map((item, idx) => (
               <Card key={idx}>

@@ -51,7 +51,7 @@ const baseEn = {
         { title: 'Passenger Care', desc: 'Automated insurance on every ride' },
         { title: 'Fast Payouts', desc: 'Instant withdrawals to your bank account' },
       ],
-      stats: ['Earned by Hosts', 'Active Hosts', 'Verified Safety'],
+      stats: ['Earned by Riders', 'Active Riders', 'Verified Safety'],
     },
     learnMore: 'Learn More',
     tracking: {
@@ -92,7 +92,7 @@ const baseEn = {
     download: {
       title: "It's easier on the apps",
       0: { title: 'Download the FeyRide Passenger app', desc: 'Scan to download' },
-      1: { title: 'Download the FeyRide Rider app', desc: 'Scan to download' },
+      1: { title: 'Download the FeyRide Driver app', desc: 'Scan to download' },
     },
     routes: {
       title: 'Popular Routes This Week',
@@ -125,7 +125,7 @@ const baseEn = {
       },
       host: {
         title: 'Ready to Turn Your Car into Income?',
-        desc: 'Join riders earning per trip. Start earning today.',
+        desc: 'Join riders earn per trip. Start earning today!',
         cta: 'Become a Rider',
         learnMore: 'Learn More',
       },
