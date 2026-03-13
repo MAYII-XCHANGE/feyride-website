@@ -39,6 +39,12 @@ import Card from "../components/Card";
 import Badge from "../components/Badge";
 import AppStoreBadge from "../components/AppStoreBadge";
 import GooglePlayBadge from "../components/GooglePlayBadge";
+import AnimatedNumber from "../components/AnimatedNumber";
+import {
+  RevealGroup,
+  RevealItem,
+  RevealSection,
+} from "../components/SectionReveal";
 import routesData from "../data/routes.json";
 import testimonialData from "../data/testimonials.json";
 import howItWorksData from "../data/howItWorks.json";
@@ -131,9 +137,9 @@ export default function Home() {
       },
     ],
     stats: [
-      { number: "500+", label: t("home.guest.stats.0") },
-      { number: "NGN 5M+", label: t("home.guest.stats.1") },
-      { number: "4.8", label: t("home.guest.stats.2") },
+      { value: 500, suffix: "+", label: t("home.guest.stats.0") },
+      { value: 5, prefix: "NGN ", suffix: "M+", label: t("home.guest.stats.1") },
+      { value: 4.8, decimals: 1, label: t("home.guest.stats.2") },
     ],
   };
 
@@ -165,9 +171,9 @@ export default function Home() {
       },
     ],
     stats: [
-      { number: "500+", label: t("home.host.stats.0") },
-      { number: "NGN 5M+", label: t("home.host.stats.1") },
-      { number: "4.8", label: t("home.host.stats.2") },
+      { value: 500, suffix: "+", label: t("home.host.stats.0") },
+      { value: 5, prefix: "NGN ", suffix: "M+", label: t("home.host.stats.1") },
+      { value: 4.8, decimals: 1, label: t("home.host.stats.2") },
     ],
     visual: "Host",
   };
@@ -383,7 +389,12 @@ export default function Home() {
               {currentContent.stats.map((stat, index) => (
                 <Card key={index} className="text-center">
                   <p className="text-2xl font-bold text-nova-green">
-                    {stat.number}
+                    <AnimatedNumber
+                      value={stat.value}
+                      prefix={stat.prefix}
+                      suffix={stat.suffix}
+                      decimals={stat.decimals}
+                    />
                     {stat.label === t("home.guest.stats.2") ||
                     stat.label === t("home.host.stats.2") ? (
                       <span className="inline-flex items-center ml-2 text-nova-green">
@@ -403,19 +414,25 @@ export default function Home() {
       </section>
 
       {/* How It Works Section (Embedded) */}
-      <section className="bg-gradient-to-br from-nova-green-light to-white py-16 sm:py-20">
+      <RevealSection
+        as="section"
+        className="bg-gradient-to-br from-nova-green-light to-white py-16 sm:py-20"
+      >
         <div className="container-custom text-center">
-          <h2 className="heading-2 text-nova-charcoal mb-6">
-            How <span className="text-nova-green">FeyRide</span> Works
-          </h2>
-          <p className="subheading text-nova-charcoal-700 max-w-2xl mx-auto">
-            Simple, secure, and smart. Whether you're seeking a ride or sharing
-            your commute, we've got you covered.
-          </p>
+          <RevealItem>
+            <h2 className="heading-2 text-nova-charcoal mb-6">
+              How <span className="text-nova-green">FeyRide</span> Works
+            </h2>
+            <p className="subheading text-nova-charcoal-700 max-w-2xl mx-auto">
+              Simple, secure, and smart. Whether you're seeking a ride or
+              sharing your commute, we've got you covered.
+            </p>
+          </RevealItem>
         </div>
-      </section>
+      </RevealSection>
 
-      <section
+      <RevealSection
+        as="section"
         className="section-padding bg-white relative overflow-hidden"
         style={{
           backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url(${trackingBackground})`,
@@ -425,172 +442,194 @@ export default function Home() {
         }}
       >
         <div className="container-custom">
-          <div className="mb-16">
+          <RevealItem className="mb-16">
             <h3 className="heading-3 text-nova-charcoal mb-4">
               For Passengers
             </h3>
             <p className="subheading text-nova-charcoal-700">
               Book. Pay. Ride. Save.
             </p>
-          </div>
+          </RevealItem>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <RevealGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {guestSteps.map((item) => {
               const StepIcon = iconMap[item.icon] ?? CheckCircle;
               return (
-                <Card key={item.step}>
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0">
-                      <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-nova-green text-nova-charcoal font-bold text-lg">
-                        <StepIcon size={18} />
+                <RevealItem key={item.step}>
+                  <Card>
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0">
+                        <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-nova-green text-nova-charcoal font-bold text-lg">
+                          <StepIcon size={18} />
+                        </div>
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-bold text-nova-charcoal mb-2">
+                          {item.title}
+                        </h4>
+                        <p className="text-sm text-nova-charcoal-700">
+                          {item.description}
+                        </p>
                       </div>
                     </div>
-                    <div className="flex-1">
-                      <h4 className="font-bold text-nova-charcoal mb-2">
-                        {item.title}
-                      </h4>
-                      <p className="text-sm text-nova-charcoal-700">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                </Card>
+                  </Card>
+                </RevealItem>
               );
             })}
-          </div>
+          </RevealGroup>
         </div>
-      </section>
+      </RevealSection>
 
-      <section className="section-padding bg-nova-charcoal-light">
+      <RevealSection
+        as="section"
+        className="section-padding bg-nova-charcoal-light"
+      >
         <div className="container-custom">
-          <div className="mb-16">
+          <RevealItem className="mb-16">
             <h3 className="heading-3 text-nova-charcoal mb-4">For Riders</h3>
             <p className="subheading text-nova-charcoal-700">
               Share. Earn. Connect.
             </p>
-          </div>
+          </RevealItem>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <RevealGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {hostSteps.map((item) => {
               const StepIcon = iconMap[item.icon] ?? CheckCircle;
               return (
-                <Card key={item.step}>
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0">
-                      <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-nova-green text-nova-charcoal font-bold text-lg">
-                        <StepIcon size={18} />
+                <RevealItem key={item.step}>
+                  <Card>
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0">
+                        <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-nova-green text-nova-charcoal font-bold text-lg">
+                          <StepIcon size={18} />
+                        </div>
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-bold text-nova-charcoal mb-2">
+                          {item.title}
+                        </h4>
+                        <p className="text-sm text-nova-charcoal-700">
+                          {item.description}
+                        </p>
                       </div>
                     </div>
-                    <div className="flex-1">
-                      <h4 className="font-bold text-nova-charcoal mb-2">
-                        {item.title}
-                      </h4>
-                      <p className="text-sm text-nova-charcoal-700">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                </Card>
+                  </Card>
+                </RevealItem>
               );
             })}
-          </div>
+          </RevealGroup>
         </div>
-      </section>
+      </RevealSection>
 
-      <section className="section-padding bg-white">
+      <RevealSection as="section" className="section-padding bg-white">
         <div className="container-custom">
-          <h3 className="heading-3 text-center text-nova-charcoal mb-16">
-            Why Choose <span className="text-nova-green">FeyRide</span>?
-          </h3>
+          <RevealItem>
+            <h3 className="heading-3 text-center text-nova-charcoal mb-16">
+              Why Choose <span className="text-nova-green">FeyRide</span>?
+            </h3>
+          </RevealItem>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <Card elevated>
-              <h4 className="heading-4 text-nova-charcoal mb-6">
-                Traditional Ride-Hailing
-              </h4>
-              <ul className="space-y-3">
-                {[
-                  "Expensive (60% commission)",
-                  "Professional drivers only",
-                  "Community connection",
-                  "Lower fares",
-                  "Predictable pricing",
-                ].map((item, idx) => (
-                  <li
-                    key={idx}
-                    className="text-nova-charcoal-700 flex items-start gap-2"
-                  >
-                    <XCircle
-                      size={16}
-                      className="text-red-500 mt-0.5 flex-shrink-0"
-                    />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </Card>
+          <RevealGroup className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <RevealItem>
+              <Card elevated>
+                <h4 className="heading-4 text-nova-charcoal mb-6">
+                  Traditional Ride-Hailing
+                </h4>
+                <ul className="space-y-3">
+                  {[
+                    "Expensive (60% commission)",
+                    "Professional drivers only",
+                    "Community connection",
+                    "Lower fares",
+                    "Predictable pricing",
+                  ].map((item, idx) => (
+                    <li
+                      key={idx}
+                      className="text-nova-charcoal-700 flex items-start gap-2"
+                    >
+                      <XCircle
+                        size={16}
+                        className="text-red-500 mt-0.5 flex-shrink-0"
+                      />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            </RevealItem>
 
-            <Card elevated className="bg-nova-charcoal text-white">
-              <h4 className="heading-4 text-white mb-6">
-                FeyRide Cost-Sharing
-              </h4>
-              <ul className="space-y-3">
-                {[
-                  "Affordable (10-20% commission)",
-                  "Regular commuters like you",
-                  "Build lasting community",
-                  "Lower fares and lower cost",
-                  "Fixed, transparent pricing",
-                ].map((item, idx) => (
-                  <li
-                    key={idx}
-                    className="text-nova-green font-semibold flex items-start gap-2"
-                  >
-                    <CheckCircle
-                      size={16}
-                      className="text-nova-green mt-0.5 flex-shrink-0"
-                    />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </Card>
-          </div>
+            <RevealItem>
+              <Card elevated className="bg-nova-charcoal text-white">
+                <h4 className="heading-4 text-white mb-6">
+                  FeyRide Cost-Sharing
+                </h4>
+                <ul className="space-y-3">
+                  {[
+                    "Affordable (10-20% commission)",
+                    "Regular commuters like you",
+                    "Build lasting community",
+                    "Lower fares and lower cost",
+                    "Fixed, transparent pricing",
+                  ].map((item, idx) => (
+                    <li
+                      key={idx}
+                      className="text-nova-green font-semibold flex items-start gap-2"
+                    >
+                      <CheckCircle
+                        size={16}
+                        className="text-nova-green mt-0.5 flex-shrink-0"
+                      />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            </RevealItem>
+          </RevealGroup>
         </div>
-      </section>
+      </RevealSection>
 
-      <section className="section-padding bg-gradient-to-r from-nova-green-dark to-nova-green-darker text-white text-center">
+      <RevealSection
+        as="section"
+        className="section-padding bg-gradient-to-r from-nova-green-dark to-nova-green-darker text-white text-center"
+      >
         <div className="container-custom">
-          <h3 className="heading-3 text-white mb-6">Get Started Today</h3>
-          <p className="subheading text-white/90 mb-8 max-w-2xl mx-auto">
-            Join thousands of smart commuters saving time and money.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-md mx-auto">
-            <a
-              href={appStoreLinks.ios}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:opacity-80 transition-opacity w-full sm:w-auto"
-            >
-              <AppStoreBadge className="h-14 w-full" />
-            </a>
-            <a
-              href={appStoreLinks.android}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:opacity-80 transition-opacity w-full sm:w-auto"
-            >
-              <GooglePlayBadge className="h-14 w-full" />
-            </a>
-          </div>
+          <RevealItem>
+            <h3 className="heading-3 text-white mb-6">Get Started Today</h3>
+            <p className="subheading text-white/90 mb-8 max-w-2xl mx-auto">
+              Join thousands of smart commuters saving time and money.
+            </p>
+          </RevealItem>
+          <RevealGroup className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-md mx-auto">
+            <RevealItem>
+              <a
+                href={appStoreLinks.ios}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-80 transition-opacity w-full sm:w-auto"
+              >
+                <AppStoreBadge className="h-14 w-full" />
+              </a>
+            </RevealItem>
+            <RevealItem>
+              <a
+                href={appStoreLinks.android}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-80 transition-opacity w-full sm:w-auto"
+              >
+                <GooglePlayBadge className="h-14 w-full" />
+              </a>
+            </RevealItem>
+          </RevealGroup>
         </div>
-      </section>
+      </RevealSection>
 
       {/* Quick Start Section */}
-      <section className="section-padding bg-white">
+      <RevealSection as="section" className="section-padding bg-white">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-            <div className="relative">
+            <RevealItem className="relative">
               <img
                 src={quickStartContent.image}
                 alt={quickStartContent.imageAlt}
@@ -598,73 +637,71 @@ export default function Home() {
                 loading="lazy"
               />
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-nova-charcoal/30 via-transparent to-transparent"></div>
-            </div>
+            </RevealItem>
 
-            <div className="space-y-6">
-              <div>
+            <RevealGroup className="space-y-6">
+              <RevealItem>
                 <h2 className="heading-2 font-display text-nova-charcoal mb-3">
                   Start in <span className="italic">2 Steps</span>
                 </h2>
                 <p className="subheading text-nova-charcoal-700">
                   Choose your path and get moving quickly to book a seat.
                 </p>
-              </div>
+              </RevealItem>
 
-              <Card className="border border-nova-green/20">
-                <h3 className="heading-5 font-display text-nova-charcoal mb-2">
-                  {quickStartContent.title}
-                </h3>
-                <p className="text-sm text-nova-charcoal-700 mb-4">
-                  {quickStartContent.description}
-                </p>
-                <ul className="space-y-2 mb-5 text-sm text-nova-charcoal-700">
-                  {quickStartContent.steps.map((step) => (
-                    <li key={step} className="flex items-start gap-2">
-                      <CheckCircle
-                        size={18}
-                        className="text-nova-green mt-0.5 flex-shrink-0"
-                      />
-                      <span>{step}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="flex flex-wrap gap-3">
-                  <Button
-                    variant="primary"
-                    size="sm"
-                    onClick={handleAppDownload}
-                  >
-                    Register
-                  </Button>
-                  {quickStartContent.secondaryAction.to === "/find-ride" ? (
+              <RevealItem>
+                <Card className="border border-nova-green/20">
+                  <h3 className="heading-5 font-display text-nova-charcoal mb-2">
+                    {quickStartContent.title}
+                  </h3>
+                  <p className="text-sm text-nova-charcoal-700 mb-4">
+                    {quickStartContent.description}
+                  </p>
+                  <ul className="space-y-2 mb-5 text-sm text-nova-charcoal-700">
+                    {quickStartContent.steps.map((step) => (
+                      <li key={step} className="flex items-start gap-2">
+                        <CheckCircle
+                          size={18}
+                          className="text-nova-green mt-0.5 flex-shrink-0"
+                        />
+                        <span>{step}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="flex flex-wrap gap-3">
                     <Button
-                      variant="outline"
+                      variant="primary"
                       size="sm"
                       onClick={handleAppDownload}
                     >
-                      {quickStartContent.secondaryAction.label}
+                      Register
                     </Button>
-                  ) : (
-                    <Link to={quickStartContent.secondaryAction.to}>
+                    {quickStartContent.secondaryAction.to === "/find-ride" ? (
                       <Button variant="outline" size="sm">
                         {quickStartContent.secondaryAction.label}
                       </Button>
-                    </Link>
-                  )}
-                </div>
-              </Card>
-            </div>
+                    ) : (
+                      <Link to={quickStartContent.secondaryAction.to}>
+                        <Button variant="outline" size="sm">
+                          {quickStartContent.secondaryAction.label}
+                        </Button>
+                      </Link>
+                    )}
+                  </div>
+                </Card>
+              </RevealItem>
+            </RevealGroup>
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* Live Ride Tracking Section */}
-      <section className="section-padding bg-white">
+      <RevealSection as="section" className="section-padding bg-white">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
-            <div className="space-y-6 order-2 lg:order-1">
-              <div>
+            <RevealGroup className="space-y-6 order-2 lg:order-1">
+              <RevealItem>
                 <h2 className="heading-2 font-display text-nova-charcoal mb-4">
                   {t("home.tracking.title")}
                 </h2>
@@ -673,12 +710,12 @@ export default function Home() {
                     ? t("home.tracking.guest.desc")
                     : t("home.tracking.host.desc")}
                 </p>
-              </div>
+              </RevealItem>
 
-              <div className="space-y-4">
+              <RevealGroup className="space-y-4">
                 {userType === "guest" ? (
                   <>
-                    <div className="flex gap-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                    <RevealItem className="flex gap-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
                       <Navigation
                         size={24}
                         className="text-nova-green flex-shrink-0"
@@ -691,9 +728,9 @@ export default function Home() {
                           {t("home.tracking.guest.1.desc")}
                         </p>
                       </div>
-                    </div>
+                    </RevealItem>
 
-                    <div className="flex gap-4 p-4 bg-green-50 rounded-lg border border-green-200">
+                    <RevealItem className="flex gap-4 p-4 bg-green-50 rounded-lg border border-green-200">
                       <Users
                         size={24}
                         className="text-green-600 flex-shrink-0"
@@ -706,9 +743,9 @@ export default function Home() {
                           {t("home.tracking.guest.2.desc")}
                         </p>
                       </div>
-                    </div>
+                    </RevealItem>
 
-                    <div className="flex gap-4 p-4 bg-purple-50 rounded-lg border border-purple-200">
+                    <RevealItem className="flex gap-4 p-4 bg-purple-50 rounded-lg border border-purple-200">
                       <AlertCircle
                         size={24}
                         className="text-purple-600 flex-shrink-0"
@@ -721,9 +758,9 @@ export default function Home() {
                           {t("home.tracking.guest.3.desc")}
                         </p>
                       </div>
-                    </div>
+                    </RevealItem>
 
-                    <div className="flex gap-4 p-4 bg-orange-50 rounded-lg border border-orange-200">
+                    <RevealItem className="flex gap-4 p-4 bg-orange-50 rounded-lg border border-orange-200">
                       <Star
                         size={24}
                         className="text-orange-600 flex-shrink-0"
@@ -736,11 +773,11 @@ export default function Home() {
                           {t("home.tracking.guest.4.desc")}
                         </p>
                       </div>
-                    </div>
+                    </RevealItem>
                   </>
                 ) : (
                   <>
-                    <div className="flex gap-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                    <RevealItem className="flex gap-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
                       <Navigation
                         size={24}
                         className="text-nova-green flex-shrink-0"
@@ -753,9 +790,9 @@ export default function Home() {
                           {t("home.tracking.host.1.desc")}
                         </p>
                       </div>
-                    </div>
+                    </RevealItem>
 
-                    <div className="flex gap-4 p-4 bg-green-50 rounded-lg border border-green-200">
+                    <RevealItem className="flex gap-4 p-4 bg-green-50 rounded-lg border border-green-200">
                       <Users
                         size={24}
                         className="text-green-600 flex-shrink-0"
@@ -768,9 +805,9 @@ export default function Home() {
                           {t("home.tracking.host.2.desc")}
                         </p>
                       </div>
-                    </div>
+                    </RevealItem>
 
-                    <div className="flex gap-4 p-4 bg-purple-50 rounded-lg border border-purple-200">
+                    <RevealItem className="flex gap-4 p-4 bg-purple-50 rounded-lg border border-purple-200">
                       <DollarSign
                         size={24}
                         className="text-purple-600 flex-shrink-0"
@@ -783,9 +820,9 @@ export default function Home() {
                           {t("home.tracking.host.3.desc")}
                         </p>
                       </div>
-                    </div>
+                    </RevealItem>
 
-                    <div className="flex gap-4 p-4 bg-orange-50 rounded-lg border border-orange-200">
+                    <RevealItem className="flex gap-4 p-4 bg-orange-50 rounded-lg border border-orange-200">
                       <Smartphone
                         size={24}
                         className="text-orange-600 flex-shrink-0"
@@ -798,14 +835,14 @@ export default function Home() {
                           {t("home.tracking.host.4.desc")}
                         </p>
                       </div>
-                    </div>
+                    </RevealItem>
                   </>
                 )}
-              </div>
-            </div>
+              </RevealGroup>
+            </RevealGroup>
 
             {/* Right Image */}
-            <div className="order-1 lg:order-2">
+            <RevealItem className="order-1 lg:order-2">
               <div className="relative h-72 sm:h-80 lg:h-[420px] rounded-2xl overflow-hidden border border-nova-green/20 shadow-lg">
                 <img
                   src={trackingBackground}
@@ -815,15 +852,18 @@ export default function Home() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-tr from-nova-charcoal/30 via-transparent to-transparent"></div>
               </div>
-            </div>
+            </RevealItem>
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* Ride Comfort & Amenities */}
-      <section className="section-padding bg-nova-green-light/20">
+      <RevealSection
+        as="section"
+        className="section-padding bg-nova-green-light/20"
+      >
         <div className="container-custom">
-          <div className="text-center mb-16 animate-slide-up">
+          <RevealItem className="text-center mb-16">
             <h2 className="heading-2 font-display text-nova-charcoal mb-4">
               {userType === "guest"
                 ? t("home.comfort.guest.title")
@@ -834,12 +874,12 @@ export default function Home() {
                 ? t("home.comfort.guest.desc")
                 : t("home.comfort.host.desc")}
             </p>
-          </div>
+          </RevealItem>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-stagger">
+          <RevealGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {userType === "guest" ? (
               <>
-                <div className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                <RevealItem className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:scale-105">
                   <div className="text-4xl mb-3 flex justify-center">
                     <Music size={36} className="text-nova-green" />
                   </div>
@@ -849,9 +889,9 @@ export default function Home() {
                   <p className="text-sm text-nova-charcoal-700">
                     {t("home.comfort.guest.1.desc")}
                   </p>
-                </div>
+                </RevealItem>
 
-                <div className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                <RevealItem className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:scale-105">
                   <div className="text-4xl mb-3 flex justify-center">
                     <Shield size={36} className="text-nova-green" />
                   </div>
@@ -861,9 +901,9 @@ export default function Home() {
                   <p className="text-sm text-nova-charcoal-700">
                     {t("home.comfort.guest.2.desc")}
                   </p>
-                </div>
+                </RevealItem>
 
-                <div className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                <RevealItem className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:scale-105">
                   <div className="text-4xl mb-3 flex justify-center">
                     <Wind size={36} className="text-nova-green" />
                   </div>
@@ -873,9 +913,9 @@ export default function Home() {
                   <p className="text-sm text-nova-charcoal-700">
                     {t("home.comfort.guest.3.desc")}
                   </p>
-                </div>
+                </RevealItem>
 
-                <div className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                <RevealItem className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:scale-105">
                   <div className="text-4xl mb-3 flex justify-center">
                     <Users size={36} className="text-nova-green" />
                   </div>
@@ -885,11 +925,11 @@ export default function Home() {
                   <p className="text-sm text-nova-charcoal-700">
                     {t("home.comfort.guest.4.desc")}
                   </p>
-                </div>
+                </RevealItem>
               </>
             ) : (
               <>
-                <div className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                <RevealItem className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:scale-105">
                   <div className="text-4xl mb-3 flex justify-center">
                     <Star size={36} className="text-nova-green" />
                   </div>
@@ -899,9 +939,9 @@ export default function Home() {
                   <p className="text-sm text-nova-charcoal-700">
                     {t("home.comfort.host.1.desc")}
                   </p>
-                </div>
+                </RevealItem>
 
-                <div className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                <RevealItem className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:scale-105">
                   <div className="text-4xl mb-3 flex justify-center">
                     <Gift size={36} className="text-nova-green" />
                   </div>
@@ -911,9 +951,9 @@ export default function Home() {
                   <p className="text-sm text-nova-charcoal-700">
                     {t("home.comfort.host.2.desc")}
                   </p>
-                </div>
+                </RevealItem>
 
-                <div className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                <RevealItem className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:scale-105">
                   <div className="text-4xl mb-3 flex justify-center">
                     <Handshake size={36} className="text-nova-green" />
                   </div>
@@ -923,9 +963,9 @@ export default function Home() {
                   <p className="text-sm text-nova-charcoal-700">
                     {t("home.comfort.host.3.desc")}
                   </p>
-                </div>
+                </RevealItem>
 
-                <div className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                <RevealItem className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:scale-105">
                   <div className="text-4xl mb-3 flex justify-center">
                     <Smartphone size={36} className="text-nova-green" />
                   </div>
@@ -935,22 +975,24 @@ export default function Home() {
                   <p className="text-sm text-nova-charcoal-700">
                     {t("home.comfort.host.4.desc")}
                   </p>
-                </div>
+                </RevealItem>
               </>
             )}
-          </div>
+          </RevealGroup>
         </div>
-      </section>
+      </RevealSection>
 
       {/* App Download Section */}
-      <section className="section-padding bg-nova-charcoal">
+      <RevealSection as="section" className="section-padding bg-nova-charcoal">
         <div className="container-custom">
           <div className="max-w-6xl mx-auto">
-            <h2 className="heading-2 font-display text-white mb-10">
-              {t("home.download.title")}
-            </h2>
+            <RevealItem>
+              <h2 className="heading-2 font-display text-white mb-10">
+                {t("home.download.title")}
+              </h2>
+            </RevealItem>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <RevealGroup className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {[
                 {
                   title: "Download the FeyRide Passenger app",
@@ -961,43 +1003,42 @@ export default function Home() {
                   description: "Scan to download",
                 },
               ].map((item, idx) => (
-                <div
-                  key={idx}
-                  className="group bg-white p-6 sm:p-7 border border-nova-charcoal-lighter hover:shadow-lg transition-all"
-                >
-                  <div className="flex items-center gap-5">
-                    <img
-                      src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(appInfoPageUrl)}`}
-                      alt={`${item.title} QR code`}
-                      className="w-28 h-28 sm:w-32 sm:h-32"
-                      loading="lazy"
-                    />
+                <RevealItem key={idx}>
+                  <div className="group bg-white p-6 sm:p-7 border border-nova-charcoal-lighter hover:shadow-lg transition-all">
+                    <div className="flex items-center gap-5">
+                      <img
+                        src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(appInfoPageUrl)}`}
+                        alt={`${item.title} QR code`}
+                        className="w-28 h-28 sm:w-32 sm:h-32"
+                        loading="lazy"
+                      />
 
-                    <div className="flex-1 min-w-0">
-                      <p className="text-2xl font-bold text-nova-charcoal leading-tight">
-                        {t(`home.download.${idx}.title`)}
-                      </p>
-                      <p className="text-xl text-nova-charcoal-700 mt-2">
-                        {t(`home.download.${idx}.desc`)}
-                      </p>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-2xl font-bold text-nova-charcoal leading-tight">
+                          {t(`home.download.${idx}.title`)}
+                        </p>
+                        <p className="text-xl text-nova-charcoal-700 mt-2">
+                          {t(`home.download.${idx}.desc`)}
+                        </p>
+                      </div>
+
+                      <ArrowRight
+                        size={30}
+                        className="text-nova-charcoal group-hover:translate-x-1 transition-transform flex-shrink-0"
+                      />
                     </div>
-
-                    <ArrowRight
-                      size={30}
-                      className="text-nova-charcoal group-hover:translate-x-1 transition-transform flex-shrink-0"
-                    />
                   </div>
-                </div>
+                </RevealItem>
               ))}
-            </div>
+            </RevealGroup>
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* Featured Routes */}
-      <section className="section-padding bg-white">
+      <RevealSection as="section" className="section-padding bg-white">
         <div className="container-custom">
-          <div className="text-center mb-16 animate-slide-up">
+          <RevealItem className="text-center mb-16">
             <h2 className="heading-2 font-display text-nova-charcoal mb-4">
               {t("home.routes.title")}
             </h2>
@@ -1009,79 +1050,81 @@ export default function Home() {
                     : t("home.routes.drivers"),
               })}
             </p>
-          </div>
+          </RevealItem>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-stagger">
+          <RevealGroup className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {routesData.routes.map((route) => (
-              <Card key={route.id} elevated className="card-hover">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="text-2xl">
-                        <Users size={24} className="text-nova-green" />
-                      </span>
-                      <div>
-                        <p className="font-semibold text-nova-charcoal">
-                          {route.host}
-                        </p>
-                        <Badge
-                          variant="success"
-                          className="text-xs inline-flex items-center gap-1"
-                        >
-                          <span className="sr-only">
-                            Rating: {route.rating}
-                          </span>
-                          {[...Array(5)].map((_, i) => (
-                            <Star
-                              key={i}
-                              size={12}
-                              className={
-                                i < Math.round(route.rating)
-                                  ? "text-yellow-400 fill-yellow-400"
-                                  : "text-yellow-400/40"
-                              }
-                            />
-                          ))}
-                        </Badge>
+              <RevealItem key={route.id}>
+                <Card elevated className="card-hover">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-2xl">
+                          <Users size={24} className="text-nova-green" />
+                        </span>
+                        <div>
+                          <p className="font-semibold text-nova-charcoal">
+                            {route.host}
+                          </p>
+                          <Badge
+                            variant="success"
+                            className="text-xs inline-flex items-center gap-1"
+                          >
+                            <span className="sr-only">
+                              Rating: {route.rating}
+                            </span>
+                            {[...Array(5)].map((_, i) => (
+                              <Star
+                                key={i}
+                                size={12}
+                                className={
+                                  i < Math.round(route.rating)
+                                    ? "text-yellow-400 fill-yellow-400"
+                                    : "text-yellow-400/40"
+                                }
+                              />
+                            ))}
+                          </Badge>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="space-y-3 mb-4">
-                  <div className="flex gap-2 items-center">
-                    <MapPin size={18} className="text-nova-charcoal-700" />
-                    <p className="text-sm text-gray-700">
-                      {route.from} to {route.to}
-                    </p>
+                  <div className="space-y-3 mb-4">
+                    <div className="flex gap-2 items-center">
+                      <MapPin size={18} className="text-nova-charcoal-700" />
+                      <p className="text-sm text-gray-700">
+                        {route.from} to {route.to}
+                      </p>
+                    </div>
+                    <div className="flex gap-2 items-center">
+                      <Clock size={18} className="text-nova-charcoal-700" />
+                      <p className="text-sm text-gray-700">{route.time}</p>
+                    </div>
+                    <div className="flex gap-2 items-center">
+                      <Users size={18} className="text-nova-charcoal-700" />
+                      <p className="text-sm text-nova-charcoal-700">
+                        {route.seats} seats available
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex gap-2 items-center">
-                    <Clock size={18} className="text-nova-charcoal-700" />
-                    <p className="text-sm text-gray-700">{route.time}</p>
+                  <div className="flex items-center justify-between pt-4 border-t border-nova-charcoal-lighter">
+                    <Button variant="primary" size="sm">
+                      {userType === "guest"
+                        ? t("home.routes.bookNow")
+                        : t("home.routes.similarRoute")}
+                    </Button>
                   </div>
-                  <div className="flex gap-2 items-center">
-                    <Users size={18} className="text-nova-charcoal-700" />
-                    <p className="text-sm text-nova-charcoal-700">
-                      {route.seats} seats available
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between pt-4 border-t border-nova-charcoal-lighter">
-                  <Button variant="primary" size="sm">
-                    {userType === "guest"
-                      ? t("home.routes.bookNow")
-                      : t("home.routes.similarRoute")}
-                  </Button>
-                </div>
-              </Card>
+                </Card>
+              </RevealItem>
             ))}
-          </div>
+          </RevealGroup>
         </div>
-      </section>
+      </RevealSection>
 
       {/* Testimonials */}
-      <section className="section-padding bg-white">
+      <RevealSection as="section" className="section-padding bg-white">
         <div className="container-custom">
-          <div className="max-w-5xl mx-auto text-center mb-12">
+          <RevealItem className="max-w-5xl mx-auto text-center mb-12">
             <p className="text-base font-semibold uppercase tracking-[0.2em] text-nova-green mb-4">
               Testimonials
             </p>
@@ -1092,66 +1135,67 @@ export default function Home() {
             <p className="subheading text-nova-charcoal-700">
               Hear from passengers and riders who use FeyRide every day.
             </p>
-          </div>
+          </RevealItem>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <RevealGroup className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {testimonialData.testimonials.slice(0, 3).map((testimonial) => (
-              <Card
-                key={testimonial.name}
-                elevated
-                className="h-full text-left border border-nova-charcoal-lighter"
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <img
-                    src={testimonialAvatars[testimonial.avatar]}
-                    alt={`${testimonial.name} headshot`}
-                    className="w-12 h-12 rounded-full object-cover border border-nova-charcoal-lighter"
-                    loading="lazy"
-                  />
-                  <div>
-                    <h4 className="font-display font-bold text-nova-charcoal">
-                      {testimonial.name}
-                    </h4>
-                    <p className="text-xs text-nova-charcoal-700">
-                      {testimonial.company}
+              <RevealItem key={testimonial.name}>
+                <Card
+                  elevated
+                  className="h-full text-left border border-nova-charcoal-lighter"
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    <img
+                      src={testimonialAvatars[testimonial.avatar]}
+                      alt={`${testimonial.name} headshot`}
+                      className="w-12 h-12 rounded-full object-cover border border-nova-charcoal-lighter"
+                      loading="lazy"
+                    />
+                    <div>
+                      <h4 className="font-display font-bold text-nova-charcoal">
+                        {testimonial.name}
+                      </h4>
+                      <p className="text-xs text-nova-charcoal-700">
+                        {testimonial.company}
+                      </p>
+                    </div>
+                  </div>
+
+                  <p className="text-sm text-nova-charcoal-700 mb-5 leading-relaxed">
+                    "{testimonial.quote}"
+                  </p>
+
+                  <div className="pt-4 border-t border-nova-charcoal-lighter">
+                    <p className="text-sm text-nova-charcoal">
+                      <span className="font-semibold text-nova-green">
+                        {testimonial.savedAmount
+                          ? `Saved NGN ${testimonial.savedAmount}`
+                          : `Earned NGN ${testimonial.earnedAmount}`}
+                      </span>{" "}
+                      on {testimonial.trips} trips
                     </p>
                   </div>
-                </div>
-
-                <p className="text-sm text-nova-charcoal-700 mb-5 leading-relaxed">
-                  "{testimonial.quote}"
-                </p>
-
-                <div className="pt-4 border-t border-nova-charcoal-lighter">
-                  <p className="text-sm text-nova-charcoal">
-                    <span className="font-semibold text-nova-green">
-                      {testimonial.savedAmount
-                        ? `Saved NGN ${testimonial.savedAmount}`
-                        : `Earned NGN ${testimonial.earnedAmount}`}
-                    </span>{" "}
-                    on {testimonial.trips} trips
-                  </p>
-                </div>
-              </Card>
+                </Card>
+              </RevealItem>
             ))}
-          </div>
+          </RevealGroup>
 
-          <div className="text-center mt-10">
+          <RevealItem className="text-center mt-10">
             <Link to="/stories">
               <Button variant="primary">
                 {t("home.testimonials.readMore")}
               </Button>
             </Link>
-          </div>
+          </RevealItem>
         </div>
-      </section>
+      </RevealSection>
 
       {/* Safety Section */}
-      <section className="section-padding bg-white">
+      <RevealSection as="section" className="section-padding bg-white">
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
-            <div className="order-2 md:order-1">
+            <RevealItem className="order-2 md:order-1">
               <div className="relative h-96 rounded-2xl border border-nova-green/20 overflow-hidden shadow-lg hover:shadow-2xl transition-all">
                 <img
                   src={safetyImage}
@@ -1169,18 +1213,20 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-            </div>
+            </RevealItem>
 
             {/* Right Content */}
-            <div className="order-1 md:order-2 space-y-6">
-              <h2 className="heading-2 font-display text-nova-charcoal">
-                {t("home.safety.title")}
-              </h2>
-              <p className="subheading text-nova-charcoal-700">
-                {t("home.safety.desc")}
-              </p>
+            <RevealGroup className="order-1 md:order-2 space-y-6">
+              <RevealItem>
+                <h2 className="heading-2 font-display text-nova-charcoal">
+                  {t("home.safety.title")}
+                </h2>
+                <p className="subheading text-nova-charcoal-700">
+                  {t("home.safety.desc")}
+                </p>
+              </RevealItem>
 
-              <div className="space-y-4">
+              <RevealGroup className="space-y-4">
                 {[
                   // { Icon: CheckCircle, title: 'ID + Selfie Verification', desc: 'Every user undergoes rigorous verification' },
                   {
@@ -1199,7 +1245,7 @@ export default function Home() {
                     desc: "Build trust through community feedback",
                   },
                 ].map((item, idx) => (
-                  <div key={idx} className="flex gap-4">
+                  <RevealItem key={idx} className="flex gap-4">
                     <div className="text-2xl flex-shrink-0">
                       <item.Icon size={28} className="text-nova-green" />
                     </div>
@@ -1211,23 +1257,27 @@ export default function Home() {
                         {t(`home.safety.items.${idx}.desc`)}
                       </p>
                     </div>
-                  </div>
+                  </RevealItem>
                 ))}
-              </div>
+              </RevealGroup>
 
-              <Link to="/safety">
-                <Button variant="outline">{t("home.safety.learnMore")}</Button>
-              </Link>
-            </div>
+              <RevealItem>
+                <Link to="/safety">
+                  <Button variant="outline">
+                    {t("home.safety.learnMore")}
+                  </Button>
+                </Link>
+              </RevealItem>
+            </RevealGroup>
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* Final CTA - Dynamic based on user type */}
-      <section className="section-padding bg-white">
+      <RevealSection as="section" className="section-padding bg-white">
         <div className="container-custom text-center">
-          <div className="max-w-3xl mx-auto space-y-8">
-            <div className="space-y-4">
+          <RevealGroup className="max-w-3xl mx-auto space-y-8">
+            <RevealItem className="space-y-4">
               <h2 className="heading-2 font-display text-nova-charcoal">
                 {userType === "guest"
                   ? t("home.finalCta.guest.title")
@@ -1238,34 +1288,38 @@ export default function Home() {
                   ? t("home.finalCta.guest.desc")
                   : t("home.finalCta.host.desc")}
               </p>
-            </div>
+            </RevealItem>
 
-            <div className="flex gap-4 justify-center flex-wrap">
-              <Button
-                variant="primary"
-                size="lg"
-                className="group"
-                onClick={handleAppDownload}
-              >
-                {userType === "guest"
-                  ? t("home.finalCta.guest.cta")
-                  : t("home.finalCta.host.cta")}
-                <ArrowRight
-                  size={20}
-                  className="group-hover:translate-x-1 transition-transform"
-                />
-              </Button>
-              <Link to="/how-it-works">
-                <Button variant="outline" size="lg">
+            <RevealGroup className="flex gap-4 justify-center flex-wrap">
+              <RevealItem>
+                <Button
+                  variant="primary"
+                  size="lg"
+                  className="group"
+                  onClick={handleAppDownload}
+                >
                   {userType === "guest"
-                    ? t("home.finalCta.guest.learnMore")
-                    : t("home.finalCta.host.learnMore")}
+                    ? t("home.finalCta.guest.cta")
+                    : t("home.finalCta.host.cta")}
+                  <ArrowRight
+                    size={20}
+                    className="group-hover:translate-x-1 transition-transform"
+                  />
                 </Button>
-              </Link>
-            </div>
-          </div>
+              </RevealItem>
+              <RevealItem>
+                <Link to="/how-it-works">
+                  <Button variant="outline" size="lg">
+                    {userType === "guest"
+                      ? t("home.finalCta.guest.learnMore")
+                      : t("home.finalCta.host.learnMore")}
+                  </Button>
+                </Link>
+              </RevealItem>
+            </RevealGroup>
+          </RevealGroup>
         </div>
-      </section>
+      </RevealSection>
     </div>
   );
 }

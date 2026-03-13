@@ -4,6 +4,7 @@ import testimonialData from '../data/testimonials.json';
 import Button from '../components/Button';
 import AppStoreBadge from '../components/AppStoreBadge';
 import GooglePlayBadge from '../components/GooglePlayBadge';
+import AnimatedNumber from '../components/AnimatedNumber';
 import headshot1 from '../assets/istockphoto-1138561236-612x612.jpg';
 import headshot2 from '../assets/istockphoto-2187993440-612x612.jpg';
 import headshot3 from '../assets/liam-pozz-yjmJBkKn26k-unsplash.jpg';
@@ -61,20 +62,26 @@ export default function Stories() {
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center mb-16">
             <div>
-              <p className="text-4xl font-bold text-nova-green">1K+</p>
+              <p className="text-4xl font-bold text-nova-green">
+                <AnimatedNumber value={1} suffix="K+" />
+              </p>
               <p className="text-gray-700 font-semibold">Active Users</p>
             </div>
             <div>
-              <p className="text-4xl font-bold text-nova-green">NGN 3M</p>
+              <p className="text-4xl font-bold text-nova-green">
+                <AnimatedNumber value={3} prefix="NGN " suffix="M" />
+              </p>
               <p className="text-gray-700 font-semibold">Saved by Community</p>
             </div>
             <div>
-              <p className="text-4xl font-bold text-nova-green">500+</p>
+              <p className="text-4xl font-bold text-nova-green">
+                <AnimatedNumber value={500} suffix="+" />
+              </p>
               <p className="text-gray-700 font-semibold">Completed Trips</p>
             </div>
             <div>
               <p className="text-4xl font-bold text-nova-green inline-flex items-center gap-2">
-                4.8
+                <AnimatedNumber value={4.8} decimals={1} />
                 <Star size={22} className="text-nova-green fill-nova-green" />
               </p>
               <p className="text-gray-700 font-semibold">Average Rating</p>
@@ -153,17 +160,23 @@ export default function Stories() {
               <div className="bg-gradient-to-br from-nova-green/10 to-nova-green/5 rounded-xl p-8 flex flex-col justify-center">
                 <div className="space-y-6 text-center">
                   <div>
-                    <p className="text-4xl font-bold text-nova-green">NGN 1,500</p>
+                    <p className="text-4xl font-bold text-nova-green">
+                      <AnimatedNumber value={1500} prefix="NGN " />
+                    </p>
                     <p className="text-gray-700">Daily Savings</p>
                   </div>
                   <div className="h-1 bg-nova-green/20"></div>
                   <div>
-                    <p className="text-4xl font-bold text-nova-green">45</p>
+                    <p className="text-4xl font-bold text-nova-green">
+                      <AnimatedNumber value={45} />
+                    </p>
                     <p className="text-gray-700">Trips Completed</p>
                   </div>
                   <div className="h-1 bg-nova-green/20"></div>
                   <div>
-                    <p className="text-4xl font-bold text-nova-green">NGN 67.5K</p>
+                    <p className="text-4xl font-bold text-nova-green">
+                      <AnimatedNumber value={67.5} prefix="NGN " suffix="K" decimals={1} />
+                    </p>
                     <p className="text-gray-700">Total Saved</p>
                   </div>
                   <div className="h-1 bg-nova-green/20"></div>

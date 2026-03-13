@@ -3,6 +3,7 @@ import Button from '../components/Button';
 import { SmartphoneIcon, AlertCircle, Star, Smartphone, Lock, AlertTriangle, CheckCircle, Shield, Phone, MapPin } from 'lucide-react';
 import AppStoreBadge from '../components/AppStoreBadge';
 import GooglePlayBadge from '../components/GooglePlayBadge';
+import AnimatedNumber from '../components/AnimatedNumber';
 
 export default function Safety() {
   return (
@@ -117,19 +118,25 @@ export default function Safety() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div className="space-y-4">
-              <p className="text-4xl font-bold text-nova-green">0.02%</p>
+              <p className="text-4xl font-bold text-nova-green">
+                <AnimatedNumber value={0.02} decimals={2} suffix="%" />
+              </p>
               <p className="text-lg font-semibold text-nova-charcoal">Safety Incident Rate</p>
               <p className="text-sm text-nova-charcoal-700">Among 500K+ trips</p>
             </div>
 
             <div className="space-y-4">
-              <p className="text-4xl font-bold text-nova-green">24/7</p>
+              <p className="text-4xl font-bold text-nova-green">
+                <AnimatedNumber value={24} suffix="/7" />
+              </p>
               <p className="text-lg font-semibold text-nova-charcoal">Support Available</p>
               <p className="text-sm text-nova-charcoal-700">Real people, real help</p>
             </div>
 
             <div className="space-y-4">
-              <p className="text-4xl font-bold text-nova-green">100%</p>
+              <p className="text-4xl font-bold text-nova-green">
+                <AnimatedNumber value={100} suffix="%" />
+              </p>
               <p className="text-lg font-semibold text-nova-charcoal">Incident Investigation</p>
               <p className="text-sm text-nova-charcoal-700">We take every report seriously</p>
             </div>
