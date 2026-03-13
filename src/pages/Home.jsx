@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 import {
@@ -62,8 +63,35 @@ import {
   redirectToStoreByDevice,
 } from "../utils/appStoreRedirect";
 
+const HOME_USER_TYPE_STORAGE_KEY = "feyride-home-user-type";
+const tabPanelMotionProps = {
+  initial: { opacity: 0, y: 24, filter: "blur(6px)" },
+  animate: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
+  },
+  exit: {
+    opacity: 0,
+    y: -16,
+    filter: "blur(6px)",
+    transition: { duration: 0.25, ease: [0.4, 0, 1, 1] },
+  },
+};
+
 export default function Home() {
-  const [userType, setUserType] = useState("guest");
+  const [userType, setUserType] = useState(() => {
+    if (typeof window === "undefined") {
+      return "guest";
+    }
+
+    const savedUserType = window.localStorage.getItem(
+      HOME_USER_TYPE_STORAGE_KEY,
+    );
+
+    return savedUserType === "host" ? "host" : "guest";
+  });
   const [tripType, setTripType] = useState("one-way");
   const { t } = useLanguage();
   const { guest: guestSteps, host: hostSteps } = howItWorksData.howItWorks;
@@ -91,6 +119,14 @@ export default function Home() {
   const handleAppDownload = () => {
     redirectToStoreByDevice();
   };
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    window.localStorage.setItem(HOME_USER_TYPE_STORAGE_KEY, userType);
+  }, [userType]);
 
   // All translation keys must be defined in LanguageContext translations
   const renderHeroTitle = (prefix) => {
@@ -361,54 +397,59 @@ export default function Home() {
                 Rider
               </Button>
             </div>
+            <AnimatePresence mode="wait">
+              <motion.div key={userType} {...tabPanelMotionProps}>
+                <div className="mb-4">
+                  <Badge variant="success">{currentContent.badge}</Badge>
+                </div>
 
-            <div className="mb-4">
-              <Badge variant="success">{currentContent.badge}</Badge>
-            </div>
+                <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-nova-charcoal leading-tight mb-6">
+                  {currentContent.title}
+                </h1>
+                <p className="subheading text-nova-charcoal-700 max-w-3xl mx-auto mb-8 typewriter-rtl">
+                  {currentContent.description}
+                </p>
 
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-nova-charcoal leading-tight mb-6">
-              {currentContent.title}
-            </h1>
-            <p className="subheading text-nova-charcoal-700 max-w-3xl mx-auto mb-8 typewriter-rtl">
-              {currentContent.description}
-            </p>
+                <div className="flex gap-4 justify-center flex-wrap mb-10">
+                  <Button variant="primary" size="lg" onClick={handleAppDownload}>
+                    {currentContent.cta}
+                    <ArrowRight size={18} />
+                  </Button>
+                  <Link to="/how-it-works">
+                    <Button variant="outline" size="lg">
+                      {t("home.finalCta.guest.learnMore")}
+                    </Button>
+                  </Link>
+                </div>
 
-            <div className="flex gap-4 justify-center flex-wrap mb-10">
-              <Button variant="primary" size="lg" onClick={handleAppDownload}>
-                {currentContent.cta}
-                <ArrowRight size={18} />
-              </Button>
-              <Link to="/how-it-works">
-                <Button variant="outline" size="lg">
-                  {t("home.finalCta.guest.learnMore")}
-                </Button>
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {currentContent.stats.map((stat, index) => (
-                <Card key={index} className="text-center">
-                  <p className="text-2xl font-bold text-nova-green">
-                    <AnimatedNumber
-                      value={stat.value}
-                      prefix={stat.prefix}
-                      suffix={stat.suffix}
-                      decimals={stat.decimals}
-                    />
-                    {stat.label === t("home.guest.stats.2") ||
-                    stat.label === t("home.host.stats.2") ? (
-                      <span className="inline-flex items-center ml-2 text-nova-green">
-                        <Star
-                          size={18}
-                          className="fill-nova-green text-nova-green"
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {currentContent.stats.map((stat, index) => (
+                    <Card key={`${userType}-${index}`} className="text-center">
+                      <p className="text-2xl font-bold text-nova-green">
+                        <AnimatedNumber
+                          value={stat.value}
+                          prefix={stat.prefix}
+                          suffix={stat.suffix}
+                          decimals={stat.decimals}
                         />
-                      </span>
-                    ) : null}
-                  </p>
-                  <p className="text-sm text-nova-charcoal-700">{stat.label}</p>
-                </Card>
-              ))}
-            </div>
+                        {stat.label === t("home.guest.stats.2") ||
+                        stat.label === t("home.host.stats.2") ? (
+                          <span className="inline-flex items-center ml-2 text-nova-green">
+                            <Star
+                              size={18}
+                              className="fill-nova-green text-nova-green"
+                            />
+                          </span>
+                        ) : null}
+                      </p>
+                      <p className="text-sm text-nova-charcoal-700">
+                        {stat.label}
+                      </p>
+                    </Card>
+                  ))}
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </section>
@@ -628,232 +669,244 @@ export default function Home() {
       {/* Quick Start Section */}
       <RevealSection as="section" className="section-padding bg-white">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-            <RevealItem className="relative">
-              <img
-                src={quickStartContent.image}
-                alt={quickStartContent.imageAlt}
-                className="w-full h-[420px] object-cover rounded-2xl border border-nova-green/20 shadow-lg"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-nova-charcoal/30 via-transparent to-transparent"></div>
-            </RevealItem>
-
-            <RevealGroup className="space-y-6">
-              <RevealItem>
-                <h2 className="heading-2 font-display text-nova-charcoal mb-3">
-                  Start in <span className="italic">2 Steps</span>
-                </h2>
-                <p className="subheading text-nova-charcoal-700">
-                  Choose your path and get moving quickly to book a seat.
-                </p>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`quick-start-${userType}`}
+              {...tabPanelMotionProps}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center"
+            >
+              <RevealItem className="relative">
+                <img
+                  src={quickStartContent.image}
+                  alt={quickStartContent.imageAlt}
+                  className="w-full h-[420px] object-cover rounded-2xl border border-nova-green/20 shadow-lg"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-nova-charcoal/30 via-transparent to-transparent"></div>
               </RevealItem>
 
-              <RevealItem>
-                <Card className="border border-nova-green/20">
-                  <h3 className="heading-5 font-display text-nova-charcoal mb-2">
-                    {quickStartContent.title}
-                  </h3>
-                  <p className="text-sm text-nova-charcoal-700 mb-4">
-                    {quickStartContent.description}
+              <RevealGroup className="space-y-6">
+                <RevealItem>
+                  <h2 className="heading-2 font-display text-nova-charcoal mb-3">
+                    Start in <span className="italic">2 Steps</span>
+                  </h2>
+                  <p className="subheading text-nova-charcoal-700">
+                    Choose your path and get moving quickly to book a seat.
                   </p>
-                  <ul className="space-y-2 mb-5 text-sm text-nova-charcoal-700">
-                    {quickStartContent.steps.map((step) => (
-                      <li key={step} className="flex items-start gap-2">
-                        <CheckCircle
-                          size={18}
-                          className="text-nova-green mt-0.5 flex-shrink-0"
-                        />
-                        <span>{step}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="flex flex-wrap gap-3">
-                    <Button
-                      variant="primary"
-                      size="sm"
-                      onClick={handleAppDownload}
-                    >
-                      Register
-                    </Button>
-                    {quickStartContent.secondaryAction.to === "/find-ride" ? (
-                      <Button variant="outline" size="sm">
-                        {quickStartContent.secondaryAction.label}
+                </RevealItem>
+
+                <RevealItem>
+                  <Card className="border border-nova-green/20">
+                    <h3 className="heading-5 font-display text-nova-charcoal mb-2">
+                      {quickStartContent.title}
+                    </h3>
+                    <p className="text-sm text-nova-charcoal-700 mb-4">
+                      {quickStartContent.description}
+                    </p>
+                    <ul className="space-y-2 mb-5 text-sm text-nova-charcoal-700">
+                      {quickStartContent.steps.map((step) => (
+                        <li key={step} className="flex items-start gap-2">
+                          <CheckCircle
+                            size={18}
+                            className="text-nova-green mt-0.5 flex-shrink-0"
+                          />
+                          <span>{step}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="flex flex-wrap gap-3">
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        onClick={handleAppDownload}
+                      >
+                        Register
                       </Button>
-                    ) : (
-                      <Link to={quickStartContent.secondaryAction.to}>
+                      {quickStartContent.secondaryAction.to === "/find-ride" ? (
                         <Button variant="outline" size="sm">
                           {quickStartContent.secondaryAction.label}
                         </Button>
-                      </Link>
-                    )}
-                  </div>
-                </Card>
-              </RevealItem>
-            </RevealGroup>
-          </div>
+                      ) : (
+                        <Link to={quickStartContent.secondaryAction.to}>
+                          <Button variant="outline" size="sm">
+                            {quickStartContent.secondaryAction.label}
+                          </Button>
+                        </Link>
+                      )}
+                    </div>
+                  </Card>
+                </RevealItem>
+              </RevealGroup>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </RevealSection>
 
       {/* Live Ride Tracking Section */}
       <RevealSection as="section" className="section-padding bg-white">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left Content */}
-            <RevealGroup className="space-y-6 order-2 lg:order-1">
-              <RevealItem>
-                <h2 className="heading-2 font-display text-nova-charcoal mb-4">
-                  {t("home.tracking.title")}
-                </h2>
-                <p className="subheading text-nova-charcoal-700 mb-8">
-                  {userType === "guest"
-                    ? t("home.tracking.guest.desc")
-                    : t("home.tracking.host.desc")}
-                </p>
-              </RevealItem>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`tracking-${userType}`}
+              {...tabPanelMotionProps}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+            >
+              {/* Left Content */}
+              <RevealGroup className="space-y-6 order-2 lg:order-1">
+                <RevealItem>
+                  <h2 className="heading-2 font-display text-nova-charcoal mb-4">
+                    {t("home.tracking.title")}
+                  </h2>
+                  <p className="subheading text-nova-charcoal-700 mb-8">
+                    {userType === "guest"
+                      ? t("home.tracking.guest.desc")
+                      : t("home.tracking.host.desc")}
+                  </p>
+                </RevealItem>
 
-              <RevealGroup className="space-y-4">
-                {userType === "guest" ? (
-                  <>
-                    <RevealItem className="flex gap-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                      <Navigation
-                        size={24}
-                        className="text-nova-green flex-shrink-0"
-                      />
-                      <div>
-                        <p className="font-semibold text-nova-charcoal">
-                          {t("home.tracking.guest.1.title")}
-                        </p>
-                        <p className="text-sm text-nova-charcoal-700">
-                          {t("home.tracking.guest.1.desc")}
-                        </p>
-                      </div>
-                    </RevealItem>
+                <RevealGroup className="space-y-4">
+                  {userType === "guest" ? (
+                    <>
+                      <RevealItem className="flex gap-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                        <Navigation
+                          size={24}
+                          className="text-nova-green flex-shrink-0"
+                        />
+                        <div>
+                          <p className="font-semibold text-nova-charcoal">
+                            {t("home.tracking.guest.1.title")}
+                          </p>
+                          <p className="text-sm text-nova-charcoal-700">
+                            {t("home.tracking.guest.1.desc")}
+                          </p>
+                        </div>
+                      </RevealItem>
 
-                    <RevealItem className="flex gap-4 p-4 bg-green-50 rounded-lg border border-green-200">
-                      <Users
-                        size={24}
-                        className="text-green-600 flex-shrink-0"
-                      />
-                      <div>
-                        <p className="font-semibold text-nova-charcoal">
-                          {t("home.tracking.guest.2.title")}
-                        </p>
-                        <p className="text-sm text-nova-charcoal-700">
-                          {t("home.tracking.guest.2.desc")}
-                        </p>
-                      </div>
-                    </RevealItem>
+                      <RevealItem className="flex gap-4 p-4 bg-green-50 rounded-lg border border-green-200">
+                        <Users
+                          size={24}
+                          className="text-green-600 flex-shrink-0"
+                        />
+                        <div>
+                          <p className="font-semibold text-nova-charcoal">
+                            {t("home.tracking.guest.2.title")}
+                          </p>
+                          <p className="text-sm text-nova-charcoal-700">
+                            {t("home.tracking.guest.2.desc")}
+                          </p>
+                        </div>
+                      </RevealItem>
 
-                    <RevealItem className="flex gap-4 p-4 bg-purple-50 rounded-lg border border-purple-200">
-                      <AlertCircle
-                        size={24}
-                        className="text-purple-600 flex-shrink-0"
-                      />
-                      <div>
-                        <p className="font-semibold text-nova-charcoal">
-                          {t("home.tracking.guest.3.title")}
-                        </p>
-                        <p className="text-sm text-nova-charcoal-700">
-                          {t("home.tracking.guest.3.desc")}
-                        </p>
-                      </div>
-                    </RevealItem>
+                      <RevealItem className="flex gap-4 p-4 bg-purple-50 rounded-lg border border-purple-200">
+                        <AlertCircle
+                          size={24}
+                          className="text-purple-600 flex-shrink-0"
+                        />
+                        <div>
+                          <p className="font-semibold text-nova-charcoal">
+                            {t("home.tracking.guest.3.title")}
+                          </p>
+                          <p className="text-sm text-nova-charcoal-700">
+                            {t("home.tracking.guest.3.desc")}
+                          </p>
+                        </div>
+                      </RevealItem>
 
-                    <RevealItem className="flex gap-4 p-4 bg-orange-50 rounded-lg border border-orange-200">
-                      <Star
-                        size={24}
-                        className="text-orange-600 flex-shrink-0"
-                      />
-                      <div>
-                        <p className="font-semibold text-nova-charcoal">
-                          {t("home.tracking.guest.4.title")}
-                        </p>
-                        <p className="text-sm text-nova-charcoal-700">
-                          {t("home.tracking.guest.4.desc")}
-                        </p>
-                      </div>
-                    </RevealItem>
-                  </>
-                ) : (
-                  <>
-                    <RevealItem className="flex gap-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                      <Navigation
-                        size={24}
-                        className="text-nova-green flex-shrink-0"
-                      />
-                      <div>
-                        <p className="font-semibold text-nova-charcoal">
-                          {t("home.tracking.host.1.title")}
-                        </p>
-                        <p className="text-sm text-nova-charcoal-700">
-                          {t("home.tracking.host.1.desc")}
-                        </p>
-                      </div>
-                    </RevealItem>
+                      <RevealItem className="flex gap-4 p-4 bg-orange-50 rounded-lg border border-orange-200">
+                        <Star
+                          size={24}
+                          className="text-orange-600 flex-shrink-0"
+                        />
+                        <div>
+                          <p className="font-semibold text-nova-charcoal">
+                            {t("home.tracking.guest.4.title")}
+                          </p>
+                          <p className="text-sm text-nova-charcoal-700">
+                            {t("home.tracking.guest.4.desc")}
+                          </p>
+                        </div>
+                      </RevealItem>
+                    </>
+                  ) : (
+                    <>
+                      <RevealItem className="flex gap-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                        <Navigation
+                          size={24}
+                          className="text-nova-green flex-shrink-0"
+                        />
+                        <div>
+                          <p className="font-semibold text-nova-charcoal">
+                            {t("home.tracking.host.1.title")}
+                          </p>
+                          <p className="text-sm text-nova-charcoal-700">
+                            {t("home.tracking.host.1.desc")}
+                          </p>
+                        </div>
+                      </RevealItem>
 
-                    <RevealItem className="flex gap-4 p-4 bg-green-50 rounded-lg border border-green-200">
-                      <Users
-                        size={24}
-                        className="text-green-600 flex-shrink-0"
-                      />
-                      <div>
-                        <p className="font-semibold text-nova-charcoal">
-                          {t("home.tracking.host.2.title")}
-                        </p>
-                        <p className="text-sm text-nova-charcoal-700">
-                          {t("home.tracking.host.2.desc")}
-                        </p>
-                      </div>
-                    </RevealItem>
+                      <RevealItem className="flex gap-4 p-4 bg-green-50 rounded-lg border border-green-200">
+                        <Users
+                          size={24}
+                          className="text-green-600 flex-shrink-0"
+                        />
+                        <div>
+                          <p className="font-semibold text-nova-charcoal">
+                            {t("home.tracking.host.2.title")}
+                          </p>
+                          <p className="text-sm text-nova-charcoal-700">
+                            {t("home.tracking.host.2.desc")}
+                          </p>
+                        </div>
+                      </RevealItem>
 
-                    <RevealItem className="flex gap-4 p-4 bg-purple-50 rounded-lg border border-purple-200">
-                      <DollarSign
-                        size={24}
-                        className="text-purple-600 flex-shrink-0"
-                      />
-                      <div>
-                        <p className="font-semibold text-nova-charcoal">
-                          {t("home.tracking.host.3.title")}
-                        </p>
-                        <p className="text-sm text-nova-charcoal-700">
-                          {t("home.tracking.host.3.desc")}
-                        </p>
-                      </div>
-                    </RevealItem>
+                      <RevealItem className="flex gap-4 p-4 bg-purple-50 rounded-lg border border-purple-200">
+                        <DollarSign
+                          size={24}
+                          className="text-purple-600 flex-shrink-0"
+                        />
+                        <div>
+                          <p className="font-semibold text-nova-charcoal">
+                            {t("home.tracking.host.3.title")}
+                          </p>
+                          <p className="text-sm text-nova-charcoal-700">
+                            {t("home.tracking.host.3.desc")}
+                          </p>
+                        </div>
+                      </RevealItem>
 
-                    <RevealItem className="flex gap-4 p-4 bg-orange-50 rounded-lg border border-orange-200">
-                      <Smartphone
-                        size={24}
-                        className="text-orange-600 flex-shrink-0"
-                      />
-                      <div>
-                        <p className="font-semibold text-nova-charcoal">
-                          {t("home.tracking.host.4.title")}
-                        </p>
-                        <p className="text-sm text-nova-charcoal-700">
-                          {t("home.tracking.host.4.desc")}
-                        </p>
-                      </div>
-                    </RevealItem>
-                  </>
-                )}
+                      <RevealItem className="flex gap-4 p-4 bg-orange-50 rounded-lg border border-orange-200">
+                        <Smartphone
+                          size={24}
+                          className="text-orange-600 flex-shrink-0"
+                        />
+                        <div>
+                          <p className="font-semibold text-nova-charcoal">
+                            {t("home.tracking.host.4.title")}
+                          </p>
+                          <p className="text-sm text-nova-charcoal-700">
+                            {t("home.tracking.host.4.desc")}
+                          </p>
+                        </div>
+                      </RevealItem>
+                    </>
+                  )}
+                </RevealGroup>
               </RevealGroup>
-            </RevealGroup>
 
-            {/* Right Image */}
-            <RevealItem className="order-1 lg:order-2">
-              <div className="relative h-72 sm:h-80 lg:h-[420px] rounded-2xl overflow-hidden border border-nova-green/20 shadow-lg">
-                <img
-                  src={trackingBackground}
-                  alt="Map background"
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-tr from-nova-charcoal/30 via-transparent to-transparent"></div>
-              </div>
-            </RevealItem>
-          </div>
+              {/* Right Image */}
+              <RevealItem className="order-1 lg:order-2">
+                <div className="relative h-72 sm:h-80 lg:h-[420px] rounded-2xl overflow-hidden border border-nova-green/20 shadow-lg">
+                  <img
+                    src={trackingBackground}
+                    alt="Map background"
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-nova-charcoal/30 via-transparent to-transparent"></div>
+                </div>
+              </RevealItem>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </RevealSection>
 
@@ -863,22 +916,24 @@ export default function Home() {
         className="section-padding bg-nova-green-light/20"
       >
         <div className="container-custom">
-          <RevealItem className="text-center mb-16">
-            <h2 className="heading-2 font-display text-nova-charcoal mb-4">
-              {userType === "guest"
-                ? t("home.comfort.guest.title")
-                : t("home.comfort.host.title")}
-            </h2>
-            <p className="subheading text-nova-charcoal-700">
-              {userType === "guest"
-                ? t("home.comfort.guest.desc")
-                : t("home.comfort.host.desc")}
-            </p>
-          </RevealItem>
+          <AnimatePresence mode="wait">
+            <motion.div key={`comfort-${userType}`} {...tabPanelMotionProps}>
+              <RevealItem className="text-center mb-16">
+                <h2 className="heading-2 font-display text-nova-charcoal mb-4">
+                  {userType === "guest"
+                    ? t("home.comfort.guest.title")
+                    : t("home.comfort.host.title")}
+                </h2>
+                <p className="subheading text-nova-charcoal-700">
+                  {userType === "guest"
+                    ? t("home.comfort.guest.desc")
+                    : t("home.comfort.host.desc")}
+                </p>
+              </RevealItem>
 
-          <RevealGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {userType === "guest" ? (
-              <>
+              <RevealGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {userType === "guest" ? (
+                  <>
                 <RevealItem className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:scale-105">
                   <div className="text-4xl mb-3 flex justify-center">
                     <Music size={36} className="text-nova-green" />
@@ -976,9 +1031,11 @@ export default function Home() {
                     {t("home.comfort.host.4.desc")}
                   </p>
                 </RevealItem>
-              </>
-            )}
-          </RevealGroup>
+                  </>
+                )}
+              </RevealGroup>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </RevealSection>
 
@@ -1038,86 +1095,90 @@ export default function Home() {
       {/* Featured Routes */}
       <RevealSection as="section" className="section-padding bg-white">
         <div className="container-custom">
-          <RevealItem className="text-center mb-16">
-            <h2 className="heading-2 font-display text-nova-charcoal mb-4">
-              {t("home.routes.title")}
-            </h2>
-            <p className="subheading text-nova-charcoal-700">
-              {t("home.routes.desc", {
-                who:
-                  userType === "guest"
-                    ? t("home.routes.riders")
-                    : t("home.routes.drivers"),
-              })}
-            </p>
-          </RevealItem>
+          <AnimatePresence mode="wait">
+            <motion.div key={`routes-${userType}`} {...tabPanelMotionProps}>
+              <RevealItem className="text-center mb-16">
+                <h2 className="heading-2 font-display text-nova-charcoal mb-4">
+                  {t("home.routes.title")}
+                </h2>
+                <p className="subheading text-nova-charcoal-700">
+                  {t("home.routes.desc", {
+                    who:
+                      userType === "guest"
+                        ? t("home.routes.riders")
+                        : t("home.routes.drivers"),
+                  })}
+                </p>
+              </RevealItem>
 
-          <RevealGroup className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {routesData.routes.map((route) => (
-              <RevealItem key={route.id}>
-                <Card elevated className="card-hover">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-2xl">
-                          <Users size={24} className="text-nova-green" />
-                        </span>
-                        <div>
-                          <p className="font-semibold text-nova-charcoal">
-                            {route.host}
-                          </p>
-                          <Badge
-                            variant="success"
-                            className="text-xs inline-flex items-center gap-1"
-                          >
-                            <span className="sr-only">
-                              Rating: {route.rating}
+              <RevealGroup className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {routesData.routes.map((route) => (
+                  <RevealItem key={`${userType}-${route.id}`}>
+                    <Card elevated className="card-hover">
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="text-2xl">
+                              <Users size={24} className="text-nova-green" />
                             </span>
-                            {[...Array(5)].map((_, i) => (
-                              <Star
-                                key={i}
-                                size={12}
-                                className={
-                                  i < Math.round(route.rating)
-                                    ? "text-yellow-400 fill-yellow-400"
-                                    : "text-yellow-400/40"
-                                }
-                              />
-                            ))}
-                          </Badge>
+                            <div>
+                              <p className="font-semibold text-nova-charcoal">
+                                {route.host}
+                              </p>
+                              <Badge
+                                variant="success"
+                                className="text-xs inline-flex items-center gap-1"
+                              >
+                                <span className="sr-only">
+                                  Rating: {route.rating}
+                                </span>
+                                {[...Array(5)].map((_, i) => (
+                                  <Star
+                                    key={i}
+                                    size={12}
+                                    className={
+                                      i < Math.round(route.rating)
+                                        ? "text-yellow-400 fill-yellow-400"
+                                        : "text-yellow-400/40"
+                                    }
+                                  />
+                                ))}
+                              </Badge>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div className="space-y-3 mb-4">
-                    <div className="flex gap-2 items-center">
-                      <MapPin size={18} className="text-nova-charcoal-700" />
-                      <p className="text-sm text-gray-700">
-                        {route.from} to {route.to}
-                      </p>
-                    </div>
-                    <div className="flex gap-2 items-center">
-                      <Clock size={18} className="text-nova-charcoal-700" />
-                      <p className="text-sm text-gray-700">{route.time}</p>
-                    </div>
-                    <div className="flex gap-2 items-center">
-                      <Users size={18} className="text-nova-charcoal-700" />
-                      <p className="text-sm text-nova-charcoal-700">
-                        {route.seats} seats available
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between pt-4 border-t border-nova-charcoal-lighter">
-                    <Button variant="primary" size="sm">
-                      {userType === "guest"
-                        ? t("home.routes.bookNow")
-                        : t("home.routes.similarRoute")}
-                    </Button>
-                  </div>
-                </Card>
-              </RevealItem>
-            ))}
-          </RevealGroup>
+                      <div className="space-y-3 mb-4">
+                        <div className="flex gap-2 items-center">
+                          <MapPin size={18} className="text-nova-charcoal-700" />
+                          <p className="text-sm text-gray-700">
+                            {route.from} to {route.to}
+                          </p>
+                        </div>
+                        <div className="flex gap-2 items-center">
+                          <Clock size={18} className="text-nova-charcoal-700" />
+                          <p className="text-sm text-gray-700">{route.time}</p>
+                        </div>
+                        <div className="flex gap-2 items-center">
+                          <Users size={18} className="text-nova-charcoal-700" />
+                          <p className="text-sm text-nova-charcoal-700">
+                            {route.seats} seats available
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between pt-4 border-t border-nova-charcoal-lighter">
+                        <Button variant="primary" size="sm">
+                          {userType === "guest"
+                            ? t("home.routes.bookNow")
+                            : t("home.routes.similarRoute")}
+                        </Button>
+                      </div>
+                    </Card>
+                  </RevealItem>
+                ))}
+              </RevealGroup>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </RevealSection>
 
@@ -1276,48 +1337,52 @@ export default function Home() {
       {/* Final CTA - Dynamic based on user type */}
       <RevealSection as="section" className="section-padding bg-white">
         <div className="container-custom text-center">
-          <RevealGroup className="max-w-3xl mx-auto space-y-8">
-            <RevealItem className="space-y-4">
-              <h2 className="heading-2 font-display text-nova-charcoal">
-                {userType === "guest"
-                  ? t("home.finalCta.guest.title")
-                  : t("home.finalCta.host.title")}
-              </h2>
-              <p className="subheading text-nova-charcoal-700">
-                {userType === "guest"
-                  ? t("home.finalCta.guest.desc")
-                  : t("home.finalCta.host.desc")}
-              </p>
-            </RevealItem>
-
-            <RevealGroup className="flex gap-4 justify-center flex-wrap">
-              <RevealItem>
-                <Button
-                  variant="primary"
-                  size="lg"
-                  className="group"
-                  onClick={handleAppDownload}
-                >
-                  {userType === "guest"
-                    ? t("home.finalCta.guest.cta")
-                    : t("home.finalCta.host.cta")}
-                  <ArrowRight
-                    size={20}
-                    className="group-hover:translate-x-1 transition-transform"
-                  />
-                </Button>
-              </RevealItem>
-              <RevealItem>
-                <Link to="/how-it-works">
-                  <Button variant="outline" size="lg">
+          <AnimatePresence mode="wait">
+            <motion.div key={`final-cta-${userType}`} {...tabPanelMotionProps}>
+              <RevealGroup className="max-w-3xl mx-auto space-y-8">
+                <RevealItem className="space-y-4">
+                  <h2 className="heading-2 font-display text-nova-charcoal">
                     {userType === "guest"
-                      ? t("home.finalCta.guest.learnMore")
-                      : t("home.finalCta.host.learnMore")}
-                  </Button>
-                </Link>
-              </RevealItem>
-            </RevealGroup>
-          </RevealGroup>
+                      ? t("home.finalCta.guest.title")
+                      : t("home.finalCta.host.title")}
+                  </h2>
+                  <p className="subheading text-nova-charcoal-700">
+                    {userType === "guest"
+                      ? t("home.finalCta.guest.desc")
+                      : t("home.finalCta.host.desc")}
+                  </p>
+                </RevealItem>
+
+                <RevealGroup className="flex gap-4 justify-center flex-wrap">
+                  <RevealItem>
+                    <Button
+                      variant="primary"
+                      size="lg"
+                      className="group"
+                      onClick={handleAppDownload}
+                    >
+                      {userType === "guest"
+                        ? t("home.finalCta.guest.cta")
+                        : t("home.finalCta.host.cta")}
+                      <ArrowRight
+                        size={20}
+                        className="group-hover:translate-x-1 transition-transform"
+                      />
+                    </Button>
+                  </RevealItem>
+                  <RevealItem>
+                    <Link to="/how-it-works">
+                      <Button variant="outline" size="lg">
+                        {userType === "guest"
+                          ? t("home.finalCta.guest.learnMore")
+                          : t("home.finalCta.host.learnMore")}
+                      </Button>
+                    </Link>
+                  </RevealItem>
+                </RevealGroup>
+              </RevealGroup>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </RevealSection>
     </div>
