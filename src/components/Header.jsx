@@ -324,12 +324,12 @@ export default function Header() {
               <div className="flex items-start justify-between gap-4 border-b border-white/10 px-6 py-5">
                 <div>
                   <p className="mb-2 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-red-300">
-                    <AlertTriangle className="h-4 w-4" />
+                    <AlertTriangle className="h-8 w-8" />
                     Emergency Support
                   </p>
-                  <h2 id="sos-alert-title" className="text-2xl font-bold">
-                    Trigger an SOS response
-                  </h2>
+                  {/* <h2 id="sos-alert-title" className="text-xl font-bold">
+                    Trigger SOS response
+                  </h2> */}
                   <p className="mt-2 text-sm text-white/75">
                     If a rider or passenger is at risk, use one of these actions immediately.
                   </p>
