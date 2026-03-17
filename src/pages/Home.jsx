@@ -1186,7 +1186,7 @@ export default function Home() {
       <RevealSection as="section" className="section-padding bg-white">
         <div className="container-custom">
           <RevealItem className="max-w-5xl mx-auto text-center mb-12">
-            <p className="text-base font-semibold uppercase tracking-[0.2em] text-nova-green mb-4">
+            <p className="text-xl font-semibold uppercase tracking-[0.2em] text-nova-green mb-4">
               Testimonials
             </p>
             <h2 className="heading-2 font-display text-nova-charcoal mb-4">

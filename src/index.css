@@ -319,15 +319,15 @@ a:hover {
   }
 
   .card {
-    @apply bg-white rounded-xl border border-nova-charcoal-lighter shadow-md hover:shadow-xl hover:border-nova-green/40 transition-all duration-300 transform hover:scale-105;
+    @apply bg-white rounded-xl border border-nova-charcoal-lighter hover:border-nova-green/40 transition-all duration-300 transform hover:scale-105;
   }
 
   .card-elevated {
-    @apply bg-white rounded-xl shadow-lg border border-nova-green/10 hover:shadow-xl hover:border-nova-green/40 transition-all duration-300 transform hover:scale-105;
+    @apply bg-white rounded-xl border border-nova-green/10 hover:border-nova-green/40 transition-all duration-300 transform hover:scale-105;
   }
 
   .card-hover {
-    @apply transition-all duration-300 scale-100 hover:scale-105 hover:shadow-xl;
+    @apply transition-all duration-300 scale-100 hover:scale-105;
   }
 
   .badge {
