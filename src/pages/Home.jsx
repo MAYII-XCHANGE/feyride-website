@@ -41,6 +41,7 @@ import Badge from "../components/Badge";
 import AppStoreBadge from "../components/AppStoreBadge";
 import GooglePlayBadge from "../components/GooglePlayBadge";
 import AnimatedNumber from "../components/AnimatedNumber";
+import TestimonialMarquee from "../components/TestimonialMarquee";
 import {
   RevealGroup,
   RevealItem,
@@ -422,9 +423,12 @@ export default function Home() {
                   </Link>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                   {currentContent.stats.map((stat, index) => (
-                    <Card key={`${userType}-${index}`} className="text-center">
+                    <Card
+                      key={`${userType}-${index}`}
+                      className="flex h-full flex-col justify-center text-center"
+                    >
                       <p className="text-2xl font-bold text-nova-green">
                         <AnimatedNumber
                           value={stat.value}
@@ -1113,8 +1117,8 @@ export default function Home() {
 
               <RevealGroup className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {routesData.routes.map((route) => (
-                  <RevealItem key={`${userType}-${route.id}`}>
-                    <Card elevated className="card-hover">
+                  <RevealItem key={`${userType}-${route.id}`} className="h-full">
+                    <Card elevated className="card-hover flex h-full flex-col">
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-2">
@@ -1166,7 +1170,7 @@ export default function Home() {
                           </p>
                         </div>
                       </div>
-                      <div className="flex items-center justify-between pt-4 border-t border-nova-charcoal-lighter">
+                      <div className="mt-auto flex items-center justify-between border-t border-nova-charcoal-lighter pt-4">
                         <Button variant="primary" size="sm">
                           {userType === "guest"
                             ? t("home.routes.bookNow")
@@ -1198,48 +1202,12 @@ export default function Home() {
             </p>
           </RevealItem>
 
-          <RevealGroup className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {testimonialData.testimonials.slice(0, 3).map((testimonial) => (
-              <RevealItem key={testimonial.name}>
-                <Card
-                  elevated
-                  className="h-full text-left border border-nova-charcoal-lighter"
-                >
-                  <div className="flex items-center gap-3 mb-4">
-                    <img
-                      src={testimonialAvatars[testimonial.avatar]}
-                      alt={`${testimonial.name} headshot`}
-                      className="w-12 h-12 rounded-full object-cover border border-nova-charcoal-lighter"
-                      loading="lazy"
-                    />
-                    <div>
-                      <h4 className="font-display font-bold text-nova-charcoal">
-                        {testimonial.name}
-                      </h4>
-                      <p className="text-xs text-nova-charcoal-700">
-                        {testimonial.company}
-                      </p>
-                    </div>
-                  </div>
-
-                  <p className="text-sm text-nova-charcoal-700 mb-5 leading-relaxed">
-                    "{testimonial.quote}"
-                  </p>
-
-                  <div className="pt-4 border-t border-nova-charcoal-lighter">
-                    <p className="text-sm text-nova-charcoal">
-                      <span className="font-semibold text-nova-green">
-                        {testimonial.savedAmount
-                          ? `Saved NGN ${testimonial.savedAmount}`
-                          : `Earned NGN ${testimonial.earnedAmount}`}
-                      </span>{" "}
-                      on {testimonial.trips} trips
-                    </p>
-                  </div>
-                </Card>
-              </RevealItem>
-            ))}
-          </RevealGroup>
+          <RevealItem>
+            <TestimonialMarquee
+              testimonials={testimonialData.testimonials}
+              testimonialAvatars={testimonialAvatars}
+            />
+          </RevealItem>
 
           <RevealItem className="text-center mt-10">
             <Link to="/stories">
