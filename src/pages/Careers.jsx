@@ -29,28 +29,34 @@ export default function Careers() {
       summary: 'Support daily ride operations and improve host/rider success metrics.'
     },
     {
-      title: 'Community & Safety Specialist',
-      location: 'Remote',
-      type: 'Full-time',
-      summary: 'Strengthen trust, safety workflows, and community engagement programs.'
-    },
-    {
       title: 'Growth Marketing Manager',
       location: 'Lagos, Nigeria',
       type: 'Full-time',
       summary: 'Lead campaigns, partnerships, and experiments that grow rider adoption and host participation.'
     },
     {
+      title: 'Content Creator',
+      location: 'Lagos, Nigeria (Hybrid)',
+      type: 'Full-time',
+      summary: 'Create engaging photo, video, and short-form content that tells the FeyRide story and connects with everyday commuters.'
+    },
+    {
+      title: 'Digital Marketer',
+      location: 'Remote',
+      type: 'Full-time',
+      summary: 'Plan and execute paid, organic, and partnership campaigns that increase awareness, installs, and qualified sign-ups.'
+    },
+    {
+      title: 'Social Media Manager',
+      location: 'Remote',
+      type: 'Full-time',
+      summary: 'Own FeyRide’s social voice, content calendar, and community engagement across key platforms.'
+    },
+    {
       title: 'Customer Support Specialist',
       location: 'Remote',
       type: 'Full-time',
       summary: 'Help riders and hosts resolve issues quickly while turning support insights into product improvements.'
-    },
-    {
-      title: 'Data Analyst',
-      location: 'Remote',
-      type: 'Full-time',
-      summary: 'Translate trip, demand, and safety data into insights that improve marketplace performance and service quality.'
     },
   ];
 

@@ -103,6 +103,18 @@ export default function Blog() {
         'As commuting choices become more crowded, transparent feedback becomes a core part of safety and reliability, not just a nice extra feature.',
       ],
     },
+    {
+      title: 'How FeyRide Helps Teams Coordinate Office Commutes',
+      date: 'Mar 10, 2026',
+      category: 'Workplace Mobility',
+      excerpt:
+        'Shared commute routines are helping coworkers arrive more predictably, cut costs, and reduce the stress of getting to the office each week.',
+      story: [
+        'For many teams, the commute is one of the least organized parts of the workday. People leave from similar neighborhoods, travel at nearly the same time, and still handle transport separately.',
+        'FeyRide makes coordination easier by giving coworkers a more structured way to align routes, pickup windows, and recurring travel plans. That kind of routine lowers uncertainty and makes office attendance feel easier to manage.',
+        'The benefit is not only financial. When teams arrive more consistently and with less transport stress, the workday starts with better energy and fewer last-minute disruptions.',
+      ],
+    },
   ];
 
   useEffect(() => {
