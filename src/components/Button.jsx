@@ -5,6 +5,7 @@ export default function Button({
   size = 'md',
   disabled = false,
   className = '',
+  href,
   ...props
 }) {
   const baseStyles = 'font-semibold rounded-lg transition-all duration-200 inline-flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-primary-200/60 focus:ring-offset-2';
@@ -27,6 +28,19 @@ export default function Button({
   };
 
   const finalClassName = `${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`;
+
+  if (href) {
+    return (
+      <a
+        className={finalClassName}
+        href={href}
+        aria-disabled={disabled}
+        {...props}
+      >
+        {children}
+      </a>
+    );
+  }
 
   return (
     <button
