@@ -48,6 +48,7 @@ import {
   RevealSection,
 } from "../components/SectionReveal";
 import routesData from "../data/routes.json";
+import { lagosLocations } from "../data/lagosLocations";
 import testimonialData from "../data/testimonials.json";
 import howItWorksData from "../data/howItWorks.json";
 import guestOnboardingImage from "../assets/pexels-gustavo-fring-4895405.jpg";
@@ -80,8 +81,10 @@ const tabPanelMotionProps = {
     transition: { duration: 0.25, ease: [0.4, 0, 1, 1] },
   },
 };
+const MotionDiv = motion.div;
 
 export default function Home() {
+  const todayDate = new Date().toISOString().split("T")[0];
   const [userType, setUserType] = useState(() => {
     if (typeof window === "undefined") {
       return "guest";
@@ -93,7 +96,15 @@ export default function Home() {
 
     return savedUserType === "host" ? "host" : "guest";
   });
-  const [tripType, setTripType] = useState("one-way");
+  const [tripType, setTripType] = useState("pickup-now");
+  const [pickupLocation, setPickupLocation] = useState("");
+  const [dropoffLocation, setDropoffLocation] = useState("");
+  const [scheduledDate, setScheduledDate] = useState(todayDate);
+  const [scheduledTime, setScheduledTime] = useState("08:30");
+  const [showPickupSuggestions, setShowPickupSuggestions] = useState(false);
+  const [showDropoffSuggestions, setShowDropoffSuggestions] = useState(false);
+  const [pickupLocationError, setPickupLocationError] = useState("");
+  const [isLocatingPickup, setIsLocatingPickup] = useState(false);
   const { t } = useLanguage();
   const { guest: guestSteps, host: hostSteps } = howItWorksData.howItWorks;
   const iconMap = {
@@ -119,6 +130,110 @@ export default function Home() {
       : "/coming-soon";
   const handleAppDownload = () => {
     redirectToStoreByDevice();
+  };
+
+  const getMatchingLocations = (query) => {
+    const normalizedQuery = query.trim().toLowerCase();
+
+    if (!normalizedQuery) {
+      return lagosLocations.slice(0, 6);
+    }
+
+    return lagosLocations
+      .filter((location) =>
+        `${location.name} ${location.address}`
+          .toLowerCase()
+          .includes(normalizedQuery),
+      )
+      .slice(0, 6);
+  };
+
+  const pickupSuggestions = getMatchingLocations(pickupLocation);
+  const dropoffSuggestions = getMatchingLocations(dropoffLocation);
+
+  const getDistanceInKm = (lat1, lng1, lat2, lng2) => {
+    const toRadians = (value) => (value * Math.PI) / 180;
+    const earthRadiusKm = 6371;
+    const deltaLat = toRadians(lat2 - lat1);
+    const deltaLng = toRadians(lng2 - lng1);
+    const a =
+      Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+      Math.cos(toRadians(lat1)) *
+        Math.cos(toRadians(lat2)) *
+        Math.sin(deltaLng / 2) *
+        Math.sin(deltaLng / 2);
+
+    return earthRadiusKm * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  };
+
+  const resolveNearestLagosLocation = (latitude, longitude) => {
+    const matches = lagosLocations
+      .map((location) => ({
+        ...location,
+        distanceKm: getDistanceInKm(
+          latitude,
+          longitude,
+          location.lat,
+          location.lng,
+        ),
+      }))
+      .sort((first, second) => first.distanceKm - second.distanceKm);
+
+    return matches[0];
+  };
+
+  const handleUseCurrentPickupLocation = () => {
+    if (typeof navigator === "undefined" || !navigator.geolocation) {
+      setPickupLocationError("Location access is not supported on this device.");
+      return;
+    }
+
+    setIsLocatingPickup(true);
+    setPickupLocationError("");
+
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        const nearestLocation = resolveNearestLagosLocation(
+          coords.latitude,
+          coords.longitude,
+        );
+
+        if (!nearestLocation || nearestLocation.distanceKm > 35) {
+          setPickupLocationError(
+            "We could not match your current position to a pickup point in Lagos.",
+          );
+          setIsLocatingPickup(false);
+          return;
+        }
+
+        setPickupLocation(
+          `Current location near ${nearestLocation.address}`,
+        );
+        setShowPickupSuggestions(false);
+        setIsLocatingPickup(false);
+      },
+      (error) => {
+        const message =
+          error.code === error.PERMISSION_DENIED
+            ? "Location permission was denied."
+            : "We could not get your current location right now.";
+
+        setPickupLocationError(message);
+        setIsLocatingPickup(false);
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 120000 },
+    );
+  };
+
+  const selectPickupLocation = (address) => {
+    setPickupLocation(address);
+    setShowPickupSuggestions(false);
+    setPickupLocationError("");
+  };
+
+  const selectDropoffLocation = (address) => {
+    setDropoffLocation(address);
+    setShowDropoffSuggestions(false);
   };
 
   useEffect(() => {
@@ -149,8 +264,7 @@ export default function Home() {
   const guestContent = {
     badge: t("home.guest.badge"),
     title: renderHeroTitle("home.guest"),
-    //description: t('home.guest.description'),
-    cta: t("home.guest.cta"),
+    // description: "Set your clear route, book faster and attract drivers",
     features: [
       {
         icon: Search,
@@ -183,8 +297,7 @@ export default function Home() {
   const hostContent = {
     badge: t("home.host.badge"),
     title: renderHeroTitle("home.host"),
-    //description: t('home.host.description'),
-    cta: t("home.host.cta"),
+    // description: "Set a clear route and attract the right passengers",
     features: [
       {
         icon: TrendingUp,
@@ -216,6 +329,20 @@ export default function Home() {
   };
 
   const currentContent = userType === "guest" ? guestContent : hostContent;
+  const heroPlannerContent =
+    userType === "guest"
+      ? {
+          cta: "See available rides",
+          helper: "Live ride matching",
+          pickupPlaceholder: "Enter pickup location",
+          dropoffPlaceholder: "Enter destination",
+        }
+      : {
+          cta: "Plan your route",
+          helper: "Clear route setup",
+          pickupPlaceholder: "Enter pickup point",
+          dropoffPlaceholder: "Enter destination point",
+        };
   const quickStartContent =
     userType === "guest"
       ? {
@@ -245,7 +372,7 @@ export default function Home() {
     <div className="font-light">
       {/* Hero Section */}
       <section
-        className="hero-section py-16 sm:py-20 relative overflow-hidden"
+        className="hero-section py-16 sm:py-20 relative overflow-visible"
         style={{
           backgroundImage: `url(${heroBackgroundImage})`,
           backgroundSize: "cover",
@@ -399,7 +526,7 @@ export default function Home() {
               </Button>
             </div>
             <AnimatePresence mode="wait">
-              <motion.div key={userType} {...tabPanelMotionProps}>
+              <MotionDiv key={userType} {...tabPanelMotionProps}>
                 <div className="mb-4">
                   <Badge variant="success">{currentContent.badge}</Badge>
                 </div>
@@ -411,19 +538,297 @@ export default function Home() {
                   {currentContent.description}
                 </p>
 
-                <div className="flex gap-4 justify-center flex-wrap mb-10">
-                  <Button variant="primary" size="lg" onClick={handleAppDownload}>
-                    {currentContent.cta}
-                    <ArrowRight size={18} />
-                  </Button>
-                  <Link to="/how-it-works">
-                    <Button variant="outline" size="lg">
-                      {t("home.finalCta.guest.learnMore")}
+                <div className="relative z-30 mx-auto mb-10 max-w-5xl rounded-[30px] border border-white/85 bg-white/92 p-4 text-left shadow-[0_30px_90px_-45px_rgba(17,24,39,0.55)] backdrop-blur-xl sm:p-5 lg:p-6">
+                  <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                    <div className="inline-flex rounded-full bg-nova-charcoal/5 p-1 ring-1 ring-nova-charcoal-lighter">
+                      {[
+                        {
+                          id: "pickup-now",
+                          label: "Pickup now",
+                          icon: Clock,
+                        },
+                        {
+                          id: "schedule",
+                          label: "Schedule",
+                          icon: CalendarDays,
+                        },
+                      ].map((option) => {
+                        const OptionIcon = option.icon;
+
+                        return (
+                          <button
+                            key={option.id}
+                            type="button"
+                            onClick={() => setTripType(option.id)}
+                            className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm ${
+                              tripType === option.id
+                                ? "bg-nova-charcoal text-white shadow-sm"
+                                : "text-nova-charcoal-700"
+                            }`}
+                          >
+                            <OptionIcon size={16} />
+                            {option.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    <span className="inline-flex items-center gap-2 rounded-full border border-nova-green/15 bg-nova-green/10 px-3 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-nova-charcoal">
+                      <Car size={14} className="text-nova-green-dark" />
+                      {heroPlannerContent.helper}
+                    </span>
+                  </div>
+
+                  <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+                    <div className="rounded-[24px] bg-[#f8fbfa] p-3 sm:p-4">
+                      <div
+                        className={`grid gap-3 ${
+                          tripType === "schedule"
+                            ? "md:grid-cols-[42px_1fr]"
+                            : "md:grid-cols-[42px_1fr]"
+                        }`}
+                      >
+                        <div className="hidden items-center justify-center md:flex">
+                          <div className="flex h-full flex-col items-center py-2">
+                            <span className="h-3.5 w-3.5 rounded-full border-[3px] border-nova-charcoal bg-white" />
+                            <span className="my-2 h-full w-px flex-1 bg-nova-charcoal/20" />
+                            <span className="h-3.5 w-3.5 rounded-full bg-nova-green" />
+                          </div>
+                        </div>
+
+                        <div className="space-y-3">
+                          <label className="group relative flex items-center gap-3 rounded-[20px] border border-nova-charcoal-lighter bg-white px-4 py-4 transition-all duration-300 focus-within:z-30 focus-within:border-nova-green focus-within:shadow-[0_18px_40px_-30px_rgba(16,185,129,0.9)] hover:border-nova-green/45">
+                            <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-nova-charcoal/5 text-nova-charcoal md:hidden">
+                              <MapPin size={18} />
+                            </span>
+                            <span className="relative block flex-1">
+                              <span className="mb-1 block text-[11px] font-semibold uppercase tracking-[0.18em] text-nova-charcoal-700">
+                                Pickup location
+                              </span>
+                              <input
+                                type="text"
+                                value={pickupLocation}
+                                onChange={(event) => {
+                                  setPickupLocation(event.target.value);
+                                  setShowPickupSuggestions(true);
+                                  setPickupLocationError("");
+                                }}
+                                onFocus={() => setShowPickupSuggestions(true)}
+                                onBlur={() => {
+                                  window.setTimeout(() => {
+                                    setShowPickupSuggestions(false);
+                                  }, 120);
+                                }}
+                                placeholder={heroPlannerContent.pickupPlaceholder}
+                                className="w-full border-none bg-transparent p-0 text-base font-semibold text-nova-charcoal outline-none placeholder:font-medium placeholder:text-nova-charcoal-500"
+                              />
+                              {showPickupSuggestions ? (
+                                <div className="absolute left-0 right-0 top-[calc(100%+0.9rem)] z-40 overflow-hidden rounded-[22px] border border-nova-charcoal-lighter bg-white shadow-[0_24px_70px_-28px_rgba(17,24,39,0.32)] ring-1 ring-black/5">
+                                  <button
+                                    type="button"
+                                    onMouseDown={(event) => event.preventDefault()}
+                                    onClick={handleUseCurrentPickupLocation}
+                                    className="flex w-full items-center justify-between gap-3 border-b border-nova-charcoal-lighter bg-nova-green/[0.05] px-4 py-3 text-left transition-colors hover:bg-nova-green/10"
+                                  >
+                                    <span className="flex items-center gap-3">
+                                      <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-nova-green/12 text-nova-green-dark">
+                                        <MapPin size={16} />
+                                      </span>
+                                      <span>
+                                        <span className="block text-sm font-semibold text-nova-charcoal">
+                                          Use current location
+                                        </span>
+                                        <span className="block text-xs text-nova-charcoal-700">
+                                          Lagos only
+                                        </span>
+                                      </span>
+                                    </span>
+                                    <span className="text-xs font-semibold text-nova-green-dark">
+                                      {isLocatingPickup ? "Locating..." : "Use"}
+                                    </span>
+                                  </button>
+
+                                  {pickupSuggestions.length > 0 ? (
+                                    <div className="max-h-72 overflow-y-auto py-1">
+                                      {pickupSuggestions.map((location) => (
+                                      <button
+                                        key={location.address}
+                                        type="button"
+                                        onMouseDown={(event) =>
+                                          event.preventDefault()
+                                        }
+                                        onClick={() =>
+                                          selectPickupLocation(location.address)
+                                        }
+                                        className="flex w-full items-start gap-3 px-4 py-3 text-left transition-colors hover:bg-nova-charcoal/5"
+                                      >
+                                        <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-2xl bg-nova-charcoal/5 text-nova-charcoal">
+                                          <MapPin size={15} />
+                                        </span>
+                                        <span>
+                                          <span className="block text-sm font-semibold text-nova-charcoal">
+                                            {location.name}
+                                          </span>
+                                          <span className="block text-xs text-nova-charcoal-700">
+                                            {location.address}
+                                          </span>
+                                        </span>
+                                      </button>
+                                      ))}
+                                    </div>
+                                  ) : (
+                                    <div className="px-4 py-3 text-sm text-nova-charcoal-700">
+                                      No Lagos pickup suggestions found.
+                                    </div>
+                                  )}
+                                </div>
+                              ) : null}
+                            </span>
+                          </label>
+                          {pickupLocationError ? (
+                            <p className="px-2 text-sm text-red-600">
+                              {pickupLocationError}
+                            </p>
+                          ) : null}
+
+                          <label className="group relative flex items-center gap-3 rounded-[20px] border border-nova-charcoal-lighter bg-white px-4 py-4 transition-all duration-300 focus-within:z-20 focus-within:border-nova-green focus-within:shadow-[0_18px_40px_-30px_rgba(16,185,129,0.9)] hover:border-nova-green/45">
+                            <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-nova-green/12 text-nova-green-dark md:hidden">
+                              <Navigation size={18} />
+                            </span>
+                            <span className="relative block flex-1">
+                              <span className="mb-1 block text-[11px] font-semibold uppercase tracking-[0.18em] text-nova-charcoal-700">
+                                Dropoff location
+                              </span>
+                              <input
+                                type="text"
+                                value={dropoffLocation}
+                                onChange={(event) => {
+                                  setDropoffLocation(event.target.value);
+                                  setShowDropoffSuggestions(true);
+                                }}
+                                onFocus={() => setShowDropoffSuggestions(true)}
+                                onBlur={() => {
+                                  window.setTimeout(() => {
+                                    setShowDropoffSuggestions(false);
+                                  }, 120);
+                                }}
+                                placeholder={heroPlannerContent.dropoffPlaceholder}
+                                className="w-full border-none bg-transparent p-0 text-base font-semibold text-nova-charcoal outline-none placeholder:font-medium placeholder:text-nova-charcoal-500"
+                              />
+                              {showDropoffSuggestions ? (
+                                <div className="absolute left-0 right-0 top-[calc(100%+0.9rem)] z-30 overflow-hidden rounded-[22px] border border-nova-charcoal-lighter bg-white shadow-[0_24px_70px_-28px_rgba(17,24,39,0.32)] ring-1 ring-black/5">
+                                  {dropoffSuggestions.length > 0 ? (
+                                    <div className="max-h-72 overflow-y-auto py-1">
+                                      {dropoffSuggestions.map((location) => (
+                                      <button
+                                        key={location.address}
+                                        type="button"
+                                        onMouseDown={(event) =>
+                                          event.preventDefault()
+                                        }
+                                        onClick={() =>
+                                          selectDropoffLocation(location.address)
+                                        }
+                                        className="flex w-full items-start gap-3 px-4 py-3 text-left transition-colors hover:bg-nova-charcoal/5"
+                                      >
+                                        <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-2xl bg-nova-green/12 text-nova-green-dark">
+                                          <Navigation size={15} />
+                                        </span>
+                                        <span>
+                                          <span className="block text-sm font-semibold text-nova-charcoal">
+                                            {location.name}
+                                          </span>
+                                          <span className="block text-xs text-nova-charcoal-700">
+                                            {location.address}
+                                          </span>
+                                        </span>
+                                      </button>
+                                      ))}
+                                    </div>
+                                  ) : (
+                                    <div className="px-4 py-3 text-sm text-nova-charcoal-700">
+                                      No Lagos destination suggestions found.
+                                    </div>
+                                  )}
+                                </div>
+                              ) : null}
+                            </span>
+                          </label>
+
+                          {tripType === "schedule" ? (
+                            <div className="grid gap-3 sm:grid-cols-2">
+                              <label className="group flex items-center gap-3 rounded-[20px] border border-nova-charcoal-lighter bg-white px-4 py-4 transition-all duration-300 focus-within:border-nova-green focus-within:shadow-[0_18px_40px_-30px_rgba(16,185,129,0.9)] hover:border-nova-green/45">
+                                <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-nova-charcoal/5 text-nova-charcoal">
+                                  <CalendarDays size={18} />
+                                </span>
+                                <span className="flex-1">
+                                  <span className="mb-1 block text-[11px] font-semibold uppercase tracking-[0.18em] text-nova-charcoal-700">
+                                    Date
+                                  </span>
+                                  <input
+                                    type="date"
+                                    min={todayDate}
+                                    value={scheduledDate}
+                                    onChange={(event) =>
+                                      setScheduledDate(event.target.value)
+                                    }
+                                    className="w-full border-none bg-transparent p-0 text-base font-semibold text-nova-charcoal outline-none"
+                                  />
+                                </span>
+                              </label>
+
+                              <label className="group flex items-center gap-3 rounded-[20px] border border-nova-charcoal-lighter bg-white px-4 py-4 transition-all duration-300 focus-within:border-nova-green focus-within:shadow-[0_18px_40px_-30px_rgba(16,185,129,0.9)] hover:border-nova-green/45">
+                                <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-nova-green/12 text-nova-green-dark">
+                                  <Clock size={18} />
+                                </span>
+                                <span className="flex-1">
+                                  <span className="mb-1 block text-[11px] font-semibold uppercase tracking-[0.18em] text-nova-charcoal-700">
+                                    Time
+                                  </span>
+                                  <input
+                                    type="time"
+                                    value={scheduledTime}
+                                    onChange={(event) =>
+                                      setScheduledTime(event.target.value)
+                                    }
+                                    className="w-full border-none bg-transparent p-0 text-base font-semibold text-nova-charcoal outline-none"
+                                  />
+                                </span>
+                              </label>
+                            </div>
+                          ) : null}
+                        </div>
+                      </div>
+                    </div>
+
+                    <Button
+                      variant="primary"
+                      size="lg"
+                      onClick={handleAppDownload}
+                      className="min-h-[72px] rounded-[22px] px-8 text-base shadow-[0_24px_45px_-24px_rgba(16,185,129,0.95)] lg:min-w-[220px]"
+                    >
+                      {heroPlannerContent.cta}
+                      <ArrowRight size={18} />
                     </Button>
-                  </Link>
+                  </div>
+
+                  <div className="mt-4 flex items-center justify-between gap-3 text-sm">
+                    <Link
+                      to="/how-it-works"
+                      className="font-semibold text-nova-charcoal underline decoration-nova-green/40 underline-offset-4 transition-colors hover:text-nova-green-dark"
+                    >
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={handleAppDownload}
+                      className="font-semibold text-nova-green-dark transition-colors hover:text-nova-charcoal"
+                    >
+                      {currentContent.cta}
+                    </button>
+                  </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <div className="relative z-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
                   {currentContent.stats.map((stat, index) => (
                     <Card
                       key={`${userType}-${index}`}
@@ -452,7 +857,7 @@ export default function Home() {
                     </Card>
                   ))}
                 </div>
-              </motion.div>
+              </MotionDiv>
             </AnimatePresence>
           </div>
         </div>
@@ -674,7 +1079,7 @@ export default function Home() {
       <RevealSection as="section" className="section-padding bg-white">
         <div className="container-custom">
           <AnimatePresence mode="wait">
-            <motion.div
+            <MotionDiv
               key={`quick-start-${userType}`}
               {...tabPanelMotionProps}
               className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center"
@@ -741,7 +1146,7 @@ export default function Home() {
                   </Card>
                 </RevealItem>
               </RevealGroup>
-            </motion.div>
+            </MotionDiv>
           </AnimatePresence>
         </div>
       </RevealSection>
@@ -750,7 +1155,7 @@ export default function Home() {
       <RevealSection as="section" className="section-padding bg-white">
         <div className="container-custom">
           <AnimatePresence mode="wait">
-            <motion.div
+            <MotionDiv
               key={`tracking-${userType}`}
               {...tabPanelMotionProps}
               className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
@@ -909,7 +1314,7 @@ export default function Home() {
                   <div className="absolute inset-0 bg-gradient-to-tr from-nova-charcoal/30 via-transparent to-transparent"></div>
                 </div>
               </RevealItem>
-            </motion.div>
+            </MotionDiv>
           </AnimatePresence>
         </div>
       </RevealSection>
@@ -921,7 +1326,7 @@ export default function Home() {
       >
         <div className="container-custom">
           <AnimatePresence mode="wait">
-            <motion.div key={`comfort-${userType}`} {...tabPanelMotionProps}>
+            <MotionDiv key={`comfort-${userType}`} {...tabPanelMotionProps}>
               <RevealItem className="text-center mb-16">
                 <h2 className="heading-2 font-display text-nova-charcoal mb-4">
                   {userType === "guest"
@@ -1038,7 +1443,7 @@ export default function Home() {
                   </>
                 )}
               </RevealGroup>
-            </motion.div>
+            </MotionDiv>
           </AnimatePresence>
         </div>
       </RevealSection>
@@ -1100,7 +1505,7 @@ export default function Home() {
       <RevealSection as="section" className="section-padding bg-white">
         <div className="container-custom">
           <AnimatePresence mode="wait">
-            <motion.div key={`routes-${userType}`} {...tabPanelMotionProps}>
+            <MotionDiv key={`routes-${userType}`} {...tabPanelMotionProps}>
               <RevealItem className="text-center mb-16">
                 <h2 className="heading-2 font-display text-nova-charcoal mb-4">
                   {t("home.routes.title")}
@@ -1181,7 +1586,7 @@ export default function Home() {
                   </RevealItem>
                 ))}
               </RevealGroup>
-            </motion.div>
+            </MotionDiv>
           </AnimatePresence>
         </div>
       </RevealSection>
@@ -1306,7 +1711,7 @@ export default function Home() {
       <RevealSection as="section" className="section-padding bg-white">
         <div className="container-custom text-center">
           <AnimatePresence mode="wait">
-            <motion.div key={`final-cta-${userType}`} {...tabPanelMotionProps}>
+            <MotionDiv key={`final-cta-${userType}`} {...tabPanelMotionProps}>
               <RevealGroup className="max-w-3xl mx-auto space-y-8">
                 <RevealItem className="space-y-4">
                   <h2 className="heading-2 font-display text-nova-charcoal">
@@ -1349,7 +1754,7 @@ export default function Home() {
                   </RevealItem>
                 </RevealGroup>
               </RevealGroup>
-            </motion.div>
+            </MotionDiv>
           </AnimatePresence>
         </div>
       </RevealSection>

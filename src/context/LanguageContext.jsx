@@ -120,13 +120,13 @@ const baseEn = {
       guest: {
         title: 'Ready to Save Big on Your Daily Commute?',
         desc: 'Join thousands saving up to 60% on commute costs. Start your first ride today.',
-        cta: 'Find a Ride',
-        learnMore: 'See How It Works',
+        cta: 'Get the Passenger App',
+        learnMore: 'Learn More',
       },
       host: {
         title: 'Ready to Turn Your Car into Income?',
         desc: 'Join riders earn per trip. Start earning today!',
-        cta: 'Become a Rider',
+        cta: 'Get the Rider App',
         learnMore: 'Learn More',
       },
     },

@@ -1,0 +1,98 @@
+export const lagosLocations = [
+  {
+    name: "Lekki Phase 1",
+    address: "Admiralty Way, Lekki Phase 1, Lagos",
+    lat: 6.4479,
+    lng: 3.4721,
+  },
+  {
+    name: "Victoria Island",
+    address: "Akin Adesola Street, Victoria Island, Lagos",
+    lat: 6.4281,
+    lng: 3.4219,
+  },
+  {
+    name: "Ikoyi",
+    address: "Awolowo Road, Ikoyi, Lagos",
+    lat: 6.4549,
+    lng: 3.4347,
+  },
+  {
+    name: "Ajah",
+    address: "Ajah Roundabout, Ajah, Lagos",
+    lat: 6.4698,
+    lng: 3.5852,
+  },
+  {
+    name: "Yaba",
+    address: "Herbert Macaulay Way, Yaba, Lagos",
+    lat: 6.5095,
+    lng: 3.3711,
+  },
+  {
+    name: "Maryland",
+    address: "Mobolaji Bank Anthony Way, Maryland, Lagos",
+    lat: 6.5731,
+    lng: 3.3676,
+  },
+  {
+    name: "Ikeja",
+    address: "Allen Avenue, Ikeja, Lagos",
+    lat: 6.6018,
+    lng: 3.3515,
+  },
+  {
+    name: "Alausa",
+    address: "Secretariat Road, Alausa, Ikeja, Lagos",
+    lat: 6.6213,
+    lng: 3.3582,
+  },
+  {
+    name: "Surulere",
+    address: "Adeniran Ogunsanya Street, Surulere, Lagos",
+    lat: 6.4966,
+    lng: 3.3496,
+  },
+  {
+    name: "Ojota",
+    address: "Ojota Interchange, Ojota, Lagos",
+    lat: 6.5841,
+    lng: 3.3896,
+  },
+  {
+    name: "Ogudu",
+    address: "Ogudu Road, Ogudu, Lagos",
+    lat: 6.5713,
+    lng: 3.3912,
+  },
+  {
+    name: "Anthony",
+    address: "Anthony Village, Lagos",
+    lat: 6.5574,
+    lng: 3.3675,
+  },
+  {
+    name: "Festac",
+    address: "23 Road, Festac Town, Lagos",
+    lat: 6.4698,
+    lng: 3.2828,
+  },
+  {
+    name: "Apapa",
+    address: "Creek Road, Apapa, Lagos",
+    lat: 6.4483,
+    lng: 3.359,
+  },
+  {
+    name: "Chevron",
+    address: "Chevron Drive, Lekki, Lagos",
+    lat: 6.4361,
+    lng: 3.5355,
+  },
+  {
+    name: "Sangotedo",
+    address: "Monastery Road, Sangotedo, Lagos",
+    lat: 6.4694,
+    lng: 3.6617,
+  },
+];
