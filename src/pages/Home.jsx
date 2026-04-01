@@ -756,13 +756,13 @@ export default function Home() {
                           </label>
 
                           {tripType === "schedule" ? (
-                            <div className="grid gap-3 sm:grid-cols-2">
-                              <label className="group flex items-center gap-3 rounded-[20px] border border-nova-charcoal-lighter bg-white px-4 py-4 transition-all duration-300 focus-within:border-nova-green focus-within:shadow-[0_18px_40px_-30px_rgba(16,185,129,0.9)] hover:border-nova-green/45">
-                                <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-nova-charcoal/5 text-nova-charcoal">
+                            <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                              <label className="group flex items-center gap-2 rounded-[18px] border border-nova-charcoal-lighter bg-white px-3 py-3 transition-all duration-300 focus-within:border-nova-green focus-within:shadow-[0_18px_40px_-30px_rgba(16,185,129,0.9)] hover:border-nova-green/45 sm:gap-3 sm:rounded-[20px] sm:px-4 sm:py-4">
+                                <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-nova-charcoal/5 text-nova-charcoal sm:h-11 sm:w-11 sm:rounded-2xl">
                                   <CalendarDays size={18} />
                                 </span>
                                 <span className="flex-1">
-                                  <span className="mb-1 block text-[11px] font-semibold uppercase tracking-[0.18em] text-nova-charcoal-700">
+                                  <span className="mb-1 block text-[10px] font-semibold uppercase tracking-[0.14em] text-nova-charcoal-700 sm:text-[11px] sm:tracking-[0.18em]">
                                     Date
                                   </span>
                                   <input
@@ -772,17 +772,17 @@ export default function Home() {
                                     onChange={(event) =>
                                       setScheduledDate(event.target.value)
                                     }
-                                    className="w-full border-none bg-transparent p-0 text-base font-semibold text-nova-charcoal outline-none"
+                                    className="w-full border-none bg-transparent p-0 text-sm font-semibold text-nova-charcoal outline-none sm:text-base"
                                   />
                                 </span>
                               </label>
 
-                              <label className="group flex items-center gap-3 rounded-[20px] border border-nova-charcoal-lighter bg-white px-4 py-4 transition-all duration-300 focus-within:border-nova-green focus-within:shadow-[0_18px_40px_-30px_rgba(16,185,129,0.9)] hover:border-nova-green/45">
-                                <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-nova-green/12 text-nova-green-dark">
+                              <label className="group flex items-center gap-2 rounded-[18px] border border-nova-charcoal-lighter bg-white px-3 py-3 transition-all duration-300 focus-within:border-nova-green focus-within:shadow-[0_18px_40px_-30px_rgba(16,185,129,0.9)] hover:border-nova-green/45 sm:gap-3 sm:rounded-[20px] sm:px-4 sm:py-4">
+                                <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-nova-green/12 text-nova-green-dark sm:h-11 sm:w-11 sm:rounded-2xl">
                                   <Clock size={18} />
                                 </span>
                                 <span className="flex-1">
-                                  <span className="mb-1 block text-[11px] font-semibold uppercase tracking-[0.18em] text-nova-charcoal-700">
+                                  <span className="mb-1 block text-[10px] font-semibold uppercase tracking-[0.14em] text-nova-charcoal-700 sm:text-[11px] sm:tracking-[0.18em]">
                                     Time
                                   </span>
                                   <input
@@ -791,7 +791,7 @@ export default function Home() {
                                     onChange={(event) =>
                                       setScheduledTime(event.target.value)
                                     }
-                                    className="w-full border-none bg-transparent p-0 text-base font-semibold text-nova-charcoal outline-none"
+                                    className="w-full border-none bg-transparent p-0 text-sm font-semibold text-nova-charcoal outline-none sm:text-base"
                                   />
                                 </span>
                               </label>
